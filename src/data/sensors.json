@@ -60,7 +60,8 @@
           "7.4V battery"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-001.jpg"
   },
   {
     "sku": "SEN-002",
@@ -124,7 +125,8 @@
           "Mini pump + relay"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-002.jpg"
   },
   {
     "sku": "SEN-003",
@@ -185,7 +187,8 @@
           "L298N driver"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-003.jpg"
   },
   {
     "sku": "SEN-004",
@@ -246,7 +249,8 @@
           "L298N driver"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-004.jpg"
   },
   {
     "sku": "SEN-005",
@@ -308,7 +312,8 @@
           "Push button"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-005.jpg"
   },
   {
     "sku": "SEN-006",
@@ -369,7 +374,8 @@
           "Push buttons"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-006.jpg"
   },
   {
     "sku": "SEN-007",
@@ -434,7 +440,8 @@
           "16x2 I2C LCD"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-007.jpg"
   },
   {
     "sku": "SEN-008",
@@ -513,7 +520,8 @@
           "Motor encoders"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-008.jpg"
   },
   {
     "sku": "SEN-009",
@@ -577,7 +585,8 @@
           "4x4 keypad"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-009.jpg"
   },
   {
     "sku": "SEN-010",
@@ -637,7 +646,8 @@
           "Buzzer"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-010.jpg"
   },
   {
     "sku": "SEN-011",
@@ -700,7 +710,8 @@
           "PC with Processing"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-011.jpg"
   },
   {
     "sku": "SEN-012",
@@ -764,7 +775,8 @@
           "16x2 I2C LCD"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-012.jpg"
   },
   {
     "sku": "SEN-013",
@@ -830,7 +842,8 @@
           "Limit switches"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-013.jpg"
   },
   {
     "sku": "SEN-014",
@@ -894,7 +907,8 @@
           "16x2 I2C LCD"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-014.jpg"
   },
   {
     "sku": "SEN-015",
@@ -960,7 +974,8 @@
           "DS3231 RTC"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-015.jpg"
   },
   {
     "sku": "SEN-016",
@@ -1022,7 +1037,8 @@
           "Micro SD card reader"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-016.jpg"
   },
   {
     "sku": "SEN-017",
@@ -1082,7 +1098,8 @@
           "DS3231 RTC"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-017.jpg"
   },
   {
     "sku": "SEN-018",
@@ -1143,7 +1160,8 @@
           "16x2 I2C LCD"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-018.jpg"
   },
   {
     "sku": "SEN-019",
@@ -1205,7 +1223,8 @@
           "4x4 keypad"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-019.jpg"
   },
   {
     "sku": "SEN-020",
@@ -1266,7 +1285,8 @@
           "Buzzer"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-020.jpg"
   },
   {
     "sku": "SEN-021",
@@ -1327,7 +1347,8 @@
           "16x2 I2C LCD"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-021.jpg"
   },
   {
     "sku": "SEN-022",
@@ -1389,7 +1410,8 @@
           "SG90 servo"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-022.jpg"
   },
   {
     "sku": "SEN-023",
@@ -1449,7 +1471,8 @@
           "DC motor"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-023.jpg"
   },
   {
     "sku": "SEN-024",
@@ -1511,7 +1534,8 @@
           "L298N driver"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-024.jpg"
   },
   {
     "sku": "SEN-025",
@@ -1578,7 +1602,8 @@
           "Buck converter"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-025.jpg"
   },
   {
     "sku": "SEN-026",
@@ -1644,7 +1669,8 @@
           "Buzzer"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-026.jpg"
   },
   {
     "sku": "SEN-027",
@@ -1711,7 +1737,8 @@
           "Exhaust fan"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-027.jpg"
   },
   {
     "sku": "SEN-028",
@@ -1778,7 +1805,8 @@
           "SIM800L GSM"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-028.jpg"
   },
   {
     "sku": "SEN-029",
@@ -1842,7 +1870,8 @@
           "16x2 I2C LCD"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-029.jpg"
   },
   {
     "sku": "SEN-030",
@@ -1909,7 +1938,8 @@
           "Micro SD card reader"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-030.jpg"
   },
   {
     "sku": "SEN-031",
@@ -1970,7 +2000,8 @@
           "Buzzer"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-031.jpg"
   },
   {
     "sku": "SEN-032",
@@ -2031,7 +2062,8 @@
           "16x2 I2C LCD"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-032.jpg"
   },
   {
     "sku": "SEN-034",
@@ -2095,7 +2127,8 @@
           "DC conveyor motor"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-034.jpg"
   },
   {
     "sku": "SEN-035",
@@ -2159,7 +2192,8 @@
           "Push buttons"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-035.jpg"
   },
   {
     "sku": "SEN-036",
@@ -2223,7 +2257,8 @@
           "DC fan"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-036.jpg"
   },
   {
     "sku": "SEN-037",
@@ -2286,7 +2321,8 @@
           "L298N driver"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-037.jpg"
   },
   {
     "sku": "SEN-038",
@@ -2351,7 +2387,8 @@
           "Grow light"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-038.jpg"
   },
   {
     "sku": "SEN-039",
@@ -2415,7 +2452,8 @@
           "Li-ion battery + charger"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-039.jpg"
   },
   {
     "sku": "SEN-040",
@@ -2485,7 +2523,8 @@
           "2S Li-ion battery"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-040.jpg"
   },
   {
     "sku": "SEN-041",
@@ -2549,7 +2588,8 @@
           "Buzzer"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-041.jpg"
   },
   {
     "sku": "SEN-042",
@@ -2612,7 +2652,8 @@
           "DS3231 RTC"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-042.jpg"
   },
   {
     "sku": "SEN-043",
@@ -2675,7 +2716,8 @@
           "Buzzer"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-043.jpg"
   },
   {
     "sku": "SEN-044",
@@ -2739,7 +2781,8 @@
           "Push button"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-044.jpg"
   },
   {
     "sku": "SEN-045",
@@ -2800,7 +2843,8 @@
           "16x2 I2C LCD"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-045.jpg"
   },
   {
     "sku": "SEN-046",
@@ -2871,7 +2915,8 @@
           "Battery pack"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-046.jpg"
   },
   {
     "sku": "SEN-048",
@@ -2941,7 +2986,8 @@
           "Rotary encoder"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-048.jpg"
   },
   {
     "sku": "SEN-049",
@@ -3011,7 +3057,8 @@
           "Logic level shifter"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-049.jpg"
   },
   {
     "sku": "SEN-050",
@@ -3069,7 +3116,8 @@
           "Buzzer"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-050.jpg"
   },
   {
     "sku": "SEN-051",
@@ -3135,7 +3183,8 @@
           "Relay module"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-051.jpg"
   },
   {
     "sku": "SEN-052",
@@ -3195,7 +3244,8 @@
           "Push button"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-052.jpg"
   },
   {
     "sku": "SEN-053",
@@ -3255,7 +3305,8 @@
           "Micro SD card reader"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-053.jpg"
   },
   {
     "sku": "SEN-054",
@@ -3316,7 +3367,8 @@
           "Enclosure"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-054.jpg"
   },
   {
     "sku": "SEN-055",
@@ -3380,7 +3432,8 @@
           "DS3231 RTC"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-055.jpg"
   },
   {
     "sku": "SEN-056",
@@ -3441,7 +3494,8 @@
           "Buzzer"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-056.jpg"
   },
   {
     "sku": "SEN-057",
@@ -3504,7 +3558,8 @@
           "Relay module"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-057.jpg"
   },
   {
     "sku": "SEN-058",
@@ -3567,7 +3622,8 @@
           "Solar panel"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-058.jpg"
   },
   {
     "sku": "SEN-059",
@@ -3627,7 +3683,8 @@
           "16x2 I2C LCD"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-059.jpg"
   },
   {
     "sku": "SEN-060",
@@ -3686,7 +3743,8 @@
           "16x2 I2C LCD"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-060.jpg"
   },
   {
     "sku": "SEN-061",
@@ -3765,7 +3823,8 @@
           "3D-printed or cardboard frame"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-061.jpg"
   },
   {
     "sku": "SEN-063",
@@ -3841,7 +3900,8 @@
           "Micro SD card reader"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-063.jpg"
   },
   {
     "sku": "SEN-065",
@@ -3905,7 +3965,8 @@
           "SG90 servo"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-065.jpg"
   },
   {
     "sku": "SEN-066",
@@ -3971,7 +4032,8 @@
           "Capacitors"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-066.jpg"
   },
   {
     "sku": "SEN-068",
@@ -4029,7 +4091,8 @@
           "Second Arduino"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-068.jpg"
   },
   {
     "sku": "SEN-069",
@@ -4088,7 +4151,8 @@
           "Micro SD card reader"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-069.jpg"
   },
   {
     "sku": "SEN-070",
@@ -4147,7 +4211,8 @@
           "MG996R servo"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-070.jpg"
   },
   {
     "sku": "SEN-071",
@@ -4206,7 +4271,8 @@
           "Transistor"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-071.jpg"
   },
   {
     "sku": "SEN-072",
@@ -4266,7 +4332,8 @@
           "5V 3A supply"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-072.jpg"
   },
   {
     "sku": "SEN-073",
@@ -4325,7 +4392,8 @@
           "Rotary encoder"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-073.jpg"
   },
   {
     "sku": "SEN-074",
@@ -4385,7 +4453,8 @@
           "16x2 I2C LCD"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-074.jpg"
   },
   {
     "sku": "SEN-075",
@@ -4447,7 +4516,8 @@
           "Micro SD card reader"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-075.jpg"
   },
   {
     "sku": "SEN-076",
@@ -4507,7 +4577,8 @@
           "Micro SD card reader"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-076.jpg"
   },
   {
     "sku": "SEN-077",
@@ -4566,7 +4637,8 @@
           "L298N driver"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-077.jpg"
   },
   {
     "sku": "SEN-078",
@@ -4626,7 +4698,8 @@
           "Small solar panel"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-078.jpg"
   },
   {
     "sku": "SEN-079",
@@ -4686,7 +4759,8 @@
           "16x2 I2C LCD"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-079.jpg"
   },
   {
     "sku": "SEN-080",
@@ -4745,7 +4819,8 @@
           "L298N driver"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-080.jpg"
   },
   {
     "sku": "SEN-081",
@@ -4813,7 +4888,8 @@
           "Buzzer"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-081.jpg"
   },
   {
     "sku": "SEN-082",
@@ -4880,7 +4956,8 @@
           "DS3231 RTC"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-082.jpg"
   },
   {
     "sku": "SEN-083",
@@ -4946,7 +5023,8 @@
           "Buzzer"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-083.jpg"
   },
   {
     "sku": "SEN-085",
@@ -5005,7 +5083,8 @@
           "SG90 servo"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-085.jpg"
   },
   {
     "sku": "SEN-086",
@@ -5061,7 +5140,8 @@
           "LED"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-086.jpg"
   },
   {
     "sku": "SEN-087",
@@ -5128,7 +5208,8 @@
           "Several hall sensors"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-087.jpg"
   },
   {
     "sku": "SEN-088",
@@ -5194,7 +5275,8 @@
           "16x2 I2C LCD"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-088.jpg"
   },
   {
     "sku": "SEN-089",
@@ -5255,7 +5337,8 @@
           "Buzzer"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-089.jpg"
   },
   {
     "sku": "SEN-090",
@@ -5328,7 +5411,8 @@
           "Buzzer"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-090.jpg"
   },
   {
     "sku": "SEN-091",
@@ -5386,7 +5470,8 @@
           "Hairless MIDI on PC"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-091.jpg"
   },
   {
     "sku": "SEN-092",
@@ -5445,7 +5530,8 @@
           "12V LED strip"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-092.jpg"
   },
   {
     "sku": "SEN-093",
@@ -5507,7 +5593,8 @@
           "16x2 I2C LCD"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-093.jpg"
   },
   {
     "sku": "SEN-095",
@@ -5569,7 +5656,8 @@
           "10kΩ resistor"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-095.jpg"
   },
   {
     "sku": "SEN-096",
@@ -5630,7 +5718,8 @@
           "16x2 I2C LCD"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-096.jpg"
   },
   {
     "sku": "SEN-098",
@@ -5692,7 +5781,8 @@
           "Solenoid valve"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-098.jpg"
   },
   {
     "sku": "SEN-099",
@@ -5753,6 +5843,7 @@
           "Buzzer"
         ]
       }
-    ]
+    ],
+    "image": "/images/sensors/SEN-099.jpg"
   }
 ]

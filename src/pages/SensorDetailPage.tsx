@@ -48,9 +48,19 @@ export default function SensorDetailPage() {
       {/* Header */}
       <div className="rounded-md border border-zinc-200 bg-white p-4 sm:p-5">
         <div className="flex items-start gap-3 sm:gap-4">
-          <span className="flex size-10 shrink-0 items-center justify-center rounded-md bg-teal-50 text-teal-700 sm:size-12">
-            <CategoryIcon category={sensor.category} size={22} />
-          </span>
+          {sensor.image ? (
+            <div className="relative size-16 shrink-0 overflow-hidden rounded-md border border-zinc-200 bg-zinc-50 p-1 sm:size-20">
+              <img
+                src={sensor.image}
+                alt={sensor.name}
+                className="h-full w-full object-contain"
+              />
+            </div>
+          ) : (
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-md bg-teal-50 text-teal-700 sm:size-12">
+              <CategoryIcon category={sensor.category} size={22} />
+            </span>
+          )}
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
               <span className="font-mono text-xs text-zinc-500">{sensor.sku}</span>

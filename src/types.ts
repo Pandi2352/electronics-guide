@@ -31,6 +31,7 @@ export interface Sensor {
   tip: string;
   library: string | null;
   projects: ProjectIdea[];
+  image?: string;
 }
 
 export type PinType = "power" | "ground" | "digital" | "analog" | "control";

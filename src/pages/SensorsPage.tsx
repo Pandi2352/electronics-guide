@@ -269,15 +269,30 @@ function CategoryChip({ active, onClick, label, count, category }: { active: boo
 }
 
 function SensorCard({ sensor: s }: { sensor: Sensor }) {
+  const [imgError, setImgError] = useState(false);
+  const showImage = Boolean(s.image && !imgError);
+
   return (
     <Link
       to={`/sensors/${s.sku}`}
       className="group flex h-full flex-col rounded-md border border-zinc-200 bg-white p-3.5 transition-colors hover:border-teal-600 sm:p-4"
     >
       <div className="flex items-start gap-3">
-        <span className="flex size-10 shrink-0 items-center justify-center rounded-md bg-teal-50 text-teal-700">
-          <CategoryIcon category={s.category} size={20} />
-        </span>
+        {showImage ? (
+          <div className="relative size-12 shrink-0 overflow-hidden rounded-md border border-zinc-200 bg-zinc-50 p-1">
+            <img
+              src={s.image}
+              alt={s.name}
+              loading="lazy"
+              onError={() => setImgError(true)}
+              className="h-full w-full object-contain transition-transform group-hover:scale-105"
+            />
+          </div>
+        ) : (
+          <span className="flex size-10 shrink-0 items-center justify-center rounded-md bg-teal-50 text-teal-700">
+            <CategoryIcon category={s.category} size={20} />
+          </span>
+        )}
         <div className="min-w-0 flex-1">
           <div className="flex items-center justify-between gap-2">
             <span className="font-mono text-xs text-zinc-500">{s.sku}</span>
@@ -323,11 +338,26 @@ function ViewSwitch({ view, onChange }: { view: View; onChange: (v: View) => voi
 }
 
 function SensorRow({ sensor: s }: { sensor: Sensor }) {
+  const [imgError, setImgError] = useState(false);
+  const showImage = Boolean(s.image && !imgError);
+
   return (
     <Link to={`/sensors/${s.sku}`} className="group flex items-center gap-3 px-3 py-3 transition-colors hover:bg-zinc-50 sm:px-4">
-      <span className="flex size-9 shrink-0 items-center justify-center rounded-md bg-teal-50 text-teal-700">
-        <CategoryIcon category={s.category} size={18} />
-      </span>
+      {showImage ? (
+        <div className="relative size-10 shrink-0 overflow-hidden rounded-md border border-zinc-200 bg-zinc-50 p-0.5">
+          <img
+            src={s.image}
+            alt={s.name}
+            loading="lazy"
+            onError={() => setImgError(true)}
+            className="h-full w-full object-contain"
+          />
+        </div>
+      ) : (
+        <span className="flex size-9 shrink-0 items-center justify-center rounded-md bg-teal-50 text-teal-700">
+          <CategoryIcon category={s.category} size={18} />
+        </span>
+      )}
       <div className="min-w-0 flex-1">
         <div className="flex items-baseline gap-2">
           <h3 className="font-semibold text-zinc-900 group-hover:text-teal-800">{s.name}</h3>

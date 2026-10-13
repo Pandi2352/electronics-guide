@@ -22,6 +22,7 @@ export interface SearchItem {
   keywords: string;
   tag?: string;
   tone?: Tone;
+  image?: string;
 }
 
 // Built-in discrete components & power modules indexed for quick bench access
@@ -188,6 +189,7 @@ function buildSearchIndex(): SearchItem[] {
     ].join(" "),
     tag: s.sku,
     tone: "teal",
+    image: s.image,
   }));
 
   const boardItems: SearchItem[] = modules.map((m) => ({
@@ -454,16 +456,23 @@ export default function GlobalSearchModal({ open, onClose }: GlobalSearchModalPr
                   >
                     <div className="flex items-start gap-3 min-w-0 flex-1">
                       <div
-                        className={`mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-md border text-xs font-semibold ${
+                        className={`mt-0.5 flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-md border text-xs font-semibold ${
                           isSelected
                             ? "border-teal-300 bg-teal-600 text-white"
                             : "border-zinc-200 bg-zinc-100 text-zinc-600 group-hover:bg-zinc-200"
                         }`}
                       >
-                        {item.category === "Sensors" && <Radar size={15} />}
-                        {item.category === "Components" && <Zap size={15} />}
-                        {item.category === "Boards" && <CircuitBoard size={15} />}
-                        {item.category === "Projects" && <Hammer size={15} />}
+                        {item.image ? (
+                          <img src={item.image} alt="" className="size-full object-contain p-0.5" />
+                        ) : item.category === "Sensors" ? (
+                          <Radar size={15} />
+                        ) : item.category === "Components" ? (
+                          <Zap size={15} />
+                        ) : item.category === "Boards" ? (
+                          <CircuitBoard size={15} />
+                        ) : (
+                          <Hammer size={15} />
+                        )}
                       </div>
 
                       <div className="min-w-0 flex-1">
