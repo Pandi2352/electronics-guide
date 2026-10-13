@@ -1,6 +1,12 @@
-# IoT Guide
+# Electronics Guide
 
-A learning site for playing with sensors on an Arduino Nano (Uno and ESP32 next). React + TypeScript + Tailwind, no backend: all content lives in two JSON files.
+> An interactive visual handbook for electronics, sensors, discrete components, power converters, and Arduino Nano builds.
+
+🔗 **Live Site:** [https://electronics-guide.vercel.app/](https://electronics-guide.vercel.app/)
+
+---
+
+## ⚡ Quick Start
 
 ```bash
 npm install
