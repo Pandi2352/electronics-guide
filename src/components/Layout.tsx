@@ -1,6 +1,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
-import { CircuitBoard, Cpu, Hammer, Menu, Radar, X } from "lucide-react";
+import { CircuitBoard, Cpu, Hammer, Menu, Radar, Search, X } from "lucide-react";
+import GlobalSearchModal from "./GlobalSearchModal";
 import {
   capacitorGuide,
   converterGuide,
@@ -121,6 +122,7 @@ function SidebarFooter() {
 
 export default function Layout() {
   const [open, setOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const { pathname } = useLocation();
 
   // Close the mobile drawer and scroll to top whenever the page changes.
@@ -128,6 +130,21 @@ export default function Layout() {
     setOpen(false);
     window.scrollTo(0, 0);
   }, [pathname]);
+
+  // Global hotkey: Ctrl+K / Cmd+K or "/" to open global search
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (
+        (e.key === "k" && (e.metaKey || e.ctrlKey)) ||
+        (e.key === "/" && !["INPUT", "TEXTAREA"].includes((e.target as HTMLElement)?.tagName))
+      ) {
+        e.preventDefault();
+        setSearchOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -143,9 +160,23 @@ export default function Layout() {
 
   return (
     <div className="min-h-dvh">
+      {/* Global Search Command Palette */}
+      <GlobalSearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />
+
       {/* Desktop sidebar */}
-      <aside className="fixed inset-y-0 left-0 hidden w-60 flex-col gap-6 overflow-y-auto border-r border-zinc-200 bg-white p-4 lg:flex">
+      <aside className="fixed inset-y-0 left-0 hidden w-60 flex-col gap-4 overflow-y-auto border-r border-zinc-200 bg-white p-4 lg:flex">
         <Brand />
+        <button
+          type="button"
+          onClick={() => setSearchOpen(true)}
+          className="flex w-full items-center gap-2 rounded-md border border-zinc-200 bg-zinc-50 px-3 py-2 text-xs text-zinc-500 transition-colors hover:border-zinc-300 hover:bg-zinc-100 hover:text-zinc-700"
+        >
+          <Search size={14} className="text-zinc-400" />
+          <span className="flex-1 text-left font-medium">Search everything…</span>
+          <kbd className="rounded border border-zinc-200 bg-white px-1.5 py-0.5 font-mono text-[10px] text-zinc-400">
+            Ctrl K
+          </kbd>
+        </button>
         <SidebarNav />
         <div className="mt-auto">
           <SidebarFooter />
@@ -155,21 +186,31 @@ export default function Layout() {
       {/* Mobile top bar */}
       <header className="sticky top-0 z-20 flex h-14 items-center justify-between border-b border-zinc-200 bg-white px-4 lg:hidden">
         <Brand />
-        <button
-          type="button"
-          onClick={() => setOpen(true)}
-          className="flex size-10 items-center justify-center rounded-md border border-zinc-200 text-zinc-700 hover:bg-zinc-100"
-          aria-label="Open menu"
-        >
-          <Menu size={18} />
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setSearchOpen(true)}
+            className="flex size-10 items-center justify-center rounded-md border border-zinc-200 text-zinc-700 hover:bg-zinc-100"
+            aria-label="Search everything"
+          >
+            <Search size={18} />
+          </button>
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            className="flex size-10 items-center justify-center rounded-md border border-zinc-200 text-zinc-700 hover:bg-zinc-100"
+            aria-label="Open menu"
+          >
+            <Menu size={18} />
+          </button>
+        </div>
       </header>
 
       {/* Mobile drawer */}
       {open && (
         <div className="fixed inset-0 z-30 lg:hidden">
           <button type="button" className="absolute inset-0 bg-zinc-900/40" aria-label="Close menu" onClick={() => setOpen(false)} />
-          <aside role="dialog" aria-modal="true" aria-label="Menu" className="absolute inset-y-0 left-0 flex w-72 max-w-[85vw] flex-col gap-6 overflow-y-auto border-r border-zinc-200 bg-white p-4">
+          <aside role="dialog" aria-modal="true" aria-label="Menu" className="absolute inset-y-0 left-0 flex w-72 max-w-[85vw] flex-col gap-4 overflow-y-auto border-r border-zinc-200 bg-white p-4">
             <div className="flex items-center justify-between">
               <Brand />
               <button
@@ -181,6 +222,17 @@ export default function Layout() {
                 <X size={18} />
               </button>
             </div>
+            <button
+              type="button"
+              onClick={() => {
+                setOpen(false);
+                setSearchOpen(true);
+              }}
+              className="flex w-full items-center gap-2 rounded-md border border-zinc-200 bg-zinc-50 px-3 py-2 text-xs text-zinc-500 transition-colors hover:border-zinc-300 hover:bg-zinc-100"
+            >
+              <Search size={14} className="text-zinc-400" />
+              <span className="flex-1 text-left font-medium">Search everything…</span>
+            </button>
             <SidebarNav />
             <div className="mt-auto">
               <SidebarFooter />
