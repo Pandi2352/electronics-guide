@@ -1,0 +1,183 @@
+{
+  "purpose": "A one-way valve for electricity. Current flows easily from Anode to Cathode, but is blocked from flowing backwards. It protects microcontrollers from inductive voltage spikes, prevents damage from backwards batteries, and directs power flow.",
+  "whenToUse": [
+    {
+      "scenario": "Motors, Solenoids, or Relays (Flyback / Snubber Protection)",
+      "why": "Inductive coils store energy in a magnetic field. When power is cut, this field collapses, generating reverse voltage spikes of 50V to 400V. A diode across the coil harmlessly recirculates this spike, preventing burned Arduino pins or blown transistors.",
+      "recommended": "1N4007 (for slow coils) or 1N5819 Schottky (for fast PWM)"
+    },
+    {
+      "scenario": "Reverse Polarity Protection",
+      "why": "Plugging in a 9V battery or 12V adapter backwards instantly fries microcontrollers. Placing a diode in series on the positive power line completely blocks reverse current.",
+      "recommended": "1N5817 or SS34 Schottky diode (low ~0.2V to 0.3V drop so you waste minimal battery power)"
+    },
+    {
+      "scenario": "Dual Power Supply OR-ing (USB vs Battery)",
+      "why": "When you want a device to seamlessly switch between USB 5V and a backup battery without one power source back-feeding into the other.",
+      "recommended": "Schottky diodes on each power rail (e.g. 1N5819)"
+    },
+    {
+      "scenario": "Voltage Clamping & Reference (Zener Diode)",
+      "why": "When you need to cap a fluctuating sensor voltage at a safe 3.3V or 5.1V ceiling so it cannot exceed the Arduino pin's absolute maximum rating.",
+      "recommended": "3.3V or 5.1V Zener Diode (with series current-limiting resistor)"
+    },
+    {
+      "scenario": "ESD & Voltage Transient Suppression (TVS Diode)",
+      "why": "Protecting external sensors and exposed data lines (like USB or RS485) from human static shocks (ESD) or lightning surges.",
+      "recommended": "TVS Diode (Bidirectional or Unidirectional)"
+    }
+  ],
+  "basics": [
+    {
+      "title": "Anode (+) vs Cathode (-)",
+      "text": "Current flows from the Anode to the Cathode. On physical cylindrical diodes, a printed silver or white stripe marks the CATHODE end. Remember: Stripe = Negative / Exit."
+    },
+    {
+      "title": "Forward Voltage Drop (Vf)",
+      "text": "Every diode takes a small voltage toll to open the gate: ~0.7V for standard silicon (1N4007), ~0.2V–0.3V for Schottky (1N5819), and 1.8V–3.2V for LEDs. Choose Schottky when every tenth of a volt matters on battery projects."
+    },
+    {
+      "title": "Reverse Breakdown & Leakage",
+      "text": "If reverse voltage exceeds the diode's rating (Peak Inverse Voltage / PIV), it breaks down. 1N4007 handles up to 1000V in reverse, while low-voltage Schottky diodes handle 20V to 40V."
+    },
+    {
+      "title": "Zener Diodes Break Down on Purpose",
+      "text": "Unlike standard diodes, Zener diodes are intentionally operated in REVERSE bias. When reverse voltage reaches the rated Zener voltage (e.g. 5.1V), it conducts steadily, clamping the voltage."
+    }
+  ],
+  "types": [
+    {
+      "id": "rectifier",
+      "name": "Standard Rectifier (1N4001–1N4007)",
+      "voltageDrop": "0.7V – 1.0V",
+      "maxCurrent": "1.0A",
+      "speed": "Slow (~30 µs)",
+      "looks": "Black plastic cylinder (DO-41 package) with a silver band marking the cathode.",
+      "pros": ["Handles huge reverse voltages (up to 1000V for 1N4007)", "Dirt cheap and virtually indestructible", "Standard flyback protection for relays"],
+      "cons": ["High forward voltage drop (~0.7V - 1.0V)", "Too slow for high-frequency PWM switching"],
+      "uses": ["Flyback snubber for DC relays and solenoids", "AC to DC bridge rectifiers", "Basic reverse polarity protection"]
+    },
+    {
+      "id": "schottky",
+      "name": "Schottky Diode (1N5817 / 1N5819 / SS34)",
+      "voltageDrop": "0.2V – 0.35V (Ultra low)",
+      "maxCurrent": "1.0A to 3.0A",
+      "speed": "Extremely fast (< 10 ns)",
+      "looks": "Black DO-41 or surface-mount SMA/SMB package with silver/white band.",
+      "pros": ["Low voltage loss saves battery run-time", "Fast switching handles high-frequency PWM and DC-DC converters", "Low heat dissipation"],
+      "cons": ["Lower reverse voltage rating (typically 20V to 40V)", "Slightly higher reverse leakage current at hot temperatures"],
+      "uses": ["Dual-supply OR-ing (USB vs battery)", "High-speed PWM motor snubber", "Output rectifiers in DC-DC buck/boost converters"]
+    },
+    {
+      "id": "zener",
+      "name": "Zener Diode (e.g. 3.3V / 5.1V BZX55)",
+      "voltageDrop": "Forward: 0.7V | Reverse breakdown: Rated Zener voltage",
+      "maxCurrent": "500 mW power limit (~10–100 mA)",
+      "speed": "Fast",
+      "looks": "Small red or orange clear glass cylinder with a black band marking the cathode.",
+      "pros": ["Provides reliable voltage clamping and references", "Protects sensitive 3.3V inputs from 5V overshoots"],
+      "cons": ["Cannot supply high currents directly (requires series resistor)", "Wastes current as heat when clamping"],
+      "uses": ["Over-voltage input clamp on analog pins", "Basic voltage reference circuits", "Noise clipping"]
+    },
+    {
+      "id": "fast-switching",
+      "name": "Fast Small-Signal Diode (1N4148)",
+      "voltageDrop": "0.6V – 0.7V",
+      "maxCurrent": "200 mA (Small signal only)",
+      "speed": "Ultra fast (4 ns)",
+      "looks": "Tiny clear orange/red glass bead with a black stripe.",
+      "pros": ["Extremely fast recovery time (4 nanoseconds)", "Tiny parasitic capacitance (< 4 pF)", "Perfect for signal lines and logic matrixes"],
+      "cons": ["Cannot handle heavy power loads (max 200–300 mA)"],
+      "uses": ["Keypad matrix isolation (anti-ghosting)", "Logic gates and wave shapers", "Low-current signal clipping"]
+    },
+    {
+      "id": "tvs",
+      "name": "TVS Diode (Transient Voltage Suppressor)",
+      "voltageDrop": "Blocks until transient trigger voltage",
+      "maxCurrent": "Up to hundreds of Amperes for nanoseconds",
+      "speed": "Picoseconds (instantaneous)",
+      "looks": "Black rectangular diode package or bidirectional dual-lead package.",
+      "pros": ["Clamps lethal electrostatic discharge (ESD) in picoseconds", "Protects exposed connectors from lightning and static"],
+      "cons": ["Only for brief surges, will burn out under continuous over-voltage"],
+      "uses": ["USB data lines (D+ / D-)", "Outdoor sensor wires and RS485 communication lines", "Power input ESD protection"]
+    }
+  ],
+  "commonParts": [
+    { "part": "1N4007", "type": "Rectifier", "rating": "1000V 1A", "whenToUse": "The universal relay and solenoid flyback diode. Put one across every mechanical relay coil." },
+    { "part": "1N5819", "type": "Schottky", "rating": "40V 1A", "whenToUse": "Low-loss power path diode. Best for battery inputs and motor PWM flyback protection." },
+    { "part": "1N5817", "type": "Schottky", "rating": "20V 1A", "whenToUse": "Lowest voltage drop (~0.23V). Ideal for 3.7V / 5V battery-operated devices." },
+    { "part": "1N4148", "type": "Fast Signal", "rating": "100V 200mA", "whenToUse": "High-speed logic signals, matrix keypads, and protecting digital input lines." },
+    { "part": "BZX55C3V3", "type": "Zener", "rating": "3.3V 500mW", "whenToUse": "Clamps 5V signals to safe 3.3V levels before feeding into ESP32 or Raspberry Pi inputs." },
+    { "part": "BZX55C5V1", "type": "Zener", "rating": "5.1V 500mW", "whenToUse": "Clamps automotive or industrial 12V/24V sensor inputs to 5V max for Arduino Nano analog pins." }
+  ],
+  "examples": [
+    {
+      "id": "diode-flyback-protection",
+      "title": "Flyback Snubber on Relay / Motor Coil",
+      "description": "How to wire a 1N4007 or 1N5819 flyback diode in reverse-parallel across a DC inductive load (motor, relay, solenoid) so inductive back-EMF spikes are safely extinguished.",
+      "parts": ["1N4007 Diode", "5V Relay or DC Motor", "2N2222 Transistor or MOSFET", "1kΩ Resistor"],
+      "wiring": [
+        { "part": "1N4007 Diode", "pin": "Cathode (Stripe)", "to": "Coil (+ 5V Power Supply)" },
+        { "part": "1N4007 Diode", "pin": "Anode (No stripe)", "to": "Coil (- Switching side / Transistor Drain)" },
+        { "part": "Arduino Nano", "pin": "D7", "to": "1kΩ Resistor -> Transistor Base/Gate" }
+      ],
+      "code": [
+        "// Flyback Diode Demo: Safe Inductive Load Switching",
+        "// The diode is connected in REVERSE across the coil (+ to stripe, - to anode).",
+        "// During normal operation, no current passes through the diode.",
+        "// When the pin turns OFF, the coil's collapsing magnetic field creates a reverse",
+        "// spike that circulates safely through the diode instead of killing the transistor.",
+        "",
+        "const int SWITCH_PIN = 7;",
+        "",
+        "void setup() {",
+        "  pinMode(SWITCH_PIN, OUTPUT);",
+        "  Serial.begin(9600);",
+        "  Serial.println(F(\"Inductive load driver with flyback protection active.\"));",
+        "}",
+        "",
+        "void loop() {",
+        "  Serial.println(F(\"Load energized (Current flows through coil)...\"));",
+        "  digitalWrite(SWITCH_PIN, HIGH);",
+        "  delay(2000);",
+        "",
+        "  Serial.println(F(\"Load de-energized (Flyback spike clamped by diode)...\"));",
+        "  digitalWrite(SWITCH_PIN, LOW);",
+        "  delay(2000);",
+        "}"
+      ]
+    },
+    {
+      "id": "diode-zener-voltage-clamp",
+      "title": "Zener Voltage Clamp (Overvoltage Protection)",
+      "description": "Protects an analog pin from exceeding 5V when reading an automotive, battery, or solar sensor voltage.",
+      "parts": ["5.1V Zener Diode", "10kΩ Current-Limiting Resistor", "Sensor source"],
+      "wiring": [
+        { "part": "Sensor Signal (+)", "pin": "Wire", "to": "10kΩ Resistor input" },
+        { "part": "10kΩ Resistor", "pin": "Output leg", "to": "Arduino A0" },
+        { "part": "5.1V Zener Diode", "pin": "Cathode (Stripe)", "to": "Arduino A0" },
+        { "part": "5.1V Zener Diode", "pin": "Anode", "to": "GND" }
+      ],
+      "code": [
+        "// Zener Diode 5.1V Clamped Analog Input",
+        "// Even if the input voltage jumps to 12V or 20V,",
+        "// the Zener conducts in reverse breakdown and holds A0 safe at ~5.1V.",
+        "",
+        "const int SENSOR_PIN = A0;",
+        "",
+        "void setup() {",
+        "  Serial.begin(9600);",
+        "}",
+        "",
+        "void loop() {",
+        "  int raw = analogRead(SENSOR_PIN);",
+        "  float voltage = (raw / 1023.0) * 5.0;",
+        "  Serial.print(F(\"Safe Analog Reading: \"));",
+        "  Serial.print(voltage, 2);",
+        "  Serial.println(F(\" V\"));",
+        "  delay(500);",
+        "}"
+      ]
+    }
+  ]
+}

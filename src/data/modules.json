@@ -1,0 +1,228 @@
+[
+  {
+    "id": "arduino-nano",
+    "name": "Arduino Nano",
+    "family": "Arduino",
+    "status": "focus",
+    "summary": "Breadboard-friendly ATmega328P board. It's the same chip as the Uno in a tiny 18 × 45 mm package, which makes it the best first board for playing with sensors.",
+    "specs": [
+      { "label": "Microcontroller", "value": "ATmega328P" },
+      { "label": "Clock", "value": "16 MHz" },
+      { "label": "Flash", "value": "32 KB (2 KB bootloader)" },
+      { "label": "SRAM", "value": "2 KB" },
+      { "label": "EEPROM", "value": "1 KB" },
+      { "label": "Logic level", "value": "5V" },
+      { "label": "Input voltage (VIN)", "value": "7–12V" },
+      { "label": "Digital I/O", "value": "14 (D0–D13)" },
+      { "label": "PWM pins", "value": "D3, D5, D6, D9, D10, D11" },
+      { "label": "Analog inputs", "value": "8 (A0–A7), 10-bit" },
+      { "label": "USB", "value": "Mini-B (CH340 on most clones)" },
+      { "label": "Wireless", "value": "None" }
+    ],
+    "buses": [
+      { "label": "I2C", "value": "A4 = SDA, A5 = SCL" },
+      { "label": "SPI", "value": "D10 = SS, D11 = MOSI, D12 = MISO, D13 = SCK" },
+      { "label": "UART", "value": "D0 = RX, D1 = TX (shared with USB)" },
+      { "label": "Interrupts", "value": "D2 (INT0), D3 (INT1)" }
+    ],
+    "pinout": {
+      "left": [
+        { "name": "D13", "type": "digital", "tags": ["SCK", "LED"] },
+        { "name": "3V3", "type": "power", "tags": [] },
+        { "name": "AREF", "type": "control", "tags": [] },
+        { "name": "A0", "type": "analog", "tags": ["D14"] },
+        { "name": "A1", "type": "analog", "tags": ["D15"] },
+        { "name": "A2", "type": "analog", "tags": ["D16"] },
+        { "name": "A3", "type": "analog", "tags": ["D17"] },
+        { "name": "A4", "type": "analog", "tags": ["SDA"] },
+        { "name": "A5", "type": "analog", "tags": ["SCL"] },
+        { "name": "A6", "type": "analog", "tags": ["analog only"] },
+        { "name": "A7", "type": "analog", "tags": ["analog only"] },
+        { "name": "5V", "type": "power", "tags": [] },
+        { "name": "RST", "type": "control", "tags": [] },
+        { "name": "GND", "type": "ground", "tags": [] },
+        { "name": "VIN", "type": "power", "tags": ["7–12V"] }
+      ],
+      "right": [
+        { "name": "D12", "type": "digital", "tags": ["MISO"] },
+        { "name": "D11", "type": "digital", "tags": ["PWM", "MOSI"] },
+        { "name": "D10", "type": "digital", "tags": ["PWM", "SS"] },
+        { "name": "D9", "type": "digital", "tags": ["PWM"] },
+        { "name": "D8", "type": "digital", "tags": [] },
+        { "name": "D7", "type": "digital", "tags": [] },
+        { "name": "D6", "type": "digital", "tags": ["PWM"] },
+        { "name": "D5", "type": "digital", "tags": ["PWM"] },
+        { "name": "D4", "type": "digital", "tags": [] },
+        { "name": "D3", "type": "digital", "tags": ["PWM", "INT1"] },
+        { "name": "D2", "type": "digital", "tags": ["INT0"] },
+        { "name": "GND", "type": "ground", "tags": [] },
+        { "name": "RST", "type": "control", "tags": [] },
+        { "name": "D0", "type": "digital", "tags": ["RX"] },
+        { "name": "D1", "type": "digital", "tags": ["TX"] }
+      ]
+    },
+    "bestFor": [
+      "Learning sensors on a breadboard",
+      "Small robots and wearables",
+      "Battery projects without Wi-Fi"
+    ],
+    "notes": [
+      "Clone boards use the CH340 USB chip. Install the CH340 driver if no COM port appears.",
+      "Upload fails? Choose Tools → Processor → ATmega328P (Old Bootloader).",
+      "A6 and A7 are analog-input only; you can't use them with digitalRead or digitalWrite.",
+      "Keep each pin under 20 mA. Drive relays, motors and LED strips through a transistor or module.",
+      "The 3V3 pin on CH340 clones supplies very little current, so use an AMS1117-3.3 for 3.3V sensors.",
+      "MQ gas sensors (~150 mA each), servos and motors need their own 5V supply, with grounds shared.",
+      "Only 2 KB of SRAM: wrap fixed text in F(\"...\") inside Serial.print to save memory.",
+      "D0/D1 are used by USB serial, so keep them free while uploading."
+    ]
+  },
+  {
+    "id": "arduino-uno",
+    "name": "Arduino Uno R3",
+    "family": "Arduino",
+    "status": "ready",
+    "summary": "The classic Arduino board with the ATmega328P. It has the same pins and code as the Nano, plus female headers that suit jumper wires and shields.",
+    "specs": [
+      { "label": "Microcontroller", "value": "ATmega328P" },
+      { "label": "Clock", "value": "16 MHz" },
+      { "label": "Flash", "value": "32 KB (0.5 KB bootloader)" },
+      { "label": "SRAM", "value": "2 KB" },
+      { "label": "EEPROM", "value": "1 KB" },
+      { "label": "Logic level", "value": "5V" },
+      { "label": "Input voltage", "value": "7–12V (DC jack or VIN)" },
+      { "label": "Digital I/O", "value": "14 (D0–D13)" },
+      { "label": "PWM pins", "value": "D3, D5, D6, D9, D10, D11" },
+      { "label": "Analog inputs", "value": "6 (A0–A5), 10-bit" },
+      { "label": "USB", "value": "Type-B (ATmega16U2 or CH340)" },
+      { "label": "Wireless", "value": "None" }
+    ],
+    "buses": [
+      { "label": "I2C", "value": "A4 = SDA, A5 = SCL (also the SDA/SCL header pins)" },
+      { "label": "SPI", "value": "D10 = SS, D11 = MOSI, D12 = MISO, D13 = SCK, plus ICSP header" },
+      { "label": "UART", "value": "D0 = RX, D1 = TX (shared with USB)" },
+      { "label": "Interrupts", "value": "D2 (INT0), D3 (INT1)" }
+    ],
+    "pinout": {
+      "left": [
+        { "name": "IOREF", "type": "power", "tags": [] },
+        { "name": "RESET", "type": "control", "tags": [] },
+        { "name": "3.3V", "type": "power", "tags": [] },
+        { "name": "5V", "type": "power", "tags": [] },
+        { "name": "GND", "type": "ground", "tags": [] },
+        { "name": "GND", "type": "ground", "tags": [] },
+        { "name": "VIN", "type": "power", "tags": ["7–12V"] },
+        { "name": "A0", "type": "analog", "tags": ["D14"] },
+        { "name": "A1", "type": "analog", "tags": ["D15"] },
+        { "name": "A2", "type": "analog", "tags": ["D16"] },
+        { "name": "A3", "type": "analog", "tags": ["D17"] },
+        { "name": "A4", "type": "analog", "tags": ["SDA"] },
+        { "name": "A5", "type": "analog", "tags": ["SCL"] }
+      ],
+      "right": [
+        { "name": "SCL", "type": "digital", "tags": ["I2C"] },
+        { "name": "SDA", "type": "digital", "tags": ["I2C"] },
+        { "name": "AREF", "type": "control", "tags": [] },
+        { "name": "GND", "type": "ground", "tags": [] },
+        { "name": "D13", "type": "digital", "tags": ["SCK", "LED"] },
+        { "name": "D12", "type": "digital", "tags": ["MISO"] },
+        { "name": "D11", "type": "digital", "tags": ["PWM", "MOSI"] },
+        { "name": "D10", "type": "digital", "tags": ["PWM", "SS"] },
+        { "name": "D9", "type": "digital", "tags": ["PWM"] },
+        { "name": "D8", "type": "digital", "tags": [] },
+        { "name": "D7", "type": "digital", "tags": [] },
+        { "name": "D6", "type": "digital", "tags": ["PWM"] },
+        { "name": "D5", "type": "digital", "tags": ["PWM"] },
+        { "name": "D4", "type": "digital", "tags": [] },
+        { "name": "D3", "type": "digital", "tags": ["PWM", "INT1"] },
+        { "name": "D2", "type": "digital", "tags": ["INT0"] },
+        { "name": "D1", "type": "digital", "tags": ["TX"] },
+        { "name": "D0", "type": "digital", "tags": ["RX"] }
+      ]
+    },
+    "bestFor": [
+      "Classroom kits and shields",
+      "Quick prototypes with jumper wires",
+      "Moving Nano sketches without changes"
+    ],
+    "notes": [
+      "Every Nano wiring in this guide works on the Uno with the same pin numbers, except A6/A7, which the Uno doesn't have.",
+      "The onboard 3.3V regulator supplies about 150 mA, more than a CH340 Nano.",
+      "The DC jack accepts 7–12V; higher voltages make the regulator run hot."
+    ]
+  },
+  {
+    "id": "esp32-devkit",
+    "name": "ESP32 DevKit V1",
+    "family": "Espressif",
+    "status": "soon",
+    "summary": "Dual-core 240 MHz board with built-in Wi-Fi and Bluetooth, the next step after the Nano for real IoT projects that send sensor data to the cloud.",
+    "specs": [
+      { "label": "Microcontroller", "value": "ESP32-WROOM-32 (Xtensa dual-core)" },
+      { "label": "Clock", "value": "Up to 240 MHz" },
+      { "label": "Flash", "value": "4 MB" },
+      { "label": "SRAM", "value": "520 KB" },
+      { "label": "Logic level", "value": "3.3V (pins are NOT 5V tolerant)" },
+      { "label": "Input voltage", "value": "5V via USB or VIN" },
+      { "label": "GPIO", "value": "25 usable on the 30-pin board" },
+      { "label": "PWM", "value": "Any output GPIO (LEDC, 16 channels)" },
+      { "label": "Analog inputs", "value": "Up to 15, 12-bit (ADC2 unavailable while Wi-Fi is on)" },
+      { "label": "DAC", "value": "GPIO25, GPIO26 (8-bit)" },
+      { "label": "USB", "value": "Micro-B (CP2102 or CH340)" },
+      { "label": "Wireless", "value": "Wi-Fi 802.11 b/g/n, Bluetooth 4.2 + BLE" }
+    ],
+    "buses": [
+      { "label": "I2C", "value": "GPIO21 = SDA, GPIO22 = SCL (default, remappable)" },
+      { "label": "SPI (VSPI)", "value": "GPIO5 = SS, GPIO23 = MOSI, GPIO19 = MISO, GPIO18 = SCK" },
+      { "label": "UART", "value": "UART0 GPIO1/3 (USB), UART2 GPIO17 = TX, GPIO16 = RX" },
+      { "label": "Interrupts", "value": "Any GPIO" }
+    ],
+    "pinout": {
+      "left": [
+        { "name": "EN", "type": "control", "tags": ["reset"] },
+        { "name": "VP", "type": "analog", "tags": ["GPIO36", "input only"] },
+        { "name": "VN", "type": "analog", "tags": ["GPIO39", "input only"] },
+        { "name": "D34", "type": "analog", "tags": ["input only"] },
+        { "name": "D35", "type": "analog", "tags": ["input only"] },
+        { "name": "D32", "type": "digital", "tags": ["ADC1", "touch"] },
+        { "name": "D33", "type": "digital", "tags": ["ADC1", "touch"] },
+        { "name": "D25", "type": "digital", "tags": ["DAC1", "ADC2"] },
+        { "name": "D26", "type": "digital", "tags": ["DAC2", "ADC2"] },
+        { "name": "D27", "type": "digital", "tags": ["ADC2", "touch"] },
+        { "name": "D14", "type": "digital", "tags": ["ADC2", "touch"] },
+        { "name": "D12", "type": "digital", "tags": ["strapping", "ADC2"] },
+        { "name": "D13", "type": "digital", "tags": ["ADC2", "touch"] },
+        { "name": "GND", "type": "ground", "tags": [] },
+        { "name": "VIN", "type": "power", "tags": ["5V"] }
+      ],
+      "right": [
+        { "name": "D23", "type": "digital", "tags": ["MOSI"] },
+        { "name": "D22", "type": "digital", "tags": ["SCL"] },
+        { "name": "TX0", "type": "digital", "tags": ["GPIO1"] },
+        { "name": "RX0", "type": "digital", "tags": ["GPIO3"] },
+        { "name": "D21", "type": "digital", "tags": ["SDA"] },
+        { "name": "D19", "type": "digital", "tags": ["MISO"] },
+        { "name": "D18", "type": "digital", "tags": ["SCK"] },
+        { "name": "D5", "type": "digital", "tags": ["SS", "strapping"] },
+        { "name": "TX2", "type": "digital", "tags": ["GPIO17"] },
+        { "name": "RX2", "type": "digital", "tags": ["GPIO16"] },
+        { "name": "D4", "type": "digital", "tags": ["ADC2", "touch"] },
+        { "name": "D2", "type": "digital", "tags": ["LED", "strapping"] },
+        { "name": "D15", "type": "digital", "tags": ["strapping", "ADC2"] },
+        { "name": "GND", "type": "ground", "tags": [] },
+        { "name": "3V3", "type": "power", "tags": [] }
+      ]
+    },
+    "bestFor": [
+      "Wi-Fi dashboards and cloud logging",
+      "Bluetooth / BLE gadgets",
+      "Projects needing more memory or speed"
+    ],
+    "notes": [
+      "Sensor wiring for the ESP32 is coming next. Most Nano wirings carry over, but 5V sensor outputs need a level shifter or divider.",
+      "Use ADC1 pins (GPIO32–39) for analog sensors; ADC2 stops working while Wi-Fi is on.",
+      "GPIO34–39 are input only and have no internal pull-ups.",
+      "Avoid strapping pins (GPIO0, 2, 5, 12, 15) for sensors that pull them at boot."
+    ]
+  }
+]

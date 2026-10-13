@@ -1,0 +1,82 @@
+{
+  "purpose": "Limits electric current and divides voltage. Without resistors, components like LEDs would draw destructive currents and burn out instantly, and microcontroller input pins would float into erratic, phantom states.",
+  "whenToUse": [
+    {
+      "scenario": "Current Limiting for LEDs (Prevent Burnout)",
+      "why": "LEDs have nearly zero internal resistance once they begin conducting. Connecting an LED directly between 5V and GND creates a short circuit that burns out the LED and can destroy the Arduino pin.",
+      "recommended": "220Ω (bright, ~15 mA) or 330Ω to 1kΩ (standard indicators)"
+    },
+    {
+      "scenario": "Pull-Up & Pull-Down Resistors for Pushbuttons",
+      "why": "An unconnected digital pin acts like an antenna, picking up static electromagnetic noise and randomly toggling between HIGH and LOW. A 10kΩ resistor anchors the pin to a known state until the button is pressed.",
+      "recommended": "10 kΩ resistor (or use Arduino's internal INPUT_PULLUP)"
+    },
+    {
+      "scenario": "Voltage Dividers for Analog Sensors (LDR, Thermistor, FSR)",
+      "why": "Sensors like photoresistors and force sensors change their resistance, not voltage. Arduino analog pins can only read voltage (0–5V). Pairing the sensor with a fixed resistor converts changing resistance into readable voltage.",
+      "recommended": "10 kΩ fixed resistor paired with analog sensor"
+    },
+    {
+      "scenario": "I2C Bus Communication Lines (SDA & SCL)",
+      "why": "The I2C protocol uses open-drain pins that can only pull lines LOW. Without pull-up resistors to 5V or 3.3V, the communication line remains dead.",
+      "recommended": "4.7 kΩ pull-ups to VCC on both SDA and SCL"
+    },
+    {
+      "scenario": "Base & Gate Protection for Transistors & MOSFETs",
+      "why": "Limits inrush current into transistor bases and drains residual charges to ground so switches don't float during power-up.",
+      "recommended": "1 kΩ for BJT Base, 100Ω series + 10kΩ pull-down for MOSFET Gate"
+    }
+  ],
+  "basics": [
+    { "title": "What a resistor does", "text": "It limits how much current can flow. Think of a narrow part in a water pipe: the narrower it is, the less water gets through." },
+    { "title": "Ohm's law", "text": "V = I × R. Voltage (volts) = current (amps) × resistance (ohms). If you know any two of them, you can work out the third." },
+    { "title": "Picking an LED resistor", "text": "R = (supply V − LED V) ÷ current. A red LED (2V) on 5V at 15 mA: (5 − 2) ÷ 0.015 = 200 Ω. Use the next common value up: 220 Ω." },
+    { "title": "Power rating", "text": "Kit resistors are ¼ watt. Power = V × I. Stay under half the rating: 5V across 100 Ω is 0.25 W, too much for a ¼ W resistor." },
+    { "title": "No direction", "text": "Resistors have no polarity. You can put them in either way round." },
+    { "title": "Tolerance", "text": "The last band tells how exact the value is. Gold = ±5%, so a 1 kΩ gold resistor can be anywhere from 950 Ω to 1050 Ω." }
+  ],
+  "howToRead": [
+    "Turn the resistor so the gold or silver band is on the right. On 5-band resistors the tolerance band is usually brown and set a little apart.",
+    "Read the first colours as digits: two digits on a 4-band resistor, three on a 5-band one.",
+    "The next band is the multiplier: it tells you how many zeros to add.",
+    "The last band is the tolerance (how exact the value is)."
+  ],
+  "example": "Yellow, Violet, Red, Gold = 4, 7, then 2 zeros = 4700 Ω = 4.7 kΩ, ±5%.",
+  "mnemonic": "Better Be Right Or Your Great Big Venture Goes Wrong → Black, Brown, Red, Orange, Yellow, Green, Blue, Violet, Grey, White (0–9).",
+  "colors": [
+    { "name": "Black", "hex": "#1c1917", "digit": 0, "multiplier": 0, "tolerance": null },
+    { "name": "Brown", "hex": "#7c3f18", "digit": 1, "multiplier": 1, "tolerance": 1 },
+    { "name": "Red", "hex": "#dc2626", "digit": 2, "multiplier": 2, "tolerance": 2 },
+    { "name": "Orange", "hex": "#f97316", "digit": 3, "multiplier": 3, "tolerance": null },
+    { "name": "Yellow", "hex": "#facc15", "digit": 4, "multiplier": 4, "tolerance": null },
+    { "name": "Green", "hex": "#16a34a", "digit": 5, "multiplier": 5, "tolerance": 0.5 },
+    { "name": "Blue", "hex": "#2563eb", "digit": 6, "multiplier": 6, "tolerance": 0.25 },
+    { "name": "Violet", "hex": "#7c3aed", "digit": 7, "multiplier": 7, "tolerance": 0.1 },
+    { "name": "Grey", "hex": "#9ca3af", "digit": 8, "multiplier": 8, "tolerance": 0.05 },
+    { "name": "White", "hex": "#f8fafc", "digit": 9, "multiplier": 9, "tolerance": null },
+    { "name": "Gold", "hex": "#c9a227", "digit": null, "multiplier": -1, "tolerance": 5 },
+    { "name": "Silver", "hex": "#b8bcc2", "digit": null, "multiplier": -2, "tolerance": 10 }
+  ],
+  "values": [
+    { "ohms": 10, "purpose": "Very low resistance for measuring current or softening a sudden rush of current.", "uses": ["Current sensing (measure the voltage across it)", "In series with a small speaker", "Limiting inrush into big capacitors"] },
+    { "ohms": 22, "purpose": "Small series resistor that protects pins and cleans up fast signals.", "uses": ["Series resistor on fast data lines", "Damping ringing on long wires"] },
+    { "ohms": 47, "purpose": "Low value for high-current LEDs, especially on 3.3V.", "uses": ["IR LED on a 3.3V board", "Bright LED that needs about 25 mA"] },
+    { "ohms": 100, "purpose": "Current limit for IR LEDs and MOSFET gates.", "uses": ["IR LED remote transmitter on 5V", "Gate resistor for a logic-level MOSFET", "In series with a small buzzer or speaker"] },
+    { "ohms": 150, "purpose": "Current limit for brighter LEDs and the dust sensor's LED.", "uses": ["GP2Y1010 dust sensor V-LED resistor", "Blue or white LED at about 13 mA on 5V"] },
+    { "ohms": 220, "purpose": "The standard LED resistor for 5V Arduino projects.", "uses": ["Any 5 mm LED on a Nano pin", "Protecting a pin while testing", "7-segment display segments"] },
+    { "ohms": 330, "purpose": "Safe LED resistor that runs LEDs a little dimmer and cooler.", "uses": ["LEDs at about 9 mA", "LED bar graphs", "Optocoupler input LED"] },
+    { "ohms": 470, "purpose": "Protects the data line of LED strips and dims indicator LEDs.", "uses": ["Data-line resistor for WS2812 LED strips", "Low-brightness status LEDs"] },
+    { "ohms": 680, "purpose": "Very dim indicator LEDs that use little power.", "uses": ["Power-on indicator LED", "Battery-friendly status LEDs"] },
+    { "ohms": 1000, "purpose": "General-purpose resistor for transistor bases and signal lines.", "uses": ["Base resistor for a BC547 driving a relay", "Protecting an input pin", "Voltage divider top resistor"] },
+    { "ohms": 2200, "purpose": "Common in voltage dividers and for biasing microphones.", "uses": ["Bias resistor for an electret microphone", "5V → 3V divider with a 3.3 kΩ", "Transistor base resistor"] },
+    { "ohms": 3300, "purpose": "Bottom resistor of a divider to drop 5V signals to about 3V.", "uses": ["5V → 3V signal for ESP32 inputs (with 2.2 kΩ)", "Transistor base resistor"] },
+    { "ohms": 4700, "purpose": "The pull-up resistor for I2C lines and the DS18B20 sensor.", "uses": ["DS18B20 data-line pull-up", "Extra I2C SDA/SCL pull-ups", "Button pull-up"] },
+    { "ohms": 10000, "purpose": "The most used value: pull-ups, pull-downs and sensor dividers.", "uses": ["Button pull-down resistor", "LDR, thermistor and FSR dividers", "MQ gas sensor load resistor"] },
+    { "ohms": 22000, "purpose": "Higher-value divider and gas-sensor load resistor.", "uses": ["MQ6 load resistor (about 20 kΩ)", "Dividers for measuring higher voltages"] },
+    { "ohms": 47000, "purpose": "Divider resistor for flex sensors and other high-resistance sensors.", "uses": ["Flex sensor divider", "Weak pull-ups"] },
+    { "ohms": 100000, "purpose": "High value that wastes very little current.", "uses": ["Battery voltage divider", "RC timing with a capacitor", "Op-amp gain resistor"] },
+    { "ohms": 220000, "purpose": "Used where only a tiny current should flow.", "uses": ["MQ3 alcohol sensor load resistor (about 200 kΩ)", "Long RC delays"] },
+    { "ohms": 470000, "purpose": "Very small currents for timing and touch sensing.", "uses": ["CapacitiveSensor touch pads", "Very long RC delays"] },
+    { "ohms": 1000000, "purpose": "1 MΩ: drains piezo sensors and makes DIY touch pads.", "uses": ["Across a piezo knock sensor", "Touch sensing with the CapacitiveSensor library", "Bleeding charge out of capacitors"] }
+  ]
+}

@@ -1,0 +1,167 @@
+{
+  "purpose": "A complete micro-circuit containing transistors, diodes, and resistors packed into a single compact chip. In Arduino and IoT projects, dedicated ICs overcome hardware limits: expanding scarce I/O pins, controlling multi-channel motors, multiplexing dozens of analog sensors onto one pin, providing precise timing, and translating voltage levels between 5V and 3.3V devices.",
+  "whenToUse": [
+    {
+      "scenario": "Running Out of Digital Pins for LEDs or Relays (Need 8, 16, or 24 outputs)",
+      "why": "Driving an 8-LED bar graph, multiple 7-segment displays, or relay banks consumes all your Nano pins. A 74HC595 Serial-in Parallel-out shift register needs only 3 Arduino pins to control 8 outputs, and multiple chips can be chained together indefinitely without using extra pins.",
+      "recommended": "74HC595 8-Bit Shift Register"
+    },
+    {
+      "scenario": "Driving Multiple Relays, Solenoids, or Stepper Motors (ULN2003A)",
+      "why": "Wiring discrete transistors and flyback diodes for 4 to 8 relays or a 28BYJ-48 stepper motor is messy and takes huge breadboard space. The ULN2003A packs 7 high-current Darlington drivers with integrated flyback suppression diodes in one 16-pin chip.",
+      "recommended": "ULN2003A Darlington Transistor Array"
+    },
+    {
+      "scenario": "Bidirectional DC Motor Control (Forward, Reverse, Speed)",
+      "why": "A single transistor can only spin a motor in one direction. An H-bridge IC can flip polarity across the motor leads to reverse directions dynamically with PWM speed control.",
+      "recommended": "L293D or SN754410 Dual H-Bridge Motor Driver"
+    },
+    {
+      "scenario": "Too Many Analog Sensors for the Nano's 8 Pins",
+      "why": "When building a MIDI controller or sensor array with 16 potentiometers or light sensors, the Nano's 8 analog inputs fall short. An analog multiplexer connects 16 analog inputs to a single Arduino A0 pin using 4 address selection pins.",
+      "recommended": "CD74HC4067 16-Channel Analog Multiplexer"
+    },
+    {
+      "scenario": "Connecting 5V Arduino to 3.3V Sensors / ESP32 without Damage",
+      "why": "Feeding 5V logic from an Arduino Nano directly into a 3.3V sensor (like an SD card module, ESP32, or sensor) will permanently fry its input pins. A level shifter converts signals safely in both directions.",
+      "recommended": "TXS0108E / BSS138 Bidirectional Logic Level Shifter"
+    },
+    {
+      "scenario": "Two I2C Sensors Have the Exact Same Fixed Address",
+      "why": "I2C devices communicate via addresses. If you have three OLED displays or four temperature sensors with fixed unchangeable addresses (like 0x3C), you cannot connect them to the same bus. An I2C multiplexer splits one bus into 8 independent selectable sub-buses.",
+      "recommended": "TCA9548A 8-Channel I2C Multiplexer"
+    }
+  ],
+  "basics": [
+    {
+      "title": "Finding Pin 1 (The Notch & Dot Rule)",
+      "text": "Every through-hole DIP chip has a small semi-circle notch or dimple at one end. Place the notch facing UP: Pin 1 is the top-left pin. Pins count downwards down the left side, then cross over to the bottom right and count upwards to the top right (counter-clockwise)."
+    },
+    {
+      "title": "Always Add a 100 nF Decoupling Capacitor!",
+      "text": "Whenever an IC switches internal transistors, it causes tiny microsecond voltage dips on its power rail. Always place a 100 nF (104) ceramic capacitor between the IC's VCC and GND pins as close to the chip body as physically possible."
+    },
+    {
+      "title": "Logic Families (74HC vs 74HCT vs 74LS)",
+      "text": "74HC (High-Speed CMOS) works from 2V to 6V, making it the universal choice for Arduino. 74HCT has TTL-compatible input thresholds (ideal for 3.3V to 5V interfacing). Avoid old 74LS (bipolar) which wastes lots of power."
+    },
+    {
+      "title": "Never Leave CMOS Inputs Floating",
+      "text": "Unused input pins on chips like the 74HC595 or 4017 act as high-impedance antennas. If left unconnected, they pick up random electromagnetic noise, draw high currents, and heat up. Always tie unused inputs to VCC or GND."
+    }
+  ],
+  "types": [
+    {
+      "id": "shift-register",
+      "name": "Shift Register (74HC595 / 74HC165)",
+      "package": "DIP-16 (16 pins)",
+      "interface": "3-wire SPI-compatible (Data, Clock, Latch)",
+      "maxOutput": "35 mA per pin (70 mA total chip limit)",
+      "looks": "Standard 16-pin narrow DIP rectangular black chip with notch on top.",
+      "pros": ["Turn 3 Arduino pins into 8, 16, 24, or 32 outputs by daisy-chaining", "Supported directly by Arduino built-in shiftOut() function", "Very inexpensive"],
+      "cons": ["Cannot source high currents for heavy motors or relays directly"],
+      "uses": ["8-LED bar displays", "Multi-digit 7-segment clock displays", "Relay board driver expansion"]
+    },
+    {
+      "id": "darlington-array",
+      "name": "Darlington Driver Array (ULN2003A)",
+      "package": "DIP-16 (16 pins)",
+      "interface": "Parallel direct logic (7 inputs / 7 open-collector outputs)",
+      "maxOutput": "500 mA per channel (50V max)",
+      "looks": "16-pin DIP chip with 7 inputs on one side and 7 outputs on the other with a COM flyback pin.",
+      "pros": ["Built-in flyback suppression diodes across all 7 channels", "Directly drives 28BYJ-48 stepper motors and 12V relays without external components", "Simple 1:1 pin mapping"],
+      "cons": ["Low-side switching only (sinks current to GND)", "Voltage drop of ~1V in saturation"],
+      "uses": ["28BYJ-48 unipolar stepper motor drive", "Relay coil multi-channel driver", "High-power indicator arrays"]
+    },
+    {
+      "id": "motor-driver-ic",
+      "name": "Dual H-Bridge Motor Driver (L293D)",
+      "package": "DIP-16 with heatsink ground pins",
+      "interface": "4 digital inputs (IN1-IN4) + 2 PWM Enable pins",
+      "maxOutput": "600 mA continuous per channel (1.2A peak, up to 36V)",
+      "looks": "16-pin DIP chip with 4 central GND pins functioning as thermal heatsinks.",
+      "pros": ["Controls two independent DC motors with full forward/reverse direction and PWM speed", "Built-in internal clamp diodes protect against back-EMF"],
+      "cons": ["Older bipolar design drops ~1.5V to 2V, causing noticeable heat under heavy motor loads"],
+      "uses": ["2-wheel differential drive robot chassis", "Automated motorized curtain actuators", "Bipolar stepper motor driver"]
+    },
+    {
+      "id": "analog-mux",
+      "name": "16-Channel Analog Multiplexer (CD74HC4067)",
+      "package": "DIP-24 or compact breakout module",
+      "interface": "4 address selector pins (S0-S3) + 1 common signal pin (SIG)",
+      "maxOutput": "Analog signals 0V to 5V bidirectional",
+      "looks": "Wide DIP-24 chip or small blue/purple breakout module with 16 labeled channel pins.",
+      "pros": ["Expands 1 analog pin into 16 inputs", "Bidirectional: can route analog signals in or out", "Near-zero signal distortion"],
+      "cons": ["Can only read one channel at any single given microsecond (time-multiplexed)"],
+      "uses": ["Musical MIDI synthesizers with 16+ knobs", "Multi-point soil moisture probe arrays", "Analog keyboard matrixes"]
+    },
+    {
+      "id": "timer-ic",
+      "name": "Precision Timer (NE555)",
+      "package": "DIP-8 (8 pins)",
+      "interface": "Analog threshold, trigger, and discharge pins",
+      "maxOutput": "200 mA source/sink",
+      "looks": "Compact 8-pin black chip, the most famous IC in electronics history.",
+      "pros": ["Generates square waves, pulses, and time delays without needing any microcontroller or code", "Can drive 200 mA loads directly"],
+      "cons": ["Timing accuracy depends on external resistor and capacitor tolerances"],
+      "uses": ["Flashing LED beacons", "Beep tone sound generators", "Watchdog reset pulse generators"]
+    }
+  ],
+  "commonParts": [
+    { "part": "74HC595", "type": "Shift Register", "function": "Serial-to-Parallel Output Expander", "whenToUse": "When you need more digital outputs (8 outputs using only 3 Arduino pins). The #1 pin expander." },
+    { "part": "ULN2003A", "type": "Darlington Array", "function": "7-Channel High-Current Driver (500mA)", "whenToUse": "Driving 28BYJ-48 stepper motors, multiple 12V relays, or solenoids cleanly." },
+    { "part": "L293D", "type": "Dual H-Bridge", "function": "Bidirectional Motor Driver (600mA)", "whenToUse": "Controlling forward/reverse direction and speed of two DC motors or one bipolar stepper." },
+    { "part": "CD74HC4067", "type": "Multiplexer", "function": "16-Channel Analog/Digital Mux", "whenToUse": "Reading up to 16 potentiometers or analog sensors on a single Arduino analog input pin." },
+    { "part": "TXS0108E", "type": "Level Shifter", "function": "8-Channel 5V <-> 3.3V Bidirectional", "whenToUse": "Connecting 5V Arduino Nano to 3.3V SD cards, ESP32, or SPI sensors safely." },
+    { "part": "NE555", "type": "Timer", "function": "Precision Pulse & Oscillator IC", "whenToUse": "Hardware pulse generation, tone generation, and standalone delay circuits." },
+    { "part": "LM358", "type": "Dual Op-Amp", "function": "Low-Power Operational Amplifier", "whenToUse": "Amplifying weak sensor voltages (like microphones, photodiodes, or strain gauges)." }
+  ],
+  "examples": [
+    {
+      "id": "ic-74hc595-shiftout",
+      "title": "74HC595 8-LED Bar Graph using shiftOut()",
+      "description": "Uses only 3 Arduino pins (Data, Clock, Latch) to drive 8 independent LEDs in a running chaser sequence using the Arduino built-in shiftOut() command.",
+      "parts": ["74HC595 IC", "8x LEDs", "8x 220Ω Resistors", "100nF Ceramic Capacitor"],
+      "wiring": [
+        { "part": "74HC595", "pin": "Pin 16 (VCC)", "to": "5V" },
+        { "part": "74HC595", "pin": "Pin 8 (GND)", "to": "GND" },
+        { "part": "74HC595", "pin": "Pin 10 (MR)", "to": "5V (Reset high)" },
+        { "part": "74HC595", "pin": "Pin 13 (OE)", "to": "GND (Output enabled)" },
+        { "part": "Arduino Nano", "pin": "D4", "to": "74HC595 Pin 14 (DS / Data)" },
+        { "part": "Arduino Nano", "pin": "D5", "to": "74HC595 Pin 12 (ST_CP / Latch)" },
+        { "part": "Arduino Nano", "pin": "D6", "to": "74HC595 Pin 11 (SH_CP / Clock)" }
+      ],
+      "code": [
+        "// 74HC595 Shift Register 8-LED Chaser",
+        "// Only uses 3 Arduino pins to control 8 outputs!",
+        "",
+        "const int DATA_PIN  = 4; // DS",
+        "const int LATCH_PIN = 5; // ST_CP",
+        "const int CLOCK_PIN = 6; // SH_CP",
+        "",
+        "void setup() {",
+        "  pinMode(DATA_PIN, OUTPUT);",
+        "  pinMode(LATCH_PIN, OUTPUT);",
+        "  pinMode(CLOCK_PIN, OUTPUT);",
+        "  Serial.begin(9600);",
+        "  Serial.println(F(\"74HC595 8-LED controller started.\"));",
+        "}",
+        "",
+        "void loop() {",
+        "  // Light up one LED at a time in sequence",
+        "  for (int i = 0; i < 8; i++) {",
+        "    byte pattern = 1 << i; // e.g. B00000001, B00000010...",
+        "",
+        "    // Take latch LOW while sending bits",
+        "    digitalWrite(LATCH_PIN, LOW);",
+        "    shiftOut(DATA_PIN, CLOCK_PIN, MSBFIRST, pattern);",
+        "    // Bring latch HIGH to output the bits on the pins",
+        "    digitalWrite(LATCH_PIN, HIGH);",
+        "",
+        "    delay(100);",
+        "  }",
+        "}"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,5758 @@
+[
+  {
+    "sku": "SEN-001",
+    "name": "IR Module",
+    "category": "Proximity & Distance",
+    "purpose": "Finds objects close in front of it",
+    "essential": true,
+    "interface": "Digital",
+    "difficulty": "Easy",
+    "voltage": "3.3–5V",
+    "summary": "IR LED and photodiode pair that pulls its output LOW when an object is 2–30 cm in front of it.",
+    "useCases": [
+      "Obstacle-avoiding robots",
+      "Touchless object counters",
+      "Automatic hand-sanitiser trigger"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "OUT",
+          "to": "D2"
+        }
+      ]
+    },
+    "tip": "Turn the blue trimmer to set the range. The output is active LOW (LOW = object present).",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Obstacle buzzer",
+        "description": "Beep a buzzer and light an LED whenever something comes close.",
+        "parts": [
+          "Buzzer",
+          "LED + 220Ω"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Visitor counter",
+        "description": "Count people passing a doorway and show the total on a 16x2 I2C LCD.",
+        "parts": [
+          "16x2 I2C LCD"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Obstacle-avoiding robot",
+        "description": "Two IR modules on a 2WD chassis steer the robot away from walls.",
+        "parts": [
+          "2WD chassis",
+          "L298N driver",
+          "7.4V battery"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-002",
+    "name": "Flame Sensor",
+    "category": "Gas, Smoke & Fire",
+    "purpose": "Detects fire or a flame",
+    "essential": true,
+    "interface": "Digital",
+    "difficulty": "Easy",
+    "voltage": "3.3–5V",
+    "summary": "IR photodiode tuned to 760–1100 nm that detects the light of a flame up to about 80 cm away.",
+    "useCases": [
+      "Fire alarms",
+      "Fire-fighting robots",
+      "Gas-stove flame-out monitor"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "OUT",
+          "to": "D2"
+        }
+      ]
+    },
+    "tip": "Sunlight and incandescent bulbs also trigger it, so test indoors. On most boards the output goes LOW when a flame is seen.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Flame alert",
+        "description": "Sound a buzzer and flash a red LED when a candle flame is detected.",
+        "parts": [
+          "Buzzer",
+          "Red LED + 220Ω"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Stove watch",
+        "description": "Alert if the stove flame goes out while a gas sensor still detects LPG.",
+        "parts": [
+          "MQ6 sensor",
+          "Buzzer"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Fire-fighting robot",
+        "description": "Three flame sensors locate the flame and a small pump or fan puts it out.",
+        "parts": [
+          "2WD chassis",
+          "L298N driver",
+          "Mini pump + relay"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-003",
+    "name": "TSOP Obstacle Sensor",
+    "category": "Proximity & Distance",
+    "purpose": "Finds obstacles, even in bright light",
+    "essential": false,
+    "interface": "Digital",
+    "difficulty": "Easy",
+    "voltage": "5V",
+    "summary": "Obstacle sensor that uses a modulated 38 kHz IR beam and a TSOP receiver, so it ignores ambient light far better than a plain IR module.",
+    "useCases": [
+      "Outdoor or sunlit obstacle detection",
+      "Longer-range robot bumpers",
+      "Reliable entry counters"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "OUT",
+          "to": "D2"
+        }
+      ]
+    },
+    "tip": "Modulation makes it stable in bright rooms. Adjust the trimmer for range and check the onboard LED.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Sunlight-proof door chime",
+        "description": "Play a short tune when someone walks past, even near a window.",
+        "parts": [
+          "Buzzer"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Shop entry counter",
+        "description": "Count customers and store the daily total in EEPROM so it survives power loss.",
+        "parts": [
+          "16x2 I2C LCD"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Maze-solving robot",
+        "description": "Front and side TSOP sensors let a robot follow the left wall through a maze.",
+        "parts": [
+          "2WD chassis",
+          "L298N driver"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-004",
+    "name": "IR Remote Module",
+    "category": "Infrared & Remote",
+    "purpose": "Lets you control things with a remote",
+    "essential": false,
+    "interface": "IR decoder",
+    "difficulty": "Easy",
+    "voltage": "5V",
+    "summary": "Kit with a 17-key NEC IR remote and a 38 kHz receiver module that decodes the button presses.",
+    "useCases": [
+      "Remote-controlled lights and fans",
+      "TV-remote robot control",
+      "Menu navigation without buttons"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "OUT",
+          "to": "D2"
+        }
+      ]
+    },
+    "tip": "Install the IRremote library and print the received command codes first, then map each key.",
+    "library": "IRremote",
+    "projects": [
+      {
+        "level": "low",
+        "title": "Remote LED",
+        "description": "Turn LEDs on and off with keys 1–3 on the remote.",
+        "parts": [
+          "3 LEDs + 220Ω"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "4-channel remote switch board",
+        "description": "Toggle four relays (lights, fan) from the remote, with an all-off key.",
+        "parts": [
+          "4-channel relay module"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "IR-controlled robot car",
+        "description": "Drive a robot with the arrow keys and set its speed with the number keys.",
+        "parts": [
+          "2WD chassis",
+          "L298N driver"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-005",
+    "name": "LDR Module",
+    "category": "Light & Optical",
+    "purpose": "Tells if it is day or night",
+    "essential": true,
+    "interface": "Digital",
+    "difficulty": "Easy",
+    "voltage": "3.3–5V",
+    "summary": "Light-dependent resistor with a comparator that switches its output when the light crosses a threshold you set.",
+    "useCases": [
+      "Automatic night lamps",
+      "Street-light automation",
+      "Day/night detection"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "OUT",
+          "to": "D2"
+        }
+      ]
+    },
+    "tip": "On most boards DO goes HIGH in the dark. Use the bare 12 mm LDR if you need an analog light level.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Automatic night light",
+        "description": "Switch an LED on when the room gets dark.",
+        "parts": [
+          "LED + 220Ω"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Smart street-light model",
+        "description": "Lamps turn on at dusk and only go bright when an IR sensor sees a car.",
+        "parts": [
+          "IR module",
+          "LEDs"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Sun-tracking curtain",
+        "description": "A servo opens the curtain at sunrise and closes it at night, with manual override.",
+        "parts": [
+          "SG90 servo",
+          "Push button"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-006",
+    "name": "TSOP Remote Receiver",
+    "category": "Infrared & Remote",
+    "purpose": "Reads buttons from a TV remote",
+    "essential": false,
+    "interface": "IR decoder",
+    "difficulty": "Easy",
+    "voltage": "5V",
+    "summary": "TSOP1838 38 kHz IR receiver on a small breakout with a status LED, for decoding TV and AC remotes.",
+    "useCases": [
+      "Reuse old TV remotes",
+      "IR remote cloning",
+      "Remote control for projects"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "OUT",
+          "to": "D2"
+        }
+      ]
+    },
+    "tip": "Works with almost any household remote. Print the raw protocol and command to identify keys.",
+    "library": "IRremote",
+    "projects": [
+      {
+        "level": "low",
+        "title": "Remote code reader",
+        "description": "Print the protocol and key code of every remote in your home.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "TV-remote volume knob",
+        "description": "Use your TV remote to control the brightness of an LED strip.",
+        "parts": [
+          "Logic-level MOSFET",
+          "12V LED strip"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "IR remote cloner",
+        "description": "Record codes from one remote and replay them with an IR LED.",
+        "parts": [
+          "IR LED",
+          "100Ω resistor",
+          "Push buttons"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-007",
+    "name": "TCRT5000 Line Sensor",
+    "category": "Proximity & Distance",
+    "purpose": "Tells black lines from white surfaces",
+    "essential": true,
+    "interface": "Digital + Analog",
+    "difficulty": "Easy",
+    "voltage": "5V",
+    "summary": "Reflective IR sensor that tells black from white surfaces 1–8 mm away, with digital and analog outputs.",
+    "useCases": [
+      "Line-following robots",
+      "Reflective-mark RPM counting",
+      "Paper or edge detection"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "DO",
+          "to": "D2"
+        },
+        {
+          "pin": "AO",
+          "to": "A0"
+        }
+      ]
+    },
+    "tip": "Black surfaces reflect little IR, so DO usually goes HIGH over a black line. Mount it 3–5 mm above the floor.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Black/white detector",
+        "description": "Light an LED when the sensor is over black tape.",
+        "parts": [
+          "LED + 220Ω"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Two-sensor line follower",
+        "description": "Two TCRT5000 sensors keep a robot on a black tape track.",
+        "parts": [
+          "2WD chassis",
+          "L298N driver"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Tachometer",
+        "description": "Count a white mark on a spinning shaft and show RPM on an LCD.",
+        "parts": [
+          "16x2 I2C LCD"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-008",
+    "name": "IR 5 Array",
+    "category": "Proximity & Distance",
+    "purpose": "Shows where a line is under a robot",
+    "essential": false,
+    "interface": "Digital",
+    "difficulty": "Medium",
+    "voltage": "5V",
+    "summary": "Five TCRT5000 sensors on one bar that report the line's position under the robot.",
+    "useCases": [
+      "Fast PID line followers",
+      "Junction and crossing detection",
+      "Grid-navigating robots"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "S1",
+          "to": "A0"
+        },
+        {
+          "pin": "S2",
+          "to": "A1"
+        },
+        {
+          "pin": "S3",
+          "to": "A2"
+        },
+        {
+          "pin": "S4",
+          "to": "A3"
+        },
+        {
+          "pin": "S5",
+          "to": "A4"
+        }
+      ]
+    },
+    "tip": "A0–A5 also work as digital pins. Weight the channels −2…+2 to get a line-position error for PID.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Line position display",
+        "description": "Show which of the five sensors sees the line using five LEDs.",
+        "parts": [
+          "5 LEDs + 220Ω"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Junction-counting robot",
+        "description": "Follow a line and stop at the third crossing, like a delivery robot.",
+        "parts": [
+          "2WD chassis",
+          "L298N driver"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "PID line follower",
+        "description": "Tune Kp, Ki and Kd for a fast, smooth line follower with wheel encoders.",
+        "parts": [
+          "2WD chassis",
+          "L298N driver",
+          "Motor encoders"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-009",
+    "name": "Laser Receiver",
+    "category": "Light & Optical",
+    "purpose": "Knows when a laser beam hits it",
+    "essential": false,
+    "interface": "Digital",
+    "difficulty": "Easy",
+    "voltage": "5V",
+    "summary": "Receiver tuned for a laser spot; its output goes HIGH while the laser beam hits the sensor.",
+    "useCases": [
+      "Laser tripwire alarms",
+      "Beam-break counters",
+      "Laser tag targets"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "OUT",
+          "to": "D2"
+        }
+      ]
+    },
+    "tip": "Pair it with the 650 nm laser module. Shield the sensor from room light with a short tube.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Laser tripwire",
+        "description": "Sound a buzzer when someone breaks the laser beam.",
+        "parts": [
+          "Laser module",
+          "Buzzer"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Race timer",
+        "description": "Two laser gates measure the time a toy car takes between them.",
+        "parts": [
+          "2 laser modules",
+          "16x2 I2C LCD"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Laser security grid",
+        "description": "Mirrors bounce one beam across a doorway, with arm/disarm by keypad.",
+        "parts": [
+          "Laser module",
+          "Mirrors",
+          "4x4 keypad"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-010",
+    "name": "Eye Blink Sensor",
+    "category": "Health & Biometric",
+    "purpose": "Detects when your eye closes",
+    "essential": false,
+    "interface": "Digital",
+    "difficulty": "Medium",
+    "voltage": "5V",
+    "summary": "IR sensor mounted on a glasses frame that detects when the eyelid closes.",
+    "useCases": [
+      "Driver drowsiness alarms",
+      "Blink-controlled switches",
+      "Fatigue monitoring"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "OUT",
+          "to": "D2"
+        }
+      ]
+    },
+    "tip": "Keep the IR LED about 1 cm from the eye. Never use laser modules near the eyes.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Blink counter",
+        "description": "Count blinks per minute and print them to the Serial Monitor.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Drowsiness alarm",
+        "description": "Buzz if the eye stays closed for more than 1.5 seconds.",
+        "parts": [
+          "Buzzer",
+          "Vibration motor"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Blink-to-talk aid",
+        "description": "Blink patterns pick phrases on an LCD for people who cannot speak.",
+        "parts": [
+          "16x2 I2C LCD",
+          "Buzzer"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-011",
+    "name": "Ultrasonic Sensor HC-SR04",
+    "category": "Proximity & Distance",
+    "purpose": "Measures distance using sound",
+    "essential": true,
+    "interface": "Pulse timing",
+    "difficulty": "Easy",
+    "voltage": "5V",
+    "summary": "Measures distance from 2 to 400 cm by timing an ultrasonic echo.",
+    "useCases": [
+      "Parking sensors",
+      "Smart dustbins",
+      "Tank level measurement"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "Trig",
+          "to": "D9"
+        },
+        {
+          "pin": "Echo",
+          "to": "D10"
+        }
+      ]
+    },
+    "tip": "Send a 10 µs pulse on Trig, then distance in cm = echo time (µs) ÷ 58. Soft surfaces absorb sound and give poor readings.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Digital ruler",
+        "description": "Print distance in cm to the Serial Monitor.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Smart dustbin",
+        "description": "The lid opens with a servo when a hand comes within 20 cm.",
+        "parts": [
+          "SG90 servo"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Ultrasonic radar",
+        "description": "Sweep the sensor on a servo and draw a radar map in Processing.",
+        "parts": [
+          "SG90 servo",
+          "PC with Processing"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-012",
+    "name": "Ultrasonic Waterproof (JSN-SR04T)",
+    "category": "Proximity & Distance",
+    "purpose": "Measures distance in wet places",
+    "essential": false,
+    "interface": "Pulse timing",
+    "difficulty": "Easy",
+    "voltage": "5V",
+    "summary": "Waterproof ultrasonic probe on a cable, measuring 25–450 cm in wet or dirty places.",
+    "useCases": [
+      "Water tank level",
+      "Outdoor parking guides",
+      "Flood and drain monitoring"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "Trig",
+          "to": "D9"
+        },
+        {
+          "pin": "Echo",
+          "to": "D10"
+        }
+      ]
+    },
+    "tip": "Its blind zone is about 25 cm, so mount it at least that far above the full water level.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Water depth meter",
+        "description": "Print the water depth below the probe to the Serial Monitor.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Tank level indicator",
+        "description": "Show tank % on an LCD and beep when it is nearly full.",
+        "parts": [
+          "16x2 I2C LCD",
+          "Buzzer"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Automatic pump controller",
+        "description": "Run the motor at 20% level and stop at 95%, with dry-run protection.",
+        "parts": [
+          "Relay module",
+          "16x2 I2C LCD"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-013",
+    "name": "Rain Sensor",
+    "category": "Water & Soil",
+    "purpose": "Detects rain",
+    "essential": false,
+    "interface": "Digital + Analog",
+    "difficulty": "Easy",
+    "voltage": "5V",
+    "summary": "Rain plate with a comparator board; the more water on the plate, the lower the analog reading.",
+    "useCases": [
+      "Rain alarms",
+      "Auto-closing windows and roofs",
+      "Rain-sensing wipers"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "D7 (power on demand)"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "DO",
+          "to": "D2"
+        },
+        {
+          "pin": "AO",
+          "to": "A0"
+        }
+      ]
+    },
+    "tip": "Power the module from a digital pin only while reading, to slow corrosion of the plate.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Rain alarm",
+        "description": "Beep when the first raindrops fall on the plate.",
+        "parts": [
+          "Buzzer"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Rain intensity meter",
+        "description": "Show dry, drizzle or heavy rain with three LEDs.",
+        "parts": [
+          "3 LEDs + 220Ω"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Auto clothes-line cover",
+        "description": "A motor pulls a cover over drying clothes when it starts raining.",
+        "parts": [
+          "L298N driver",
+          "Geared DC motor",
+          "Limit switches"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-014",
+    "name": "Capacitive Soil Moisture Sensor",
+    "category": "Water & Soil",
+    "purpose": "Checks if the soil is wet or dry",
+    "essential": true,
+    "interface": "Analog",
+    "difficulty": "Easy",
+    "voltage": "3.3–5.5V",
+    "summary": "Corrosion-resistant soil moisture probe that measures capacitance instead of passing current through the soil.",
+    "useCases": [
+      "Plant monitoring",
+      "Automatic irrigation",
+      "Greenhouse logging"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "AO",
+          "to": "A0"
+        }
+      ]
+    },
+    "tip": "Record the reading in dry air and in water to calibrate. A lower reading means wetter soil. Keep the electronics at the top dry.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Plant mood light",
+        "description": "Green, yellow or red LED shows how thirsty your plant is.",
+        "parts": [
+          "3 LEDs + 220Ω"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Automatic plant watering",
+        "description": "A relay runs a mini pump when moisture falls below 35%.",
+        "parts": [
+          "Relay module",
+          "5V mini pump",
+          "Tubing"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Multi-pot irrigation system",
+        "description": "Four probes and four valves water each pot on its own schedule.",
+        "parts": [
+          "4-channel relay",
+          "Solenoid valves",
+          "16x2 I2C LCD"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-015",
+    "name": "Soil Moisture Sensor",
+    "category": "Water & Soil",
+    "purpose": "Checks if the soil needs water",
+    "essential": false,
+    "interface": "Digital + Analog",
+    "difficulty": "Easy",
+    "voltage": "3.3–5V",
+    "summary": "Resistive two-prong soil probe with a comparator board; low-cost and easy to start with.",
+    "useCases": [
+      "Plant watering reminders",
+      "Soil science experiments",
+      "Dry-soil alarms"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "D7 (power on demand)"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "DO",
+          "to": "D2"
+        },
+        {
+          "pin": "AO",
+          "to": "A0"
+        }
+      ]
+    },
+    "tip": "The prongs corrode within weeks if powered all the time. Switch power from a digital pin and read every few minutes.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Thirsty plant buzzer",
+        "description": "Chirp once an hour when the soil is dry.",
+        "parts": [
+          "Buzzer"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Soil moisture bar graph",
+        "description": "Show moisture as a 5-LED bar graph.",
+        "parts": [
+          "5 LEDs + 220Ω"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Garden watering scheduler",
+        "description": "Water only in the morning, and only if the soil is dry and it isn't raining.",
+        "parts": [
+          "Rain sensor",
+          "Relay module",
+          "DS3231 RTC"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-016",
+    "name": "Water Level Sensor",
+    "category": "Water & Soil",
+    "purpose": "Detects water and how high it is",
+    "essential": false,
+    "interface": "Analog",
+    "difficulty": "Easy",
+    "voltage": "5V",
+    "summary": "PCB with exposed parallel traces whose analog output rises as more of it is covered by water.",
+    "useCases": [
+      "Overflow alerts",
+      "Leak detection",
+      "Small reservoir level"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "+ (VCC)",
+          "to": "D7 (power on demand)"
+        },
+        {
+          "pin": "− (GND)",
+          "to": "GND"
+        },
+        {
+          "pin": "S",
+          "to": "A0"
+        }
+      ]
+    },
+    "tip": "Not linear and it corrodes over time. Power it only while reading and use it for 'low/half/full' levels.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Leak detector",
+        "description": "Beep if water is detected on the floor under a washing machine.",
+        "parts": [
+          "Buzzer"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Pet bowl monitor",
+        "description": "Blink an LED when the water bowl runs low.",
+        "parts": [
+          "LED + 220Ω"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Hydroponic reservoir manager",
+        "description": "Top up the reservoir with a pump and log the level and refill times.",
+        "parts": [
+          "Relay module",
+          "Mini pump",
+          "Micro SD card reader"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-017",
+    "name": "DHT11",
+    "category": "Temperature & Climate",
+    "purpose": "Measures temperature and humidity",
+    "essential": true,
+    "interface": "DHT protocol",
+    "difficulty": "Easy",
+    "voltage": "3.3–5V",
+    "summary": "Basic temperature (0–50 °C, ±2 °C) and humidity (20–90 %, ±5 %) sensor on a single data pin.",
+    "useCases": [
+      "Room climate display",
+      "Simple weather stations",
+      "Fan control"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "DATA",
+          "to": "D2"
+        }
+      ]
+    },
+    "tip": "Read at most once per second. If you get NaN, check the wiring and that you chose DHT11 in the code.",
+    "library": "DHT sensor library (Adafruit)",
+    "projects": [
+      {
+        "level": "low",
+        "title": "Room thermometer",
+        "description": "Print temperature and humidity every 2 seconds.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Auto fan",
+        "description": "Turn a fan on through a relay above 30 °C.",
+        "parts": [
+          "Relay module",
+          "DC fan"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Mini climate logger",
+        "description": "Log temperature and humidity to an SD card every minute for a week.",
+        "parts": [
+          "Micro SD card reader",
+          "DS3231 RTC"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-018",
+    "name": "DHT22",
+    "category": "Temperature & Climate",
+    "purpose": "Measures temperature and humidity accurately",
+    "essential": false,
+    "interface": "DHT protocol",
+    "difficulty": "Easy",
+    "voltage": "3.3–5V",
+    "summary": "Accurate temperature (−40–80 °C, ±0.5 °C) and humidity (0–100 %, ±2 %) sensor, an upgrade from the DHT11.",
+    "useCases": [
+      "Weather stations",
+      "Incubators",
+      "Greenhouse climate control"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "DATA",
+          "to": "D2"
+        }
+      ]
+    },
+    "tip": "Wait at least 2 seconds between reads. Bare sensors need a 10 kΩ pull-up on DATA; modules usually include it.",
+    "library": "DHT sensor library (Adafruit)",
+    "projects": [
+      {
+        "level": "low",
+        "title": "Comfort index",
+        "description": "Compute and print the heat index from temperature and humidity.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Weather station",
+        "description": "Show temperature, humidity and pressure on an LCD with a BMP280.",
+        "parts": [
+          "BMP280",
+          "16x2 I2C LCD"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Egg incubator controller",
+        "description": "Hold 37.5 °C with a heater and 55 % humidity, with turn reminders.",
+        "parts": [
+          "Relay module",
+          "Heater bulb",
+          "16x2 I2C LCD"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-019",
+    "name": "PIR Sensor (HC-SR501)",
+    "category": "Motion & Orientation",
+    "purpose": "Detects people moving nearby",
+    "essential": true,
+    "interface": "Digital",
+    "difficulty": "Easy",
+    "voltage": "5–20V",
+    "summary": "Passive infrared sensor that detects people moving up to about 7 m away.",
+    "useCases": [
+      "Security lights",
+      "Room occupancy",
+      "Intruder alarms"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "OUT",
+          "to": "D2"
+        }
+      ]
+    },
+    "tip": "Give it about 60 seconds to settle after power-up. Two trimmers set the sensitivity and how long the output stays on.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Motion light",
+        "description": "Turn an LED on for 10 seconds when someone walks in.",
+        "parts": [
+          "LED + 220Ω"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Room occupancy counter",
+        "description": "Log motion events per hour to find when a room is used.",
+        "parts": [
+          "16x2 I2C LCD"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Dual-tech intruder alarm",
+        "description": "Raise the alarm only when both the PIR and a microwave radar trigger.",
+        "parts": [
+          "RCWL-0516",
+          "Buzzer",
+          "4x4 keypad"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-020",
+    "name": "TTP223B Touch",
+    "category": "Touch",
+    "purpose": "A button that works by touch",
+    "essential": true,
+    "interface": "Digital",
+    "difficulty": "Easy",
+    "voltage": "2–5.5V",
+    "summary": "Capacitive touch pad whose output goes HIGH while it is touched; it works through thin plastic or glass.",
+    "useCases": [
+      "Touch lamps",
+      "Hidden switches",
+      "Buttons behind acrylic panels"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "OUT",
+          "to": "D2"
+        }
+      ]
+    },
+    "tip": "Solder pad A to make it a toggle, or pad B to make the output active LOW.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Touch lamp",
+        "description": "Each touch toggles an LED on or off.",
+        "parts": [
+          "LED + 220Ω"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Touch dimmer",
+        "description": "A short tap toggles the light and holding it fades the brightness.",
+        "parts": [
+          "LED + 220Ω"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Hidden touch lock",
+        "description": "Tap a secret rhythm on a hidden pad to open a servo lock.",
+        "parts": [
+          "SG90 servo",
+          "Buzzer"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-021",
+    "name": "Sound Sensor (3-pin)",
+    "category": "Sound",
+    "purpose": "Detects loud sounds like a clap",
+    "essential": true,
+    "interface": "Digital",
+    "difficulty": "Easy",
+    "voltage": "3.3–5V",
+    "summary": "Microphone with a comparator that gives a digital pulse when the sound is louder than the threshold you set.",
+    "useCases": [
+      "Clap switches",
+      "Noise alarms",
+      "Knock detection"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "OUT",
+          "to": "D2"
+        }
+      ]
+    },
+    "tip": "Turn the trimmer until the LED just goes off in a quiet room. Some boards output LOW on sound, others HIGH.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Clap LED",
+        "description": "Each clap toggles an LED.",
+        "parts": [
+          "LED + 220Ω"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Double-clap switch",
+        "description": "Two claps within a second toggle a relay-controlled lamp.",
+        "parts": [
+          "Relay module"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Classroom noise meter",
+        "description": "Count loud events per minute and show green/amber/red lights.",
+        "parts": [
+          "3 LEDs + 220Ω",
+          "16x2 I2C LCD"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-022",
+    "name": "Sound Sensor (4-pin)",
+    "category": "Sound",
+    "purpose": "Measures how loud a sound is",
+    "essential": false,
+    "interface": "Digital + Analog",
+    "difficulty": "Easy",
+    "voltage": "3.3–5V",
+    "summary": "Microphone module with both a threshold output and an analog output that follows the sound level.",
+    "useCases": [
+      "Sound level meters",
+      "Music-reactive LEDs",
+      "Clap pattern detection"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "DO",
+          "to": "D2"
+        },
+        {
+          "pin": "AO",
+          "to": "A0"
+        }
+      ]
+    },
+    "tip": "The AO signal is small. Sample quickly and use the peak-to-peak value over 50 ms as the sound level.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Sound level plot",
+        "description": "Plot the sound level in the Arduino Serial Plotter.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Music VU meter",
+        "description": "An 8-LED bar graph dances to the music.",
+        "parts": [
+          "8 LEDs + 220Ω"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Clap-pattern lock",
+        "description": "Unlock a servo latch only after a secret clap rhythm.",
+        "parts": [
+          "SG90 servo"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-023",
+    "name": "HC-89 Slot Interrupt Sensor",
+    "category": "Speed & Rotation",
+    "purpose": "Counts things passing through a slot",
+    "essential": false,
+    "interface": "Digital",
+    "difficulty": "Easy",
+    "voltage": "3.3–5V",
+    "summary": "Slotted optocoupler that changes its output whenever something passes through the slot.",
+    "useCases": [
+      "Encoder disc speed sensing",
+      "RPM counters",
+      "Coin or object counting"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "OUT",
+          "to": "D2"
+        }
+      ]
+    },
+    "tip": "Use D2 or D3 with attachInterrupt() so no pulses are missed at high speed.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Slot counter",
+        "description": "Count how many cards you push through the slot.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Fan RPM meter",
+        "description": "Measure the RPM of a fan blade passing through the slot.",
+        "parts": [
+          "16x2 I2C LCD"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Closed-loop motor speed",
+        "description": "Hold a DC motor at a set RPM with PID control and PWM.",
+        "parts": [
+          "L298N driver",
+          "Encoder disc",
+          "DC motor"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-024",
+    "name": "Motor Encoder (LM393)",
+    "category": "Speed & Rotation",
+    "purpose": "Measures how fast a wheel turns",
+    "essential": false,
+    "interface": "Digital",
+    "difficulty": "Easy",
+    "voltage": "3.3–5V",
+    "summary": "Slot speed sensor with an LM393 comparator, made for 20-slot encoder discs on robot wheels.",
+    "useCases": [
+      "Robot wheel odometry",
+      "Motor RPM measurement",
+      "Speed matching between wheels"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "OUT",
+          "to": "D3"
+        }
+      ]
+    },
+    "tip": "With a 20-slot disc, RPM = pulses per second × 3. Use an interrupt pin (D2/D3).",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Wheel RPM",
+        "description": "Print wheel RPM once a second.",
+        "parts": [
+          "20-slot encoder disc"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Drive straight",
+        "description": "Match two wheel speeds so a robot drives in a straight line.",
+        "parts": [
+          "2WD chassis",
+          "L298N driver"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Odometry robot",
+        "description": "Drive an exact square by counting encoder ticks for each side and turn.",
+        "parts": [
+          "2WD chassis",
+          "L298N driver"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-025",
+    "name": "MQ2 Smoke Sensor",
+    "category": "Gas, Smoke & Fire",
+    "purpose": "Detects smoke and cooking gas",
+    "essential": true,
+    "interface": "Digital + Analog",
+    "difficulty": "Medium",
+    "voltage": "5V",
+    "summary": "Gas sensor module for smoke, LPG, propane and hydrogen (about 300–10000 ppm).",
+    "useCases": [
+      "Smoke alarms",
+      "Kitchen gas-leak alerts",
+      "Fire-detection systems"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "DO",
+          "to": "D2"
+        },
+        {
+          "pin": "AO",
+          "to": "A0"
+        }
+      ]
+    },
+    "tip": "The heater draws about 150 mA, so give it 24 hours to burn in when new and 1–2 minutes to warm up each time. Readings drift, so compare against a clean-air baseline.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Smoke alarm",
+        "description": "Buzz when the reading jumps above the clean-air baseline.",
+        "parts": [
+          "Buzzer"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Kitchen safety alarm",
+        "description": "Combine smoke and flame detection and turn on an exhaust fan.",
+        "parts": [
+          "Flame sensor",
+          "Relay module",
+          "Exhaust fan"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Gas alarm with SMS alert",
+        "description": "Send an SMS through a GSM module when smoke is detected.",
+        "parts": [
+          "SIM800L GSM",
+          "Buck converter"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-026",
+    "name": "MQ3 Alcohol Sensor",
+    "category": "Gas, Smoke & Fire",
+    "purpose": "Detects alcohol in the air",
+    "essential": false,
+    "interface": "Digital + Analog",
+    "difficulty": "Medium",
+    "voltage": "5V",
+    "summary": "Gas sensor module for alcohol vapour, used in breathalyser demos.",
+    "useCases": [
+      "Breathalyser demos",
+      "Fermentation monitoring",
+      "Sanitiser vapour detection"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "DO",
+          "to": "D2"
+        },
+        {
+          "pin": "AO",
+          "to": "A0"
+        }
+      ]
+    },
+    "tip": "The heater draws about 150 mA, so give it 24 hours to burn in when new and 1–2 minutes to warm up each time. Readings drift, so compare against a clean-air baseline. This is a demo device, not a legal breath-alcohol tester.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Alcohol detector",
+        "description": "Light an LED when alcohol vapour is near (try hand sanitiser).",
+        "parts": [
+          "LED + 220Ω"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Breathalyser level meter",
+        "description": "Show a 0–10 level on an LCD after a 5-second blow.",
+        "parts": [
+          "16x2 I2C LCD"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Vehicle ignition interlock model",
+        "description": "A relay blocks a toy car's motor when alcohol is detected.",
+        "parts": [
+          "Relay module",
+          "DC motor",
+          "Buzzer"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-027",
+    "name": "MQ4 Methane Sensor",
+    "category": "Gas, Smoke & Fire",
+    "purpose": "Detects methane (natural gas)",
+    "essential": false,
+    "interface": "Digital + Analog",
+    "difficulty": "Medium",
+    "voltage": "5V",
+    "summary": "Gas sensor module for methane (CNG / natural gas) from about 200 to 10000 ppm.",
+    "useCases": [
+      "CNG leak detection",
+      "Biogas plant monitoring",
+      "Kitchen safety"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "DO",
+          "to": "D2"
+        },
+        {
+          "pin": "AO",
+          "to": "A0"
+        }
+      ]
+    },
+    "tip": "The heater draws about 150 mA, so give it 24 hours to burn in when new and 1–2 minutes to warm up each time. Readings drift, so compare against a clean-air baseline.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Methane leak indicator",
+        "description": "LED and buzzer warn when methane is detected.",
+        "parts": [
+          "Buzzer",
+          "LED + 220Ω"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Biogas level monitor",
+        "description": "Track gas concentration in a biogas digester over the day.",
+        "parts": [
+          "16x2 I2C LCD"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Auto gas shut-off",
+        "description": "Close a solenoid valve and start an exhaust fan on a methane leak.",
+        "parts": [
+          "Relay module",
+          "Solenoid valve",
+          "Exhaust fan"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-028",
+    "name": "MQ6 LPG Sensor",
+    "category": "Gas, Smoke & Fire",
+    "purpose": "Detects LPG cooking-gas leaks",
+    "essential": false,
+    "interface": "Digital + Analog",
+    "difficulty": "Medium",
+    "voltage": "5V",
+    "summary": "Gas sensor module for LPG, butane and propane, the gases in Indian cooking cylinders.",
+    "useCases": [
+      "LPG cylinder leak alarms",
+      "Kitchen safety",
+      "Gas storage monitoring"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "DO",
+          "to": "D2"
+        },
+        {
+          "pin": "AO",
+          "to": "A0"
+        }
+      ]
+    },
+    "tip": "The heater draws about 150 mA, so give it 24 hours to burn in when new and 1–2 minutes to warm up each time. Readings drift, so compare against a clean-air baseline.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "LPG leak alarm",
+        "description": "Loud beeps and a red LED when LPG is detected.",
+        "parts": [
+          "Buzzer",
+          "Red LED + 220Ω"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Gas leak detector with fan",
+        "description": "Start an exhaust fan through a relay until the gas level drops.",
+        "parts": [
+          "Relay module",
+          "Exhaust fan"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Cylinder safety system",
+        "description": "Close the cylinder valve with a servo and send a GSM alert.",
+        "parts": [
+          "MG996R servo",
+          "SIM800L GSM"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-029",
+    "name": "MQ7 Carbon Monoxide Sensor",
+    "category": "Gas, Smoke & Fire",
+    "purpose": "Detects carbon monoxide gas",
+    "essential": false,
+    "interface": "Digital + Analog",
+    "difficulty": "Hard",
+    "voltage": "5V",
+    "summary": "Gas sensor module for carbon monoxide (about 20–2000 ppm).",
+    "useCases": [
+      "CO alarms",
+      "Generator room safety",
+      "Vehicle exhaust experiments"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "DO",
+          "to": "D2"
+        },
+        {
+          "pin": "AO",
+          "to": "A0"
+        }
+      ]
+    },
+    "tip": "For accurate CO readings the heater must cycle between 5V for 60 s and 1.4V for 90 s. Running it at a constant 5V only shows trends. Never rely on it as a life-safety alarm.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "CO trend plot",
+        "description": "Plot the CO reading in the Serial Plotter near a candle.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "CO warning light",
+        "description": "Amber and red LEDs show rising CO levels with a buzzer.",
+        "parts": [
+          "LEDs + 220Ω",
+          "Buzzer"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Heater-cycled CO meter",
+        "description": "Drive the heater with a MOSFET PWM cycle for proper CO measurement.",
+        "parts": [
+          "Logic-level MOSFET",
+          "16x2 I2C LCD"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-030",
+    "name": "MQ135 Air Quality Sensor",
+    "category": "Gas, Smoke & Fire",
+    "purpose": "Checks if the air is clean",
+    "essential": false,
+    "interface": "Digital + Analog",
+    "difficulty": "Medium",
+    "voltage": "5V",
+    "summary": "General air-quality sensor that responds to NH3, NOx, benzene, smoke and CO2.",
+    "useCases": [
+      "Indoor air quality monitors",
+      "Ventilation control",
+      "Pollution trend logging"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "DO",
+          "to": "D2"
+        },
+        {
+          "pin": "AO",
+          "to": "A0"
+        }
+      ]
+    },
+    "tip": "The heater draws about 150 mA, so give it 24 hours to burn in when new and 1–2 minutes to warm up each time. Readings drift, so compare against a clean-air baseline. Use it for relative air-quality levels, not exact CO2 ppm.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Air quality traffic light",
+        "description": "Green, amber or red LED for good, moderate or poor air.",
+        "parts": [
+          "3 LEDs + 220Ω"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Ventilation controller",
+        "description": "Run a fan when air quality is poor and stop it when it recovers.",
+        "parts": [
+          "Relay module",
+          "DC fan"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Air quality logger",
+        "description": "Log MQ135, dust and DHT22 readings to an SD card as CSV.",
+        "parts": [
+          "Dust sensor",
+          "DHT22",
+          "Micro SD card reader"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-031",
+    "name": "Tilt Sensor (SW-520D)",
+    "category": "Motion & Orientation",
+    "purpose": "Knows when something is tilted",
+    "essential": false,
+    "interface": "Digital",
+    "difficulty": "Easy",
+    "voltage": "3.3–5V",
+    "summary": "Ball switch that opens or closes when the module tilts past about 45°.",
+    "useCases": [
+      "Anti-theft alarms",
+      "Tilt-activated toys",
+      "Orientation detection"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "OUT",
+          "to": "D2"
+        }
+      ]
+    },
+    "tip": "It's a mechanical ball, so debounce it in code by ignoring changes for 50 ms.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Tilt alarm",
+        "description": "Beep when a box is tipped over.",
+        "parts": [
+          "Buzzer"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Digital hourglass",
+        "description": "Flip the device over to restart an LED timer.",
+        "parts": [
+          "8 LEDs + 220Ω"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Bike anti-theft alarm",
+        "description": "Arm with an RFID tag and sound a siren if the bike is moved.",
+        "parts": [
+          "RC522 RFID",
+          "Buzzer"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-032",
+    "name": "Vibration Sensor (SW-420)",
+    "category": "Motion & Orientation",
+    "purpose": "Detects shaking or knocks",
+    "essential": false,
+    "interface": "Digital",
+    "difficulty": "Easy",
+    "voltage": "3.3–5V",
+    "summary": "Spring vibration switch with a comparator that outputs a pulse when the module is shaken or knocked.",
+    "useCases": [
+      "Knock and door alarms",
+      "Machine vibration monitoring",
+      "Earthquake demos"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "OUT",
+          "to": "D2"
+        }
+      ]
+    },
+    "tip": "Count pulses over a short window to measure how strong the vibration is.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Knock alarm",
+        "description": "Buzz when someone knocks on a door.",
+        "parts": [
+          "Buzzer"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Washing machine done alert",
+        "description": "Notify when vibration stops for two minutes.",
+        "parts": [
+          "Buzzer"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Seismograph",
+        "description": "Plot vibration intensity over time and log events to SD.",
+        "parts": [
+          "Micro SD card reader",
+          "16x2 I2C LCD"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-034",
+    "name": "Inductive Proximity Sensor (NPN)",
+    "category": "Magnetic & Metal",
+    "purpose": "Detects metal without touching it",
+    "essential": false,
+    "interface": "Digital",
+    "difficulty": "Medium",
+    "voltage": "6–36V",
+    "summary": "Industrial LJ12A3-4-Z/BX sensor that detects metal up to 4 mm away without touching it.",
+    "useCases": [
+      "Metal object counting",
+      "CNC homing and limit switches",
+      "Conveyor part detection"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "Brown (+)",
+          "to": "12V external supply"
+        },
+        {
+          "pin": "Blue (−)",
+          "to": "GND (shared with Nano)"
+        },
+        {
+          "pin": "Black (out)",
+          "to": "D2 (INPUT_PULLUP)"
+        }
+      ]
+    },
+    "tip": "It needs 6–36V, so use a 12V supply and connect its ground to the Nano. The NPN output only pulls LOW, so INPUT_PULLUP keeps the Nano pin at a safe 5V.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Metal detector LED",
+        "description": "Light an LED when a screw is near the sensor face.",
+        "parts": [
+          "12V supply",
+          "LED + 220Ω"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Can counter",
+        "description": "Count metal cans on a conveyor and show the total.",
+        "parts": [
+          "12V supply",
+          "16x2 I2C LCD"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Metal/plastic sorter",
+        "description": "A servo pushes metal parts off a conveyor into a separate bin.",
+        "parts": [
+          "12V supply",
+          "SG90 servo",
+          "DC conveyor motor"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-035",
+    "name": "TSL2561 Lux Sensor",
+    "category": "Light & Optical",
+    "purpose": "Measures exactly how bright the light is",
+    "essential": false,
+    "interface": "I2C",
+    "difficulty": "Medium",
+    "voltage": "3.3V",
+    "summary": "Digital light sensor with separate visible and infrared channels that reports real lux values.",
+    "useCases": [
+      "Daylight logging",
+      "Display auto-brightness",
+      "Grow-light control"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "3.3V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "SDA",
+          "to": "A4"
+        },
+        {
+          "pin": "SCL",
+          "to": "A5"
+        }
+      ]
+    },
+    "tip": "I2C address 0x39 by default. Many breakouts are 3.3V only, so power it from 3.3V.",
+    "library": "Adafruit TSL2561",
+    "projects": [
+      {
+        "level": "low",
+        "title": "Lux meter",
+        "description": "Print lux readings every second.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Auto-brightness lamp",
+        "description": "An LED dims or brightens to keep the desk light steady.",
+        "parts": [
+          "LED strip",
+          "Logic-level MOSFET"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Photography light meter",
+        "description": "Calculate shutter speed for a chosen ISO and aperture, shown on an LCD.",
+        "parts": [
+          "16x2 I2C LCD",
+          "Push buttons"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-036",
+    "name": "GY-21 HTU21",
+    "category": "Temperature & Climate",
+    "purpose": "Measures temperature and humidity very precisely",
+    "essential": false,
+    "interface": "I2C",
+    "difficulty": "Easy",
+    "voltage": "3.3–5V",
+    "summary": "Precise I2C temperature (±0.3 °C) and humidity (±2 %) sensor.",
+    "useCases": [
+      "Precise climate logging",
+      "Server-room monitoring",
+      "Humidors and incubators"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "SDA",
+          "to": "A4"
+        },
+        {
+          "pin": "SCL",
+          "to": "A5"
+        }
+      ]
+    },
+    "tip": "Address 0x40. The GY-21 board has a regulator and level shifting, so 5V is fine.",
+    "library": "Adafruit HTU21DF",
+    "projects": [
+      {
+        "level": "low",
+        "title": "Precise thermometer",
+        "description": "Print temperature and humidity with two decimals.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Dew-point alert",
+        "description": "Warn when the surface temperature nears the dew point (risk of mould).",
+        "parts": [
+          "Buzzer",
+          "16x2 I2C LCD"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Humidity-controlled cabinet",
+        "description": "Run a dehumidifier fan to keep camera lenses below 45 % RH.",
+        "parts": [
+          "Relay module",
+          "DC fan"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-037",
+    "name": "HMC5883L Compass",
+    "category": "Motion & Orientation",
+    "purpose": "Works like a digital compass",
+    "essential": false,
+    "interface": "I2C",
+    "difficulty": "Medium",
+    "voltage": "3.3–5V",
+    "summary": "Three-axis magnetometer used as a digital compass.",
+    "useCases": [
+      "Robot heading",
+      "Digital compass",
+      "Vehicle detection by magnetic change"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "SDA",
+          "to": "A4"
+        },
+        {
+          "pin": "SCL",
+          "to": "A5"
+        }
+      ]
+    },
+    "tip": "Run an I2C scanner first. Address 0x1E means HMC5883L, while 0x0D means the board has the QMC5883L clone chip and needs the QMC5883LCompass library.",
+    "library": "Adafruit HMC5883 Unified / QMC5883LCompass",
+    "projects": [
+      {
+        "level": "low",
+        "title": "Compass heading",
+        "description": "Print the heading in degrees.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Compass needle",
+        "description": "A servo always points north.",
+        "parts": [
+          "SG90 servo"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Heading-hold robot",
+        "description": "Drive a robot on a fixed compass heading, correcting drift with PID.",
+        "parts": [
+          "2WD chassis",
+          "L298N driver"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-038",
+    "name": "BH1750 Light Sensor",
+    "category": "Light & Optical",
+    "purpose": "Measures light brightness in lux",
+    "essential": true,
+    "interface": "I2C",
+    "difficulty": "Easy",
+    "voltage": "3.3–5V",
+    "summary": "Digital ambient-light sensor that reads 1–65535 lux directly, with no calibration needed.",
+    "useCases": [
+      "Smart lighting",
+      "Screen auto-brightness",
+      "Plant light monitoring"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "SDA",
+          "to": "A4"
+        },
+        {
+          "pin": "SCL",
+          "to": "A5"
+        }
+      ]
+    },
+    "tip": "Address 0x23 (ADDR low) or 0x5C (ADDR high). Simpler and cheaper than the TSL2561.",
+    "library": "BH1750 (claws)",
+    "projects": [
+      {
+        "level": "low",
+        "title": "Lux meter",
+        "description": "Print the light level in lux every second.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Smart study lamp",
+        "description": "Fade an LED lamp to keep 500 lux on your desk.",
+        "parts": [
+          "LED strip",
+          "Logic-level MOSFET"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Grow-light controller",
+        "description": "Top up daylight with grow lights to reach a daily light target.",
+        "parts": [
+          "Relay module",
+          "DS3231 RTC",
+          "Grow light"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-039",
+    "name": "ADXL345 Accelerometer",
+    "category": "Motion & Orientation",
+    "purpose": "Measures movement, tilt and falls",
+    "essential": false,
+    "interface": "I2C",
+    "difficulty": "Medium",
+    "voltage": "3.3–5V",
+    "summary": "Three-axis accelerometer (±2 to ±16 g) with built-in tap and free-fall detection.",
+    "useCases": [
+      "Fall detection",
+      "Tap and double-tap input",
+      "Tilt measurement"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "SDA",
+          "to": "A4"
+        },
+        {
+          "pin": "SCL",
+          "to": "A5"
+        }
+      ]
+    },
+    "tip": "Address 0x53 with SDO to GND. In full-resolution mode each count is about 3.9 mg.",
+    "library": "Adafruit ADXL345",
+    "projects": [
+      {
+        "level": "low",
+        "title": "Tilt angles",
+        "description": "Print pitch and roll in degrees.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Digital spirit level",
+        "description": "Five LEDs show when a surface is level.",
+        "parts": [
+          "5 LEDs + 220Ω"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Wearable fall detector",
+        "description": "Detect free-fall, impact and then stillness, and sound an alarm.",
+        "parts": [
+          "Buzzer",
+          "Push button",
+          "Li-ion battery + charger"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-040",
+    "name": "MPU6050 Gyro + Accelerometer",
+    "category": "Motion & Orientation",
+    "purpose": "Measures tilt and rotation",
+    "essential": true,
+    "interface": "I2C",
+    "difficulty": "Medium",
+    "voltage": "3.3–5V",
+    "summary": "Six-axis motion sensor with a 3-axis gyroscope and a 3-axis accelerometer.",
+    "useCases": [
+      "Self-balancing robots",
+      "Gesture control",
+      "Drone and gimbal stabilisation"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "SDA",
+          "to": "A4"
+        },
+        {
+          "pin": "SCL",
+          "to": "A5"
+        },
+        {
+          "pin": "INT",
+          "to": "D2 (optional)"
+        }
+      ]
+    },
+    "tip": "Address 0x68 (AD0 low). Combine the gyro and accelerometer with a complementary filter for steady angles.",
+    "library": "MPU6050 (Electronic Cats) or raw Wire",
+    "projects": [
+      {
+        "level": "low",
+        "title": "Angle meter",
+        "description": "Print pitch and roll angles in the Serial Plotter.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Gesture-controlled car",
+        "description": "Tilt your hand to drive a robot car.",
+        "parts": [
+          "2 NRF24L01",
+          "2WD chassis",
+          "L298N driver"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Self-balancing robot",
+        "description": "Balance a two-wheel robot with a PID loop.",
+        "parts": [
+          "2 geared motors",
+          "L298N driver",
+          "2S Li-ion battery"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-041",
+    "name": "MAX30100 Pulse Oximeter",
+    "category": "Health & Biometric",
+    "purpose": "Measures heart rate and oxygen level",
+    "essential": false,
+    "interface": "I2C",
+    "difficulty": "Hard",
+    "voltage": "3.3–5V",
+    "summary": "Optical heart-rate and SpO2 sensor that you read with a fingertip on the window.",
+    "useCases": [
+      "Heart-rate monitors",
+      "SpO2 demos",
+      "Fitness wearables"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "SDA",
+          "to": "A4"
+        },
+        {
+          "pin": "SCL",
+          "to": "A5"
+        }
+      ]
+    },
+    "tip": "Address 0x57. Many green boards have I2C pull-ups to 1.8V that stop it working with a Nano. If it isn't detected, remove the three 4.7 kΩ resistors and add pull-ups to 3.3V.",
+    "library": "MAX30100lib (OXullo)",
+    "projects": [
+      {
+        "level": "low",
+        "title": "Finger detector",
+        "description": "Print the IR value and detect when a finger is placed.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Heart-rate display",
+        "description": "Show BPM on an LCD with a beat LED.",
+        "parts": [
+          "16x2 I2C LCD",
+          "LED + 220Ω"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Pulse oximeter",
+        "description": "Show BPM and SpO2, with an alarm when SpO2 drops below 92 %.",
+        "parts": [
+          "16x2 I2C LCD",
+          "Buzzer"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-042",
+    "name": "MAX30102 Pulse Oximeter",
+    "category": "Health & Biometric",
+    "purpose": "Measures heart rate and oxygen better",
+    "essential": false,
+    "interface": "I2C",
+    "difficulty": "Medium",
+    "voltage": "3.3–5V",
+    "summary": "Improved heart-rate and SpO2 sensor with a larger FIFO and lower noise than the MAX30100.",
+    "useCases": [
+      "Heart-rate monitors",
+      "SpO2 measurement",
+      "Sleep and fitness tracking"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "SDA",
+          "to": "A4"
+        },
+        {
+          "pin": "SCL",
+          "to": "A5"
+        }
+      ]
+    },
+    "tip": "Address 0x57. Keep your finger still with light pressure, because movement ruins the reading.",
+    "library": "SparkFun MAX3010x",
+    "projects": [
+      {
+        "level": "low",
+        "title": "Beat plotter",
+        "description": "Plot the raw IR signal and watch your heartbeat.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Finger heart-rate monitor",
+        "description": "Average BPM over 4 beats and show it on an LCD.",
+        "parts": [
+          "16x2 I2C LCD"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Health band logger",
+        "description": "Log BPM with timestamps and flag readings outside 50–120 BPM.",
+        "parts": [
+          "Micro SD card reader",
+          "DS3231 RTC"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-043",
+    "name": "BMP180 Pressure Sensor",
+    "category": "Temperature & Climate",
+    "purpose": "Measures air pressure and height",
+    "essential": false,
+    "interface": "I2C",
+    "difficulty": "Easy",
+    "voltage": "3.3–5V",
+    "summary": "Barometric pressure (300–1100 hPa) and temperature sensor; it can estimate altitude.",
+    "useCases": [
+      "Weather forecasting",
+      "Altitude measurement",
+      "Indoor floor detection"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "SDA",
+          "to": "A4"
+        },
+        {
+          "pin": "SCL",
+          "to": "A5"
+        }
+      ]
+    },
+    "tip": "Address 0x77. For a true altitude, set your local sea-level pressure.",
+    "library": "Adafruit BMP085 Library",
+    "projects": [
+      {
+        "level": "low",
+        "title": "Barometer",
+        "description": "Print pressure in hPa and temperature.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Weather trend predictor",
+        "description": "Predict 'sunny' or 'rain likely' from the 3-hour pressure trend.",
+        "parts": [
+          "16x2 I2C LCD"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Model-rocket altimeter",
+        "description": "Record the peak altitude and store it in EEPROM.",
+        "parts": [
+          "LiPo battery",
+          "Buzzer"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-044",
+    "name": "BMP280 Pressure Sensor",
+    "category": "Temperature & Climate",
+    "purpose": "Measures air pressure and height accurately",
+    "essential": false,
+    "interface": "I2C",
+    "difficulty": "Easy",
+    "voltage": "3.3V",
+    "summary": "Newer, more precise barometric pressure and temperature sensor (±1 hPa).",
+    "useCases": [
+      "Weather stations",
+      "Altimeters",
+      "Drone altitude hold"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "3.3V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "SDA",
+          "to": "A4"
+        },
+        {
+          "pin": "SCL",
+          "to": "A5"
+        }
+      ]
+    },
+    "tip": "The purple 6-pin GY-BMP280 board is 3.3V only, so power it from 3.3V. The address is 0x76 when SDO is to GND (0x77 otherwise).",
+    "library": "Adafruit BMP280",
+    "projects": [
+      {
+        "level": "low",
+        "title": "Barometer",
+        "description": "Print pressure, temperature and altitude.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Weather station",
+        "description": "Combine with a DHT22 and show all readings on an LCD.",
+        "parts": [
+          "DHT22",
+          "16x2 I2C LCD"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Floor-level detector",
+        "description": "Detect which floor of a building you are on from the pressure change.",
+        "parts": [
+          "16x2 I2C LCD",
+          "Push button"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-045",
+    "name": "Pulse Sensor",
+    "category": "Health & Biometric",
+    "purpose": "Reads your heartbeat from a fingertip",
+    "essential": false,
+    "interface": "Analog",
+    "difficulty": "Easy",
+    "voltage": "3.3–5V",
+    "summary": "Optical heart-beat sensor that clips to a fingertip or earlobe and gives an analog pulse waveform.",
+    "useCases": [
+      "Heart-rate displays",
+      "Biofeedback projects",
+      "Stress indicators"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "+ (red)",
+          "to": "5V"
+        },
+        {
+          "pin": "− (black)",
+          "to": "GND"
+        },
+        {
+          "pin": "S (purple)",
+          "to": "A0"
+        }
+      ]
+    },
+    "tip": "Cover the front with the clear sticker and don't press too hard. The PulseSensor Playground library calculates BPM for you.",
+    "library": "PulseSensor Playground",
+    "projects": [
+      {
+        "level": "low",
+        "title": "Heartbeat LED",
+        "description": "Blink an LED with each heartbeat.",
+        "parts": [
+          "LED + 220Ω"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "BPM display",
+        "description": "Show live BPM on an LCD.",
+        "parts": [
+          "16x2 I2C LCD"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Stress biofeedback game",
+        "description": "A calming LED gets greener as your heart rate falls during deep breathing.",
+        "parts": [
+          "RGB LED",
+          "16x2 I2C LCD"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-046",
+    "name": "ECG Sensor AD8232",
+    "category": "Health & Biometric",
+    "purpose": "Records the heart's electrical signal (ECG)",
+    "essential": false,
+    "interface": "Analog",
+    "difficulty": "Hard",
+    "voltage": "3.3V",
+    "summary": "Single-lead heart ECG front-end that outputs a clean analog ECG waveform.",
+    "useCases": [
+      "ECG waveform display",
+      "Heart-rate from R-peaks",
+      "Biomedical learning projects"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "3.3V",
+          "to": "3.3V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "OUTPUT",
+          "to": "A0"
+        },
+        {
+          "pin": "LO+",
+          "to": "D10"
+        },
+        {
+          "pin": "LO−",
+          "to": "D11"
+        }
+      ]
+    },
+    "tip": "Use it with 3 ECG gel electrodes: red on the right chest, yellow on the left chest, green on the lower right abdomen. For safety, power the laptop from its battery, not the charger. This is not a medical device.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "ECG plot",
+        "description": "Plot your ECG waveform in the Serial Plotter.",
+        "parts": [
+          "ECG electrodes"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "ECG heart-rate monitor",
+        "description": "Detect R-peaks and show BPM with lead-off warnings.",
+        "parts": [
+          "ECG electrodes",
+          "16x2 I2C LCD"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Portable ECG recorder",
+        "description": "Record 30-second ECG clips to an SD card for viewing on a PC.",
+        "parts": [
+          "ECG electrodes",
+          "Micro SD card reader",
+          "Battery pack"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-048",
+    "name": "MAX6675 Thermocouple",
+    "category": "Temperature & Climate",
+    "purpose": "Measures very high temperatures",
+    "essential": false,
+    "interface": "SPI",
+    "difficulty": "Medium",
+    "voltage": "3–5V",
+    "summary": "K-type thermocouple amplifier that measures 0–1024 °C in 0.25 °C steps. The probe is included.",
+    "useCases": [
+      "Oven and kiln control",
+      "Reflow soldering",
+      "Exhaust and BBQ temperature"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "SCK",
+          "to": "D6"
+        },
+        {
+          "pin": "CS",
+          "to": "D5"
+        },
+        {
+          "pin": "SO",
+          "to": "D4"
+        }
+      ]
+    },
+    "tip": "Read it no faster than every 250 ms or you'll get the same value. If the temperature falls when heated, swap the thermocouple wires.",
+    "library": "MAX6675 library (Adafruit)",
+    "projects": [
+      {
+        "level": "low",
+        "title": "High-temp thermometer",
+        "description": "Read the temperature of a soldering iron tip.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Over-temperature alarm",
+        "description": "Buzz when a heater passes a setpoint you choose with a rotary encoder.",
+        "parts": [
+          "Rotary encoder",
+          "Buzzer",
+          "16x2 I2C LCD"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Reflow / kiln controller",
+        "description": "PID-control a heater through an SSR to follow a temperature profile.",
+        "parts": [
+          "SSR-25DA",
+          "16x2 I2C LCD",
+          "Rotary encoder"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-049",
+    "name": "APDS9960 Gesture Sensor",
+    "category": "Light & Optical",
+    "purpose": "Detects hand swipes and colours",
+    "essential": false,
+    "interface": "I2C",
+    "difficulty": "Hard",
+    "voltage": "3.3V",
+    "summary": "Gesture, proximity, ambient light and RGB colour sensor in one chip.",
+    "useCases": [
+      "Touch-free gesture control",
+      "Proximity wake-up",
+      "Colour sensing"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "3.3V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "SDA",
+          "to": "A4"
+        },
+        {
+          "pin": "SCL",
+          "to": "A5"
+        },
+        {
+          "pin": "INT",
+          "to": "D2"
+        }
+      ]
+    },
+    "tip": "It is a 3.3V-only device. The 3.3V pin on clone Nanos is weak, so power it from an AMS1117-3.3 and use an I2C level shifter for reliable gestures.",
+    "library": "SparkFun APDS9960",
+    "projects": [
+      {
+        "level": "low",
+        "title": "Proximity lamp",
+        "description": "Turn on an LED when your hand comes near.",
+        "parts": [
+          "LED + 220Ω"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Colour reader",
+        "description": "Show the RGB value of objects on an RGB LED.",
+        "parts": [
+          "RGB LED"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Gesture-controlled home",
+        "description": "Swipe up/down for lights and left/right to move a servo blind.",
+        "parts": [
+          "Relay module",
+          "SG90 servo",
+          "Logic level shifter"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-050",
+    "name": "Magnetic Reed Sensor",
+    "category": "Magnetic & Metal",
+    "purpose": "Knows if a door is open or closed",
+    "essential": true,
+    "interface": "Digital",
+    "difficulty": "Easy",
+    "voltage": "—",
+    "summary": "Door/window reed switch with a magnet; the contact closes when the magnet is near.",
+    "useCases": [
+      "Door and window alarms",
+      "Cabinet-open detection",
+      "Bicycle speedometers"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "Wire 1",
+          "to": "GND"
+        },
+        {
+          "pin": "Wire 2",
+          "to": "D2 (INPUT_PULLUP)"
+        }
+      ]
+    },
+    "tip": "With INPUT_PULLUP the pin reads LOW when the door is closed and HIGH when it opens.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Door alarm",
+        "description": "Beep when the door opens.",
+        "parts": [
+          "Buzzer"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Fridge door reminder",
+        "description": "Beep if the fridge door stays open for more than 30 seconds.",
+        "parts": [
+          "Buzzer"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Home security panel",
+        "description": "Monitor several doors, with keypad arming and an alarm log.",
+        "parts": [
+          "4x4 keypad",
+          "16x2 I2C LCD",
+          "Buzzer"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-051",
+    "name": "HX710 Air Pressure Sensor",
+    "category": "Force, Weight & Pressure",
+    "purpose": "Measures air pressure in a tube",
+    "essential": false,
+    "interface": "HX711",
+    "difficulty": "Medium",
+    "voltage": "5V",
+    "summary": "MPS20N0040D pressure sensor (0–40 kPa) with an HX710B 24-bit ADC, connected by a tube.",
+    "useCases": [
+      "Water level by air pressure",
+      "Blood-pressure cuff projects",
+      "Vacuum and airflow gauges"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "OUT",
+          "to": "D3"
+        },
+        {
+          "pin": "SCK",
+          "to": "D4"
+        }
+      ]
+    },
+    "tip": "Push a silicone tube onto the port. Calibrate the zero at open air first and then scale with a known level.",
+    "library": "HX710B library",
+    "projects": [
+      {
+        "level": "low",
+        "title": "Blow meter",
+        "description": "Show how hard you blow into the tube.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Tank level by pressure",
+        "description": "A tube at the tank bottom measures water depth with no electronics in the water.",
+        "parts": [
+          "Silicone tube",
+          "16x2 I2C LCD"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Digital BP monitor model",
+        "description": "Inflate a cuff with a pump and detect pressure oscillations.",
+        "parts": [
+          "BP cuff",
+          "Air pump",
+          "Solenoid valve",
+          "Relay module"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-052",
+    "name": "Water Flow Sensor (YF-S201)",
+    "category": "Water & Soil",
+    "purpose": "Measures how much water flows",
+    "essential": false,
+    "interface": "Pulse timing",
+    "difficulty": "Easy",
+    "voltage": "5V",
+    "summary": "Hall-effect flow meter for 1–30 L/min that outputs pulses in proportion to the flow.",
+    "useCases": [
+      "Water consumption meters",
+      "Automatic dispensers",
+      "Leak detection"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "Red",
+          "to": "5V"
+        },
+        {
+          "pin": "Black",
+          "to": "GND"
+        },
+        {
+          "pin": "Yellow",
+          "to": "D2 (interrupt)"
+        }
+      ]
+    },
+    "tip": "Flow (L/min) ≈ pulse frequency (Hz) ÷ 7.5. Count pulses with attachInterrupt() on D2.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Flow rate meter",
+        "description": "Print litres per minute every second.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Water usage meter",
+        "description": "Show the total litres used on an LCD.",
+        "parts": [
+          "16x2 I2C LCD"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Smart dispenser",
+        "description": "Dispense exactly 500 ml with a solenoid valve and stop automatically.",
+        "parts": [
+          "Solenoid valve",
+          "Relay module",
+          "Push button"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-053",
+    "name": "Metal Detector Module",
+    "category": "Magnetic & Metal",
+    "purpose": "Finds hidden metal objects",
+    "essential": false,
+    "interface": "Digital",
+    "difficulty": "Easy",
+    "voltage": "3–5V",
+    "summary": "Standalone coil-based metal detector board with an onboard buzzer, which detects coins a few cm away.",
+    "useCases": [
+      "Hidden metal finders",
+      "Security wand demos",
+      "Coin detection"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "OUT",
+          "to": "D2"
+        }
+      ]
+    },
+    "tip": "It works on its own with just power. Use the OUT pin, if your board has one, to read detections on the Nano.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Coin finder",
+        "description": "Hide coins in sand and find them with the beeping detector.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Metal-detecting robot",
+        "description": "A robot stops and flashes when it drives over metal.",
+        "parts": [
+          "2WD chassis",
+          "L298N driver"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Metal detection logger",
+        "description": "Mark detection spots on a grid with a joystick and record them.",
+        "parts": [
+          "Joystick",
+          "Micro SD card reader"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-054",
+    "name": "AC Voltage Sensor ZMPT101B",
+    "category": "Voltage & Current",
+    "purpose": "Measures mains AC voltage",
+    "essential": false,
+    "interface": "Analog",
+    "difficulty": "Hard",
+    "voltage": "5V",
+    "summary": "Isolated mains voltage transformer module that outputs a small AC sine wave centred at 2.5V.",
+    "useCases": [
+      "Mains voltage monitors",
+      "Energy meters",
+      "Over/under-voltage protection"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "OUT",
+          "to": "A1"
+        }
+      ]
+    },
+    "tip": "DANGER: the input side is at mains voltage. Use screw terminals, an enclosure and supervision, and calibrate the trimmer against a multimeter. EmonLib calculates RMS for you.",
+    "library": "EmonLib",
+    "projects": [
+      {
+        "level": "low",
+        "title": "Mains present indicator",
+        "description": "Detect whether mains power is on (via the transformer module only).",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Voltage monitor",
+        "description": "Show RMS mains voltage on an LCD.",
+        "parts": [
+          "16x2 I2C LCD",
+          "Enclosure"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Smart energy meter",
+        "description": "Measure V, A, W and kWh with a ZMPT101B and an ACS712.",
+        "parts": [
+          "ACS712 20A",
+          "16x2 I2C LCD",
+          "Enclosure"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-055",
+    "name": "0–25V Voltage Sensor",
+    "category": "Voltage & Current",
+    "purpose": "Measures battery and DC voltage",
+    "essential": false,
+    "interface": "Analog",
+    "difficulty": "Easy",
+    "voltage": "DC 0–25V input",
+    "summary": "Simple 5:1 resistor divider that lets the Nano measure DC voltages up to 25V.",
+    "useCases": [
+      "Battery monitors",
+      "Solar panel voltage",
+      "Power-supply checks"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "S",
+          "to": "A0"
+        },
+        {
+          "pin": "−",
+          "to": "GND"
+        },
+        {
+          "pin": "VCC (input +)",
+          "to": "Voltage to measure"
+        },
+        {
+          "pin": "GND (input −)",
+          "to": "Ground of source"
+        }
+      ]
+    },
+    "tip": "Volts = analogRead(A0) × 5.0 / 1023 × 5. Never exceed 25V, and connect the source ground to the Nano ground.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Battery checker",
+        "description": "Print the voltage of a 9V or 12V battery.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Low-battery cut-off",
+        "description": "Disconnect the load through a relay when a 12V battery drops below 11.5V.",
+        "parts": [
+          "Relay module"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Solar charge logger",
+        "description": "Log panel and battery voltage every minute to an SD card.",
+        "parts": [
+          "2 voltage sensors",
+          "Micro SD card reader",
+          "DS3231 RTC"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-056",
+    "name": "AC Current Sensor (ZMCT103C)",
+    "category": "Voltage & Current",
+    "purpose": "Measures the AC current an appliance uses",
+    "essential": false,
+    "interface": "Analog",
+    "difficulty": "Medium",
+    "voltage": "5V",
+    "summary": "Current-transformer module; pass a live wire through the hole to measure AC current up to 5A without cutting into the circuit.",
+    "useCases": [
+      "Appliance on/off detection",
+      "Energy monitoring",
+      "Motor overload detection"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "OUT",
+          "to": "A0"
+        }
+      ]
+    },
+    "tip": "Pass only one conductor (live) through the core. Sample quickly and calculate RMS, or use EmonLib.",
+    "library": "EmonLib",
+    "projects": [
+      {
+        "level": "low",
+        "title": "Appliance on detector",
+        "description": "Light an LED when the kettle is drawing current.",
+        "parts": [
+          "LED + 220Ω"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Appliance usage timer",
+        "description": "Log how many hours a fridge compressor runs each day.",
+        "parts": [
+          "16x2 I2C LCD"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Motor overload protection",
+        "description": "Cut power to a motor through a relay when the current is too high.",
+        "parts": [
+          "Relay module",
+          "Buzzer"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-057",
+    "name": "ACS712 5A Current Sensor",
+    "category": "Voltage & Current",
+    "purpose": "Measures small currents (up to 5A)",
+    "essential": false,
+    "interface": "Analog",
+    "difficulty": "Easy",
+    "voltage": "5V",
+    "summary": "Hall-effect current sensor for ±5A AC or DC, with the current path isolated from the output.",
+    "useCases": [
+      "DC motor current",
+      "Battery charge/discharge",
+      "Small appliance monitoring"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "OUT",
+          "to": "A0"
+        }
+      ]
+    },
+    "tip": "Output is 2.5V at 0A and changes by 185 mV per amp. Measure the zero offset at power-up, and average many samples because it is noisy. For AC, calculate RMS.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "DC current meter",
+        "description": "Measure the current of a small motor.",
+        "parts": [
+          "DC motor"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Stall detector",
+        "description": "Detect a jammed motor from a current spike and stop it.",
+        "parts": [
+          "L298N driver",
+          "DC motor"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Battery capacity tester",
+        "description": "Discharge a battery through a load and calculate mAh.",
+        "parts": [
+          "Voltage sensor",
+          "Power resistor",
+          "Relay module"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-058",
+    "name": "INA260 Power Monitor",
+    "category": "Voltage & Current",
+    "purpose": "Measures voltage, current and power precisely",
+    "essential": false,
+    "interface": "I2C",
+    "difficulty": "Medium",
+    "voltage": "3.3–5V",
+    "summary": "Precision I2C sensor with a built-in shunt that measures voltage (up to 36V), current (±15A) and power.",
+    "useCases": [
+      "Solar and battery profiling",
+      "Power budgets for IoT devices",
+      "Precise DC energy logging"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "SDA",
+          "to": "A4"
+        },
+        {
+          "pin": "SCL",
+          "to": "A5"
+        }
+      ]
+    },
+    "tip": "Address 0x40 by default. Wire it on the high side, in series with the load positive.",
+    "library": "Adafruit INA260",
+    "projects": [
+      {
+        "level": "low",
+        "title": "USB power meter",
+        "description": "Measure how much current your Nano project really uses.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Battery discharge logger",
+        "description": "Record voltage, current and mAh during discharge.",
+        "parts": [
+          "Micro SD card reader"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Solar MPPT experiment",
+        "description": "Sweep the panel load to find the maximum power point.",
+        "parts": [
+          "Logic-level MOSFET",
+          "Solar panel"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-059",
+    "name": "ACS712 20A Current Sensor",
+    "category": "Voltage & Current",
+    "purpose": "Measures medium currents (up to 20A)",
+    "essential": false,
+    "interface": "Analog",
+    "difficulty": "Medium",
+    "voltage": "5V",
+    "summary": "Hall-effect current sensor for ±20A AC or DC.",
+    "useCases": [
+      "Home appliance monitoring",
+      "E-bike and inverter current",
+      "Energy meters"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "OUT",
+          "to": "A0"
+        }
+      ]
+    },
+    "tip": "Output is 2.5V at 0A and changes by 100 mV per amp. Measure the zero offset at power-up, and average many samples because it is noisy. For AC, calculate RMS.",
+    "library": "EmonLib (for AC)",
+    "projects": [
+      {
+        "level": "low",
+        "title": "Current meter",
+        "description": "Measure the DC current of a 12V device.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Appliance power monitor",
+        "description": "Show the RMS current of an appliance on an LCD.",
+        "parts": [
+          "16x2 I2C LCD",
+          "Enclosure"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Smart energy meter",
+        "description": "Combine with a ZMPT101B for V, A, W and kWh.",
+        "parts": [
+          "ZMPT101B",
+          "16x2 I2C LCD"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-060",
+    "name": "ACS712 30A Current Sensor",
+    "category": "Voltage & Current",
+    "purpose": "Measures large currents (up to 30A)",
+    "essential": false,
+    "interface": "Analog",
+    "difficulty": "Medium",
+    "voltage": "5V",
+    "summary": "Hall-effect current sensor for ±30A AC or DC, for higher-power loads.",
+    "useCases": [
+      "Inverter and UPS monitoring",
+      "Motor controllers",
+      "Battery bank current"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "OUT",
+          "to": "A0"
+        }
+      ]
+    },
+    "tip": "Output is 2.5V at 0A and changes by 66 mV per amp. Measure the zero offset at power-up, and average many samples because it is noisy. For AC, calculate RMS.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "High-current meter",
+        "description": "Measure the current of a 12V car accessory.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Battery bank monitor",
+        "description": "Show charge and discharge current with direction arrows.",
+        "parts": [
+          "16x2 I2C LCD"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Inverter load manager",
+        "description": "Shed non-critical loads by relay when the total current is too high.",
+        "parts": [
+          "4-channel relay",
+          "16x2 I2C LCD"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-061",
+    "name": "Colour Sensor (TCS3200)",
+    "category": "Light & Optical",
+    "purpose": "Tells the colour of an object",
+    "essential": false,
+    "interface": "Pulse timing",
+    "difficulty": "Medium",
+    "voltage": "5V",
+    "summary": "RGB colour sensor that outputs a frequency for the red, green, blue or clear filter you select.",
+    "useCases": [
+      "Colour sorting machines",
+      "Colour-line robots",
+      "Paint and fabric matching"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "S0",
+          "to": "D4"
+        },
+        {
+          "pin": "S1",
+          "to": "D5"
+        },
+        {
+          "pin": "S2",
+          "to": "D6"
+        },
+        {
+          "pin": "S3",
+          "to": "D7"
+        },
+        {
+          "pin": "OUT",
+          "to": "D8"
+        },
+        {
+          "pin": "OE",
+          "to": "GND"
+        }
+      ]
+    },
+    "tip": "Measure each filter with pulseIn(). Calibrate with white and black paper and map the readings to 0–255.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Colour reader",
+        "description": "Print R, G and B values for objects you show it.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Colour mimic lamp",
+        "description": "An RGB LED copies the colour of the object.",
+        "parts": [
+          "RGB LED + 3 × 220Ω"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Skittles colour sorter",
+        "description": "Two servos pick up candies and drop them into bins by colour.",
+        "parts": [
+          "2 SG90 servos",
+          "3D-printed or cardboard frame"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-063",
+    "name": "Dust Sensor (GP2Y1010AU0F)",
+    "category": "Gas, Smoke & Fire",
+    "purpose": "Measures dust in the air",
+    "essential": false,
+    "interface": "Analog",
+    "difficulty": "Hard",
+    "voltage": "5V",
+    "summary": "Sharp optical dust sensor that detects fine particles (PM2.5-style dust density).",
+    "useCases": [
+      "Indoor air quality monitors",
+      "Air purifier auto-control",
+      "Construction dust checks"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "V-LED (1)",
+          "to": "5V via 150Ω (+220µF to GND)"
+        },
+        {
+          "pin": "LED-GND (2)",
+          "to": "GND"
+        },
+        {
+          "pin": "LED (3)",
+          "to": "D7"
+        },
+        {
+          "pin": "S-GND (4)",
+          "to": "GND"
+        },
+        {
+          "pin": "Vo (5)",
+          "to": "A0"
+        },
+        {
+          "pin": "Vcc (6)",
+          "to": "5V"
+        }
+      ]
+    },
+    "tip": "Pulse the LED: set D7 LOW, wait 280 µs, read A0, then set it HIGH. Dust (mg/m³) ≈ 0.17 × V − 0.1. Add the 150Ω resistor and 220 µF capacitor.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Dust reading",
+        "description": "Print the dust density every second.",
+        "parts": [
+          "150Ω resistor",
+          "220µF capacitor"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Air purifier controller",
+        "description": "Turn on a purifier fan when the dust level is high.",
+        "parts": [
+          "Relay module",
+          "DC fan"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Air quality logger",
+        "description": "Log dust, gas and climate data to SD as CSV.",
+        "parts": [
+          "MQ135",
+          "DHT22",
+          "Micro SD card reader"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-065",
+    "name": "Condenser Microphone",
+    "category": "Sound",
+    "purpose": "A small microphone that picks up sound",
+    "essential": false,
+    "interface": "Analog",
+    "difficulty": "Medium",
+    "voltage": "1.5–10V",
+    "summary": "Bare electret microphone capsule; it needs a bias resistor and an amplifier stage.",
+    "useCases": [
+      "Build your own sound module",
+      "Voice-activated circuits",
+      "Audio level meters"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "+ (pin not on case)",
+          "to": "5V via 2.2kΩ, signal via 1µF to amp"
+        },
+        {
+          "pin": "− (pin on case)",
+          "to": "GND"
+        },
+        {
+          "pin": "Amp output",
+          "to": "A0"
+        }
+      ]
+    },
+    "tip": "On its own the signal is only a few millivolts. Use a transistor or LM358/MAX4466 amplifier biased at 2.5V before A0.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Mic amplifier build",
+        "description": "Build a one-transistor amplifier and view the signal in the Serial Plotter.",
+        "parts": [
+          "BC547",
+          "Resistors",
+          "Capacitors"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Sound-reactive LEDs",
+        "description": "LEDs flash to the beat of music.",
+        "parts": [
+          "LM358",
+          "LEDs + 220Ω"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Clap-direction finder",
+        "description": "Two mics estimate which side a clap came from by timing difference.",
+        "parts": [
+          "2 amplifiers",
+          "SG90 servo"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-066",
+    "name": "IR LED + Photodiode Pair",
+    "category": "Proximity & Distance",
+    "purpose": "Make your own infrared object sensor",
+    "essential": false,
+    "interface": "Analog",
+    "difficulty": "Easy",
+    "voltage": "5V",
+    "summary": "Matching IR emitter and receiver for building your own obstacle, beam-break or reflective sensors.",
+    "useCases": [
+      "DIY obstacle sensors",
+      "Beam-break counters",
+      "Finger pulse sensing"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "IR LED anode",
+          "to": "5V via 220Ω"
+        },
+        {
+          "pin": "IR LED cathode",
+          "to": "GND"
+        },
+        {
+          "pin": "Photodiode cathode",
+          "to": "5V via 10kΩ → A0 at junction"
+        },
+        {
+          "pin": "Photodiode anode",
+          "to": "GND"
+        }
+      ]
+    },
+    "tip": "The photodiode is reverse-biased. More IR means more current and a lower voltage at A0. Shield it from sunlight.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "DIY obstacle sensor",
+        "description": "Detect your hand by the change in analog reading.",
+        "parts": [
+          "220Ω + 10kΩ resistors"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Beam-break counter",
+        "description": "Count objects passing between the facing LED and photodiode.",
+        "parts": [
+          "16x2 I2C LCD"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "DIY finger pulse sensor",
+        "description": "Shine IR through a fingertip and filter the signal to get BPM.",
+        "parts": [
+          "LM358",
+          "Resistors",
+          "Capacitors"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-068",
+    "name": "Photodiode (2 pcs)",
+    "category": "Light & Optical",
+    "purpose": "Detects light very quickly",
+    "essential": false,
+    "interface": "Analog",
+    "difficulty": "Easy",
+    "voltage": "5V (reverse-biased)",
+    "summary": "Fast light sensors that respond in microseconds, unlike slow LDRs.",
+    "useCases": [
+      "Light-pulse detection",
+      "Beam-break receivers",
+      "Optical data links"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "Cathode",
+          "to": "5V via 10kΩ → A0 at junction"
+        },
+        {
+          "pin": "Anode",
+          "to": "GND"
+        }
+      ]
+    },
+    "tip": "Reverse-bias it with a 10 kΩ–1 MΩ resistor: a bigger resistor is more sensitive but slower.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Light flash detector",
+        "description": "Detect a phone camera flash.",
+        "parts": [
+          "10kΩ resistor"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Strobe frequency meter",
+        "description": "Measure the flicker frequency of a lamp or LED.",
+        "parts": [
+          "LM358",
+          "16x2 I2C LCD"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Li-Fi text receiver",
+        "description": "Receive text sent by a blinking LED on another Arduino.",
+        "parts": [
+          "LM393 comparator",
+          "Second Arduino"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-069",
+    "name": "Force Sensor Square (FSR406)",
+    "category": "Force, Weight & Pressure",
+    "purpose": "Measures how hard you press on a large pad",
+    "essential": false,
+    "interface": "Analog",
+    "difficulty": "Easy",
+    "voltage": "—",
+    "summary": "Large square force-sensitive resistor (about 38 mm) whose resistance drops as you press harder.",
+    "useCases": [
+      "Seat occupancy detection",
+      "Pressure mats",
+      "Large touch pads"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "Lead 1",
+          "to": "5V"
+        },
+        {
+          "pin": "Lead 2",
+          "to": "A0 + 10kΩ to GND"
+        }
+      ]
+    },
+    "tip": "Use a 10 kΩ resistor from A0 to GND, with the FSR between 5V and A0. It shows relative force, not exact newtons or grams.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Press meter",
+        "description": "Show press strength as an LED brightness.",
+        "parts": [
+          "10kΩ resistor",
+          "LED + 220Ω"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Chair occupancy sensor",
+        "description": "Track how long you sit and remind you to take breaks.",
+        "parts": [
+          "10kΩ resistor",
+          "Buzzer"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Smart floor mat",
+        "description": "Count steps and detect a person standing at the door.",
+        "parts": [
+          "10kΩ resistor",
+          "Micro SD card reader"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-070",
+    "name": "FSR 12.7 mm (FSR402)",
+    "category": "Force, Weight & Pressure",
+    "purpose": "Measures how hard you press",
+    "essential": false,
+    "interface": "Analog",
+    "difficulty": "Easy",
+    "voltage": "—",
+    "summary": "Round 12.7 mm force-sensitive resistor for fingertip-sized presses.",
+    "useCases": [
+      "Grip force sensing",
+      "Drum and MIDI pads",
+      "Object presence on shelves"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "Lead 1",
+          "to": "5V"
+        },
+        {
+          "pin": "Lead 2",
+          "to": "A0 + 10kΩ to GND"
+        }
+      ]
+    },
+    "tip": "Use a 10 kΩ resistor from A0 to GND, with the FSR between 5V and A0. It shows relative force, not exact newtons or grams.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Squeeze meter",
+        "description": "Display squeeze force as a 5-LED bar.",
+        "parts": [
+          "10kΩ resistor",
+          "5 LEDs + 220Ω"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Finger drum pad",
+        "description": "Play different buzzer tones depending on how hard you hit.",
+        "parts": [
+          "10kΩ resistor",
+          "Buzzer"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Robot gripper feedback",
+        "description": "Stop closing a servo gripper once a grip force is reached.",
+        "parts": [
+          "10kΩ resistor",
+          "MG996R servo"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-071",
+    "name": "FSR 5.08 mm (FSR400)",
+    "category": "Force, Weight & Pressure",
+    "purpose": "Measures pressing force on a tiny spot",
+    "essential": false,
+    "interface": "Analog",
+    "difficulty": "Easy",
+    "voltage": "—",
+    "summary": "Small 5 mm force-sensitive resistor for tiny buttons and fingertips.",
+    "useCases": [
+      "Fingertip sensors",
+      "Tiny pressure buttons",
+      "Wearables"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "Lead 1",
+          "to": "5V"
+        },
+        {
+          "pin": "Lead 2",
+          "to": "A0 + 10kΩ to GND"
+        }
+      ]
+    },
+    "tip": "Use a 10 kΩ resistor from A0 to GND, with the FSR between 5V and A0. It shows relative force, not exact newtons or grams.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Pressure button",
+        "description": "Light an LED only on a firm press.",
+        "parts": [
+          "10kΩ resistor",
+          "LED + 220Ω"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Typing pressure logger",
+        "description": "Measure how hard you press a key over time.",
+        "parts": [
+          "10kΩ resistor"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Haptic glove fingertip",
+        "description": "Map fingertip pressure to vibration motor strength.",
+        "parts": [
+          "10kΩ resistor",
+          "Vibration motor",
+          "Transistor"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-072",
+    "name": "Flex Sensor 2.2 inch",
+    "category": "Force, Weight & Pressure",
+    "purpose": "Measures how much it is bent",
+    "essential": false,
+    "interface": "Analog",
+    "difficulty": "Easy",
+    "voltage": "—",
+    "summary": "Bend sensor whose resistance rises from about 25 kΩ flat to about 100 kΩ bent.",
+    "useCases": [
+      "Data gloves",
+      "Robotic hand control",
+      "Joint angle measurement"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "Lead 1",
+          "to": "5V"
+        },
+        {
+          "pin": "Lead 2",
+          "to": "A0 + 47kΩ to GND"
+        }
+      ]
+    },
+    "tip": "Use a 47 kΩ resistor divider. Bend it in one direction only, and protect the base (where the leads join) from flexing.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Bend meter",
+        "description": "Print the bend angle by mapping the flat and fully-bent readings.",
+        "parts": [
+          "47kΩ resistor"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Finger-controlled servo",
+        "description": "Bending your finger moves a servo.",
+        "parts": [
+          "47kΩ resistor",
+          "SG90 servo"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Robotic hand glove",
+        "description": "Five flex sensors drive five servos in a robotic hand.",
+        "parts": [
+          "5 flex sensors",
+          "5 servos",
+          "PCA9685",
+          "5V 3A supply"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-073",
+    "name": "10K Thermistor",
+    "category": "Temperature & Climate",
+    "purpose": "A cheap part that senses temperature",
+    "essential": false,
+    "interface": "Analog",
+    "difficulty": "Easy",
+    "voltage": "—",
+    "summary": "NTC thermistor (10 kΩ at 25 °C, β ≈ 3950) whose resistance falls as it gets hotter.",
+    "useCases": [
+      "3D-printer and battery temperature",
+      "Fridge monitors",
+      "Cheap temperature probes"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "Lead 1",
+          "to": "5V"
+        },
+        {
+          "pin": "Lead 2",
+          "to": "A0 + 10kΩ to GND"
+        }
+      ]
+    },
+    "tip": "Convert with the Beta equation: 1/T = 1/298.15 + ln(R/10000)/3950, with T in kelvin.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Thermometer",
+        "description": "Calculate and print °C with the Beta equation.",
+        "parts": [
+          "10kΩ resistor"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Fridge temperature alarm",
+        "description": "Beep if the fridge is warmer than 8 °C for 10 minutes.",
+        "parts": [
+          "10kΩ resistor",
+          "Buzzer"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Thermostat with hysteresis",
+        "description": "Control a heater with an adjustable setpoint and a 1 °C band.",
+        "parts": [
+          "10kΩ resistor",
+          "Relay module",
+          "Rotary encoder"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-074",
+    "name": "LM35 Temperature Sensor",
+    "category": "Temperature & Climate",
+    "purpose": "Measures temperature (simple analog)",
+    "essential": true,
+    "interface": "Analog",
+    "difficulty": "Easy",
+    "voltage": "4–30V",
+    "summary": "Analog sensor that outputs 10 mV per °C; no library needed.",
+    "useCases": [
+      "Simple thermometers",
+      "Overheat protection",
+      "Classroom experiments"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "+Vs (left, flat face)",
+          "to": "5V"
+        },
+        {
+          "pin": "Vout (middle)",
+          "to": "A0"
+        },
+        {
+          "pin": "GND (right)",
+          "to": "GND"
+        }
+      ]
+    },
+    "tip": "°C = analogRead(A0) × 500 / 1023. Swapping +Vs and GND makes it hot, so check the pinout with the flat face towards you.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Serial thermometer",
+        "description": "Plot temperature in the Serial Plotter.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Temperature-controlled fan",
+        "description": "Fan speed rises with temperature using PWM.",
+        "parts": [
+          "Logic-level MOSFET",
+          "DC fan"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Multi-room temperature panel",
+        "description": "Read three LM35s and show min/max of each on an LCD.",
+        "parts": [
+          "3 LM35",
+          "16x2 I2C LCD"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-075",
+    "name": "DS18B20 Waterproof",
+    "category": "Temperature & Climate",
+    "purpose": "Measures the temperature of water and liquids",
+    "essential": false,
+    "interface": "1-Wire",
+    "difficulty": "Easy",
+    "voltage": "3–5.5V",
+    "summary": "Digital temperature probe (−55–125 °C, ±0.5 °C) in a waterproof steel tube.",
+    "useCases": [
+      "Aquariums",
+      "Water heaters",
+      "Soil and liquid temperature"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "Red",
+          "to": "5V"
+        },
+        {
+          "pin": "Black",
+          "to": "GND"
+        },
+        {
+          "pin": "Yellow (data)",
+          "to": "D2 + 4.7kΩ to 5V"
+        }
+      ]
+    },
+    "tip": "It needs a 4.7 kΩ pull-up. Many probes can share one pin because each has a unique address.",
+    "library": "OneWire + DallasTemperature",
+    "projects": [
+      {
+        "level": "low",
+        "title": "Water thermometer",
+        "description": "Print water temperature in °C.",
+        "parts": [
+          "4.7kΩ resistor"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Aquarium heater control",
+        "description": "Keep the tank at 26 °C through a relay-controlled heater.",
+        "parts": [
+          "4.7kΩ resistor",
+          "Relay module"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Multi-probe solar heater logger",
+        "description": "Log inlet, outlet and tank temperatures to SD.",
+        "parts": [
+          "3 DS18B20",
+          "Micro SD card reader"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-076",
+    "name": "DS18B20 Module",
+    "category": "Temperature & Climate",
+    "purpose": "Measures temperature digitally",
+    "essential": true,
+    "interface": "1-Wire",
+    "difficulty": "Easy",
+    "voltage": "3–5.5V",
+    "summary": "DS18B20 digital temperature sensor on a module with the pull-up resistor and LED onboard.",
+    "useCases": [
+      "Room temperature",
+      "Electronics enclosure monitoring",
+      "Learning 1-Wire"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "DQ",
+          "to": "D2"
+        }
+      ]
+    },
+    "tip": "The pull-up is already on the module. Use DallasTemperature to read °C with 9–12 bit resolution.",
+    "library": "OneWire + DallasTemperature",
+    "projects": [
+      {
+        "level": "low",
+        "title": "Room thermometer",
+        "description": "Print temperature every second.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Overheat cut-off",
+        "description": "Disconnect a device through a relay above 60 °C.",
+        "parts": [
+          "Relay module",
+          "Buzzer"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Temperature data logger",
+        "description": "Log readings with timestamps and draw a graph on the PC.",
+        "parts": [
+          "DS3231 RTC",
+          "Micro SD card reader"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-077",
+    "name": "5 mm LDR",
+    "category": "Light & Optical",
+    "purpose": "Senses light level",
+    "essential": false,
+    "interface": "Analog",
+    "difficulty": "Easy",
+    "voltage": "—",
+    "summary": "Bare light-dependent resistor whose resistance falls in brighter light.",
+    "useCases": [
+      "Light meters",
+      "Night lamps",
+      "Simple light-seeking robots"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "Lead 1",
+          "to": "5V"
+        },
+        {
+          "pin": "Lead 2",
+          "to": "A0 + 10kΩ to GND"
+        }
+      ]
+    },
+    "tip": "With the LDR on top and 10 kΩ to GND, the reading rises as it gets brighter.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Light meter",
+        "description": "Print a 0–100 % light level.",
+        "parts": [
+          "10kΩ resistor"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Fading night light",
+        "description": "An LED fades in smoothly as the room gets darker.",
+        "parts": [
+          "10kΩ resistor",
+          "LED + 220Ω"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Light-seeking robot",
+        "description": "Two LDRs steer a robot toward the brightest light.",
+        "parts": [
+          "2 LDRs",
+          "2WD chassis",
+          "L298N driver"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-078",
+    "name": "12 mm LDR",
+    "category": "Light & Optical",
+    "purpose": "Senses light level, works better in dim light",
+    "essential": false,
+    "interface": "Analog",
+    "difficulty": "Easy",
+    "voltage": "—",
+    "summary": "Larger LDR that is more sensitive in low light than the 5 mm version.",
+    "useCases": [
+      "Dusk detection",
+      "Solar trackers",
+      "Ambient light logging"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "Lead 1",
+          "to": "5V"
+        },
+        {
+          "pin": "Lead 2",
+          "to": "A0 + 10kΩ to GND"
+        }
+      ]
+    },
+    "tip": "Larger area means better low-light response. Use 4 of them for a two-axis solar tracker.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Dusk detector",
+        "description": "Turn on an LED at dusk, with hysteresis so it doesn't flicker.",
+        "parts": [
+          "10kΩ resistor",
+          "LED + 220Ω"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Single-axis solar tracker",
+        "description": "Two LDRs and a servo turn a small panel toward the sun.",
+        "parts": [
+          "2 LDRs",
+          "SG90 servo"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Dual-axis solar tracker",
+        "description": "Four LDRs and two servos track the sun across the sky.",
+        "parts": [
+          "4 LDRs",
+          "2 servos",
+          "Small solar panel"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-079",
+    "name": "TSOP1738",
+    "category": "Infrared & Remote",
+    "purpose": "Receives TV remote signals",
+    "essential": false,
+    "interface": "IR decoder",
+    "difficulty": "Easy",
+    "voltage": "5V",
+    "summary": "Bare 38 kHz IR receiver IC for TV-remote signals.",
+    "useCases": [
+      "Remote-controlled projects",
+      "IR beam receivers",
+      "Remote decoding"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "Pin 1 (GND)",
+          "to": "GND"
+        },
+        {
+          "pin": "Pin 2 (Vs)",
+          "to": "5V"
+        },
+        {
+          "pin": "Pin 3 (OUT)",
+          "to": "D2"
+        }
+      ]
+    },
+    "tip": "The TSOP1738 pinout is GND–Vs–OUT, different from the TSOP1838 (OUT–GND–Vs). Check the datasheet for your part.",
+    "library": "IRremote",
+    "projects": [
+      {
+        "level": "low",
+        "title": "Remote key printer",
+        "description": "Print any remote's key codes.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "IR-controlled fan speed",
+        "description": "Use remote keys to set fan speed with PWM.",
+        "parts": [
+          "Logic-level MOSFET",
+          "DC fan"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "IR object counter",
+        "description": "A 38 kHz IR LED and TSOP form a long-range beam-break counter.",
+        "parts": [
+          "IR LED",
+          "16x2 I2C LCD"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-080",
+    "name": "TSOP1738 Metal Cap",
+    "category": "Infrared & Remote",
+    "purpose": "Receives remote signals, works well near motors",
+    "essential": false,
+    "interface": "IR decoder",
+    "difficulty": "Easy",
+    "voltage": "5V",
+    "summary": "TSOP1738 IR receiver with a metal shield that rejects electrical noise.",
+    "useCases": [
+      "Noisy environments near motors",
+      "Reliable remote control",
+      "Industrial IR links"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "Pin 1 (GND)",
+          "to": "GND"
+        },
+        {
+          "pin": "Pin 2 (Vs)",
+          "to": "5V"
+        },
+        {
+          "pin": "Pin 3 (OUT)",
+          "to": "D2"
+        }
+      ]
+    },
+    "tip": "The shield helps near motors and switching supplies. Add 100Ω in series with Vs and a 4.7 µF capacitor to GND for extra stability.",
+    "library": "IRremote",
+    "projects": [
+      {
+        "level": "low",
+        "title": "Remote key printer",
+        "description": "Print any remote's key codes.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Remote relay board",
+        "description": "Control four relays with a TV remote.",
+        "parts": [
+          "4-channel relay"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "IR robot control",
+        "description": "Drive a motorised robot without the motor noise causing glitches.",
+        "parts": [
+          "2WD chassis",
+          "L298N driver"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-081",
+    "name": "5 kg Load Cell",
+    "category": "Force, Weight & Pressure",
+    "purpose": "Weighs things up to 5 kg",
+    "essential": false,
+    "interface": "HX711",
+    "difficulty": "Medium",
+    "voltage": "Via HX711",
+    "summary": "Aluminium bar strain-gauge load cell for weights up to 5 kg.",
+    "useCases": [
+      "Kitchen scales",
+      "Parcel weighing",
+      "Inventory shelves"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "Red (E+)",
+          "to": "HX711 E+"
+        },
+        {
+          "pin": "Black (E−)",
+          "to": "HX711 E−"
+        },
+        {
+          "pin": "White (A−)",
+          "to": "HX711 A−"
+        },
+        {
+          "pin": "Green (A+)",
+          "to": "HX711 A+"
+        }
+      ]
+    },
+    "tip": "Connect it to an HX711: red E+, black E−, white A−, green A+. Mount it so only the arrow end is loaded, then calibrate with a known weight.",
+    "library": "HX711 (bogde)",
+    "projects": [
+      {
+        "level": "low",
+        "title": "Raw weight reading",
+        "description": "Print raw HX711 values while pressing the bar.",
+        "parts": [
+          "HX711"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Digital kitchen scale",
+        "description": "Weigh in grams on an LCD, with a tare button.",
+        "parts": [
+          "HX711",
+          "16x2 I2C LCD",
+          "Push button"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Smart pill/stock shelf",
+        "description": "Count identical items by weight and alert when stock is low.",
+        "parts": [
+          "HX711",
+          "16x2 I2C LCD",
+          "Buzzer"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-082",
+    "name": "10 kg Load Cell",
+    "category": "Force, Weight & Pressure",
+    "purpose": "Weighs things up to 10 kg",
+    "essential": false,
+    "interface": "HX711",
+    "difficulty": "Medium",
+    "voltage": "Via HX711",
+    "summary": "Bar load cell for up to 10 kg, for heavier scales.",
+    "useCases": [
+      "Luggage scales",
+      "Pet food monitors",
+      "Beehive weighing"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "Red (E+)",
+          "to": "HX711 E+"
+        },
+        {
+          "pin": "Black (E−)",
+          "to": "HX711 E−"
+        },
+        {
+          "pin": "White (A−)",
+          "to": "HX711 A−"
+        },
+        {
+          "pin": "Green (A+)",
+          "to": "HX711 A+"
+        }
+      ]
+    },
+    "tip": "Connect it to an HX711: red E+, black E−, white A−, green A+. Mount it so only the arrow end is loaded, then calibrate with a known weight.",
+    "library": "HX711 (bogde)",
+    "projects": [
+      {
+        "level": "low",
+        "title": "Weight printer",
+        "description": "Print weight in kg after calibration.",
+        "parts": [
+          "HX711"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Pet food bowl monitor",
+        "description": "Track how much your pet eats each day.",
+        "parts": [
+          "HX711",
+          "16x2 I2C LCD"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Beehive scale logger",
+        "description": "Log hive weight daily to track honey production.",
+        "parts": [
+          "HX711",
+          "Micro SD card reader",
+          "DS3231 RTC"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-083",
+    "name": "50 kg Load Cell",
+    "category": "Force, Weight & Pressure",
+    "purpose": "Weighs people, like a bathroom scale",
+    "essential": false,
+    "interface": "HX711",
+    "difficulty": "Hard",
+    "voltage": "Via HX711",
+    "summary": "Half-bridge body-scale load cell (3 wires). Use four of them to make a full bathroom-scale bridge.",
+    "useCases": [
+      "Bathroom scales",
+      "Bed occupancy",
+      "Large platform scales"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "Red",
+          "to": "Bridge combiner board"
+        },
+        {
+          "pin": "Black",
+          "to": "Bridge combiner board"
+        },
+        {
+          "pin": "White",
+          "to": "Bridge combiner board"
+        }
+      ]
+    },
+    "tip": "One cell is only half a bridge. Use 4 cells with a combiner board, or 1 cell plus 2 × 1 kΩ resistors, before the HX711.",
+    "library": "HX711 (bogde)",
+    "projects": [
+      {
+        "level": "low",
+        "title": "Half-bridge test",
+        "description": "Wire one cell with two resistors and see the reading change when pressed.",
+        "parts": [
+          "HX711",
+          "2 × 1kΩ resistors"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Bathroom scale",
+        "description": "Four cells under a board make a body-weight scale.",
+        "parts": [
+          "4 × 50kg cells",
+          "Combiner board",
+          "HX711",
+          "16x2 I2C LCD"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Bed occupancy monitor",
+        "description": "Detect when someone gets out of bed at night for elderly care.",
+        "parts": [
+          "4 × 50kg cells",
+          "HX711",
+          "Buzzer"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-085",
+    "name": "35 mm Piezo Plate",
+    "category": "Sound",
+    "purpose": "Detects knocks or makes beeps",
+    "essential": false,
+    "interface": "Analog",
+    "difficulty": "Easy",
+    "voltage": "—",
+    "summary": "Piezo disc that works as a knock sensor (it generates a voltage) or as a buzzer.",
+    "useCases": [
+      "Knock detection",
+      "Drum triggers",
+      "Energy-harvesting demos"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "Red",
+          "to": "A0 + 1MΩ to GND"
+        },
+        {
+          "pin": "Black",
+          "to": "GND"
+        }
+      ]
+    },
+    "tip": "As a sensor, put a 1 MΩ resistor across it and read A0. It can produce voltage spikes, so add a 5.1V Zener for protection. As a buzzer, drive it with tone().",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Knock detector",
+        "description": "Light an LED when the table is knocked.",
+        "parts": [
+          "1MΩ resistor",
+          "LED + 220Ω"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Electronic drum pad",
+        "description": "Play a sound whose loudness follows hit strength.",
+        "parts": [
+          "1MΩ resistor",
+          "Buzzer"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Secret knock lock",
+        "description": "Record a knock rhythm and open a servo latch when it matches.",
+        "parts": [
+          "1MΩ resistor",
+          "SG90 servo"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-086",
+    "name": "27 mm Piezo Plate",
+    "category": "Sound",
+    "purpose": "Detects taps or makes beeps",
+    "essential": false,
+    "interface": "Analog",
+    "difficulty": "Easy",
+    "voltage": "—",
+    "summary": "Smaller piezo disc for knock sensing or making sound.",
+    "useCases": [
+      "Knock and tap sensors",
+      "Simple buzzers",
+      "Vibration pickups"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "Red",
+          "to": "A0 + 1MΩ to GND"
+        },
+        {
+          "pin": "Black",
+          "to": "GND"
+        }
+      ]
+    },
+    "tip": "As a sensor, put a 1 MΩ resistor across it and read A0. It can produce voltage spikes, so add a 5.1V Zener for protection. As a buzzer, drive it with tone().",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Piezo melody",
+        "description": "Play a tune with tone().",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Tap counter",
+        "description": "Count taps on a table and show the number on LEDs.",
+        "parts": [
+          "1MΩ resistor"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Footstep energy demo",
+        "description": "Rectify the piezo output to charge a capacitor and light an LED.",
+        "parts": [
+          "Bridge rectifier",
+          "Capacitor",
+          "LED"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-087",
+    "name": "Hall Effect Sensor Module",
+    "category": "Magnetic & Metal",
+    "purpose": "Detects magnets",
+    "essential": false,
+    "interface": "Digital + Analog",
+    "difficulty": "Easy",
+    "voltage": "3.3–5V",
+    "summary": "Linear Hall-effect sensor with a comparator that detects magnets and magnetic field strength.",
+    "useCases": [
+      "Magnet detection",
+      "RPM sensing with a magnet",
+      "Contactless switches"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "DO",
+          "to": "D2"
+        },
+        {
+          "pin": "AO",
+          "to": "A0"
+        }
+      ]
+    },
+    "tip": "AO sits at about 2.5V and moves up or down depending on the magnet's pole. Adjust the trimmer for the DO threshold.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Magnet detector",
+        "description": "Light an LED when a magnet is near.",
+        "parts": [
+          "LED + 220Ω"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Bicycle speedometer",
+        "description": "A wheel magnet triggers the sensor and you calculate km/h.",
+        "parts": [
+          "Magnet",
+          "16x2 I2C LCD"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Contactless liquid level",
+        "description": "A float magnet triggers sensors at different heights in a tube.",
+        "parts": [
+          "Magnets",
+          "Float",
+          "Several hall sensors"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-088",
+    "name": "AS608 Fingerprint Sensor",
+    "category": "Health & Biometric",
+    "purpose": "Recognises fingerprints",
+    "essential": false,
+    "interface": "UART",
+    "difficulty": "Hard",
+    "voltage": "3.3V",
+    "summary": "Optical fingerprint module that stores up to about 160 fingerprints and does the matching itself.",
+    "useCases": [
+      "Biometric door locks",
+      "Attendance systems",
+      "Secure lockers"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "V+ (red)",
+          "to": "3.3V"
+        },
+        {
+          "pin": "GND (black)",
+          "to": "GND"
+        },
+        {
+          "pin": "TX (yellow)",
+          "to": "D2 (SoftwareSerial RX)"
+        },
+        {
+          "pin": "RX (white/green)",
+          "to": "D3 (SoftwareSerial TX)"
+        }
+      ]
+    },
+    "tip": "The AS608 runs on 3.3V (the R307 runs on 5V). Wire colours vary, so check your cable. Enroll fingers with the Adafruit 'enroll' example first, at 57600 baud.",
+    "library": "Adafruit Fingerprint Sensor Library",
+    "projects": [
+      {
+        "level": "low",
+        "title": "Fingerprint enroll & match",
+        "description": "Enroll your finger and print the matched ID.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Fingerprint door lock",
+        "description": "Open a solenoid lock for enrolled fingers, with lockout after 3 failures.",
+        "parts": [
+          "Relay module",
+          "12V solenoid lock",
+          "Buzzer"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Attendance system",
+        "description": "Log the finger ID with date and time to SD.",
+        "parts": [
+          "DS3231 RTC",
+          "Micro SD card reader",
+          "16x2 I2C LCD"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-089",
+    "name": "1-Channel Touch",
+    "category": "Touch",
+    "purpose": "A single touch button",
+    "essential": false,
+    "interface": "Digital",
+    "difficulty": "Easy",
+    "voltage": "2–5.5V",
+    "summary": "Single TTP223 capacitive touch button on a round pad.",
+    "useCases": [
+      "Touch buttons",
+      "Touch lamps",
+      "Waterproof panel buttons"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "OUT",
+          "to": "D2"
+        }
+      ]
+    },
+    "tip": "The output goes HIGH while touched. You can stick it behind up to about 3 mm of plastic.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Touch LED",
+        "description": "LED on while touching.",
+        "parts": [
+          "LED + 220Ω"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Touch toggle switch",
+        "description": "A touch toggles a relay.",
+        "parts": [
+          "Relay module"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Touch piano key",
+        "description": "Combine several pads into a mini piano with a buzzer.",
+        "parts": [
+          "Several touch pads",
+          "Buzzer"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-090",
+    "name": "4-Channel Touch (TTP224)",
+    "category": "Touch",
+    "purpose": "Four touch buttons",
+    "essential": false,
+    "interface": "Digital",
+    "difficulty": "Easy",
+    "voltage": "2.4–5.5V",
+    "summary": "Four capacitive touch keys on one board, each with its own output pin.",
+    "useCases": [
+      "Touch keypads",
+      "Menu buttons",
+      "4-zone light control"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "OUT1",
+          "to": "D2"
+        },
+        {
+          "pin": "OUT2",
+          "to": "D3"
+        },
+        {
+          "pin": "OUT3",
+          "to": "D4"
+        },
+        {
+          "pin": "OUT4",
+          "to": "D5"
+        }
+      ]
+    },
+    "tip": "Each output is HIGH while its key is touched.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Four-key LEDs",
+        "description": "Each key lights its own LED.",
+        "parts": [
+          "4 LEDs + 220Ω"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Touch relay panel",
+        "description": "Four keys toggle four relays.",
+        "parts": [
+          "4-channel relay"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Touch PIN lock",
+        "description": "Enter a 4-digit PIN with the touch keys to open a servo lock.",
+        "parts": [
+          "SG90 servo",
+          "Buzzer"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-091",
+    "name": "8-Channel Touch",
+    "category": "Touch",
+    "purpose": "Eight touch buttons",
+    "essential": false,
+    "interface": "Digital",
+    "difficulty": "Easy",
+    "voltage": "2.4–5.5V",
+    "summary": "Eight capacitive touch keys with parallel outputs.",
+    "useCases": [
+      "Touch keyboards",
+      "Musical instruments",
+      "Multi-zone controls"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "OUT1–OUT8",
+          "to": "D2–D9"
+        }
+      ]
+    },
+    "tip": "It uses 8 pins. If you're short of pins, read the outputs through a 74HC165 shift register.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Touch keyboard test",
+        "description": "Print which key is touched.",
+        "parts": []
+      },
+      {
+        "level": "medium",
+        "title": "Touch piano",
+        "description": "Play 8 notes of a scale on a buzzer.",
+        "parts": [
+          "Buzzer"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Touch MIDI controller",
+        "description": "Send MIDI notes over USB serial to music software on a PC.",
+        "parts": [
+          "Hairless MIDI on PC"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-092",
+    "name": "PWM Touch Dimmer",
+    "category": "Touch",
+    "purpose": "Turns lights on and dims them by touch",
+    "essential": false,
+    "interface": "Digital",
+    "difficulty": "Easy",
+    "voltage": "5–12V",
+    "summary": "Touch dimmer board: a tap toggles the output and a long press sets the brightness via PWM.",
+    "useCases": [
+      "Touch-dimmable lamps",
+      "LED strip dimmers",
+      "Desk lights"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VCC",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "OUT (PWM)",
+          "to": "D2 (read with pulseIn)"
+        }
+      ]
+    },
+    "tip": "It works on its own for LED dimming. To read the brightness on the Nano, measure the duty cycle with pulseIn().",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Touch-dim LED",
+        "description": "Dim an LED by touch without any code.",
+        "parts": [
+          "LED + resistor"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Brightness reader",
+        "description": "Read the dimmer's duty cycle and show it as %.",
+        "parts": []
+      },
+      {
+        "level": "high",
+        "title": "Touch-dim LED strip",
+        "description": "Drive a 12V strip through a MOSFET and sync a second strip from the Nano.",
+        "parts": [
+          "Logic-level MOSFET",
+          "12V LED strip"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-093",
+    "name": "E18-D80NK IR Proximity",
+    "category": "Proximity & Distance",
+    "purpose": "Detects objects up to 80 cm away",
+    "essential": false,
+    "interface": "Digital",
+    "difficulty": "Easy",
+    "voltage": "5V",
+    "summary": "Adjustable 3–80 cm industrial IR proximity sensor in a threaded barrel.",
+    "useCases": [
+      "Conveyor object counting",
+      "Robot obstacle detection",
+      "Automatic doors"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "Brown",
+          "to": "5V"
+        },
+        {
+          "pin": "Blue",
+          "to": "GND"
+        },
+        {
+          "pin": "Black",
+          "to": "D2 (INPUT_PULLUP)"
+        }
+      ]
+    },
+    "tip": "The NPN output goes LOW when an object is detected. Set the range with the screw on the back.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Object detector",
+        "description": "Light an LED when something is in range.",
+        "parts": [
+          "LED + 220Ω"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Automatic hand dryer model",
+        "description": "Run a fan while hands are under the sensor.",
+        "parts": [
+          "Relay module",
+          "DC fan"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Conveyor counting & rejection",
+        "description": "Count items and push out every 10th one with a servo for inspection.",
+        "parts": [
+          "SG90 servo",
+          "16x2 I2C LCD"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-095",
+    "name": "MQ2 Sensor (bare)",
+    "category": "Gas, Smoke & Fire",
+    "purpose": "Detects smoke and gas (bare sensor)",
+    "essential": false,
+    "interface": "Analog",
+    "difficulty": "Medium",
+    "voltage": "5V",
+    "summary": "Bare MQ2 gas element for smoke and LPG, for building your own module or PCB.",
+    "useCases": [
+      "Custom gas-sensor PCBs",
+      "Smoke alarms",
+      "Learning sensor circuits"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "H pins",
+          "to": "5V and GND (heater)"
+        },
+        {
+          "pin": "A pins",
+          "to": "5V"
+        },
+        {
+          "pin": "B pins",
+          "to": "A0 + 10kΩ to GND"
+        }
+      ]
+    },
+    "tip": "The bare sensor needs a circuit: heater pins (H) to 5V/GND, A pins to 5V, and B pins to A0 with a 10 kΩ load resistor to GND. The heater draws about 150 mA.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Build the circuit",
+        "description": "Wire the load resistor and read smoke levels on A0.",
+        "parts": [
+          "10kΩ resistor",
+          "Breadboard"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Smoke alarm PCB",
+        "description": "Solder your own smoke alarm board with buzzer.",
+        "parts": [
+          "Perfboard",
+          "Buzzer"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Rs/R0 ppm estimate",
+        "description": "Calculate Rs/R0 and estimate ppm from the datasheet curve.",
+        "parts": [
+          "10kΩ resistor"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-096",
+    "name": "MQ3 Sensor (bare)",
+    "category": "Gas, Smoke & Fire",
+    "purpose": "Detects alcohol (bare sensor)",
+    "essential": false,
+    "interface": "Analog",
+    "difficulty": "Medium",
+    "voltage": "5V",
+    "summary": "Bare MQ3 alcohol gas element.",
+    "useCases": [
+      "Breathalyser demos",
+      "Custom sensor boards",
+      "Fermentation monitors"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "H pins",
+          "to": "5V and GND (heater)"
+        },
+        {
+          "pin": "A pins",
+          "to": "5V"
+        },
+        {
+          "pin": "B pins",
+          "to": "A0 + 200kΩ to GND"
+        }
+      ]
+    },
+    "tip": "The MQ3 datasheet recommends a 200 kΩ load resistor. Let it warm up for at least 2 minutes before reading.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Alcohol sniffer",
+        "description": "Show the alcohol level on a 5-LED bar.",
+        "parts": [
+          "200kΩ resistor",
+          "5 LEDs"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Wine fermentation tracker",
+        "description": "Watch alcohol vapour rise over days.",
+        "parts": [
+          "Micro SD card reader"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Calibrated breath meter",
+        "description": "Estimate mg/L with the datasheet curve (demo only).",
+        "parts": [
+          "16x2 I2C LCD"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-098",
+    "name": "MQ6 Sensor (bare)",
+    "category": "Gas, Smoke & Fire",
+    "purpose": "Detects LPG gas (bare sensor)",
+    "essential": false,
+    "interface": "Analog",
+    "difficulty": "Medium",
+    "voltage": "5V",
+    "summary": "Bare MQ6 element for LPG, butane and propane.",
+    "useCases": [
+      "LPG leak detectors",
+      "Custom gas boards",
+      "Learning sensor circuits"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "H pins",
+          "to": "5V and GND (heater)"
+        },
+        {
+          "pin": "A pins",
+          "to": "5V"
+        },
+        {
+          "pin": "B pins",
+          "to": "A0 + 20kΩ to GND"
+        }
+      ]
+    },
+    "tip": "The bare sensor needs a circuit: heater pins (H) to 5V/GND, A pins to 5V, and B pins to A0 with a 20 kΩ load resistor to GND. The heater draws about 150 mA.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "LPG reading",
+        "description": "Read the LPG level and print it.",
+        "parts": [
+          "20kΩ resistor"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Cylinder leak alarm",
+        "description": "A loud buzzer and LED for LPG leaks.",
+        "parts": [
+          "Buzzer",
+          "LED"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Leak alarm with auto-valve",
+        "description": "Close a solenoid valve on a leak until reset.",
+        "parts": [
+          "Relay module",
+          "Solenoid valve"
+        ]
+      }
+    ]
+  },
+  {
+    "sku": "SEN-099",
+    "name": "RCWL-0516 Microwave Radar",
+    "category": "Motion & Orientation",
+    "purpose": "Detects movement, even through walls",
+    "essential": false,
+    "interface": "Digital",
+    "difficulty": "Easy",
+    "voltage": "4–28V",
+    "summary": "Doppler microwave motion sensor that sees movement up to about 7 m, even through plastic or thin walls.",
+    "useCases": [
+      "Hidden motion lights",
+      "Occupancy detection",
+      "Intruder alarms"
+    ],
+    "wiring": {
+      "arduino-nano": [
+        {
+          "pin": "VIN",
+          "to": "5V"
+        },
+        {
+          "pin": "GND",
+          "to": "GND"
+        },
+        {
+          "pin": "OUT",
+          "to": "D2"
+        }
+      ]
+    },
+    "tip": "OUT goes HIGH (3.3V, which the Nano reads fine) for about 2 seconds on motion. Keep it away from metal and fans, which cause false triggers.",
+    "library": null,
+    "projects": [
+      {
+        "level": "low",
+        "title": "Motion LED",
+        "description": "Light an LED when anything moves.",
+        "parts": [
+          "LED + 220Ω"
+        ]
+      },
+      {
+        "level": "medium",
+        "title": "Hidden porch light",
+        "description": "A light turns on behind a plastic cover when someone approaches.",
+        "parts": [
+          "Relay module"
+        ]
+      },
+      {
+        "level": "high",
+        "title": "Dual-tech intruder alarm",
+        "description": "Combine with a PIR so the alarm sounds only when both detect motion.",
+        "parts": [
+          "PIR sensor",
+          "Buzzer"
+        ]
+      }
+    ]
+  }
+]

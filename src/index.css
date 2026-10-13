@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+/*
+  Design rules for this site:
+  - no shadows anywhere (shadow utilities are removed from the theme)
+  - one corner radius: rounded-md
+*/
+@theme {
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --shadow-*: initial;
+  --inset-shadow-*: initial;
+  --drop-shadow-*: initial;
+  --text-shadow-*: initial;
+
+  --radius-*: initial;
+  --radius-md: 0.375rem;
+}
+
+/* Horizontal scrollers (category chips on phones) without a visible scrollbar. */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-zinc-50 font-sans text-zinc-900 antialiased;
+    overflow-x: clip;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-teal-600;
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "purpose": "A voltage-controlled high-power electronic switch. Unlike BJTs which consume continuous base current, a MOSFET gate draws zero steady current and has near-zero internal resistance (R_DS(on)). It allows a 5V or 3.3V Arduino pin to switch 5A to 50A+ loads like 12V/24V LED strips, motors, and heating elements at high-speed PWM with virtually zero heat.",
+  "whenToUse": [
+    {
+      "scenario": "High-Current Loads (1A to 50A+): 12V/24V LED Strips, Motors, Heaters",
+      "why": "Standard BJTs (like 2N2222) top out at 800 mA. Relays cannot be switched fast with PWM. A MOSFET handles massive currents (5A to 50A) with negligible heat thanks to milliohm-level internal resistance.",
+      "recommended": "IRLZ44N or IRLB8721 (Logic-Level N-Channel)"
+    },
+    {
+      "scenario": "High-Speed PWM Dimming and Motor Speed Control",
+      "why": "Mechanical relays can only switch 10–20 times per second and will quickly wear out. MOSFETs switch millions of times per second, making them the industry standard for smooth LED brightness dimming and DC motor PWM speed control.",
+      "recommended": "IRLZ44N or FQP30N06L"
+    },
+    {
+      "scenario": "Battery-Powered IoT Devices (Zero Gate Power Consumption)",
+      "why": "BJTs waste 5 mA to 20 mA of continuous control current to stay turned on. A MOSFET gate is insulated by glass (silicon dioxide)—once charged, it consumes 0.000 mA static current, preserving battery life.",
+      "recommended": "AO3400 (SMD) or 2N7000 (through-hole)"
+    },
+    {
+      "scenario": "THE CRITICAL RULE: Always Choose 'Logic-Level' MOSFETs!",
+      "why": "The #1 beginner trap in Arduino electronics! Standard power MOSFETs (like the infamous IRF520 or IRFZ44N) require 10V at the Gate to turn on fully. When driven by a 5V or 3.3V Arduino pin, they only partially open, act like a heating element, and can catch fire. You MUST choose a LOGIC-LEVEL MOSFET (look for an 'L' in the part number, like IRLZ44N or IRLB8721) which turns on fully at 3V to 4.5V.",
+      "recommended": "IRLZ44N, IRLB8721, FQP30N06L (Avoid IRF520 for 5V direct drive!)"
+    },
+    {
+      "scenario": "Always Add a 10 kΩ Gate Pull-Down Resistor",
+      "why": "When the Arduino boots or resets, its pins are high-impedance inputs. The MOSFET gate acts like a tiny sensitive capacitor and will pick up static noise, causing your motor or laser to randomly turn ON. A 10kΩ resistor from Gate to GND ensures it stays firmly OFF until your code actively drives it.",
+      "recommended": "10 kΩ pull-down resistor from Gate to GND"
+    }
+  ],
+  "basics": [
+    {
+      "title": "Gate (G), Drain (D), Source (S)",
+      "text": "The three pins of a MOSFET. Gate is the control switch (connected to Arduino). Drain connects to the negative side of your load. Source connects to GND (for N-Channel). Current flows between Drain and Source."
+    },
+    {
+      "title": "N-Channel vs P-Channel",
+      "text": "N-Channel is a Low-Side switch (Source to GND, Drain to Load negative). It is used in 95% of microcontroller projects because it is cheap, low-resistance, and easy to drive directly. P-Channel is a High-Side switch (Source to VCC, Drain to Load positive)."
+    },
+    {
+      "title": "R_DS(on) — On Resistance",
+      "text": "The resistance between Drain and Source when the MOSFET is fully turned on. Good logic-level MOSFETs have R_DS(on) under 0.020 Ω (20 milliohms). At 5A load, 20 mΩ drops only 0.1V and wastes only 0.5 Watts of heat—no heatsink needed!"
+    },
+    {
+      "title": "Gate Protection (Series Resistor + Pull-Down)",
+      "text": "Place a small 100Ω to 220Ω resistor between the Arduino pin and the Gate to limit the microsecond inrush current charging the gate capacitor. Place a 10kΩ resistor between Gate and GND to keep the MOSFET safely OFF during boot."
+    }
+  ],
+  "types": [
+    {
+      "id": "n-channel-logic",
+      "name": "N-Channel Logic-Level MOSFET",
+      "gateThreshold": "V_GS(th) = 1.0V – 2.5V (Fully ON at 4.5V)",
+      "rdsOn": "8 mΩ to 30 mΩ (Extremely low)",
+      "maxCurrent": "16A to 60A (TO-220 package)",
+      "looks": "Standard black TO-220 package with metal mounting tab (Pins: 1-Gate, 2-Drain, 3-Source).",
+      "pros": ["Directly driven by 5V Arduino Nano pins with zero driver ICs", "Handles 10A+ without needing a bulky heatsink", "Supports high-speed PWM frequencies"],
+      "cons": ["Low-side switching (load negative is separated from ground when off)"],
+      "uses": ["12V/24V LED strip brightness control", "High-power DC motor speed regulation", "Heated beds and high-current solenoids"]
+    },
+    {
+      "id": "p-channel-logic",
+      "name": "P-Channel Logic-Level MOSFET",
+      "gateThreshold": "Negative V_GS (Turns on when Gate pulled low)",
+      "rdsOn": "20 mΩ to 50 mΩ",
+      "maxCurrent": "10A to 40A",
+      "looks": "Same TO-220 package; part numbers like IRL9530 or FQP27P06.",
+      "pros": ["High-side switching: load always stays securely grounded to common chassis", "Ideal for power distribution switches"],
+      "cons": ["If the load voltage exceeds 5V (e.g. 12V), requires a small NPN transistor to pull the gate to ground safely"],
+      "uses": ["High-side vehicle lighting", "Power rail sequencing", "Reverse-battery ideal diode circuits"]
+    },
+    {
+      "id": "small-signal-mosfet",
+      "name": "Small Signal MOSFET (2N7000 / BS170)",
+      "gateThreshold": "2.0V – 3.0V",
+      "rdsOn": "1.2 Ω to 5 Ω",
+      "maxCurrent": "200 mA to 500 mA (TO-92)",
+      "looks": "Tiny half-cylinder TO-92 package, identical in shape to a 2N2222 BJT.",
+      "pros": ["Virtually zero gate drive power", "Perfect for low-power sensors, I2C level shifting, and tiny relays", "High input impedance"],
+      "cons": ["Higher ON-resistance (1.2–5 ohms), so not suited for heavy currents (>500 mA)"],
+      "uses": ["Bidirectional I2C level shifters (3.3V to 5V)", "Low-power battery switches", "Small 5V buzzers and reed relays"]
+    }
+  ],
+  "commonParts": [
+    { "part": "IRLZ44N", "type": "N-Channel (Logic-Level)", "rating": "55V 47A (Rds=22mΩ)", "whenToUse": "THE #1 choice for Arduino. Logic-level gate guarantees full conduction at 4.5V. Great for 12V LED strips and motors." },
+    { "part": "IRLB8721", "type": "N-Channel (Logic-Level)", "rating": "30V 62A (Rds=8.7mΩ)", "whenToUse": "Ultra-low R_DS(on) of 8.7 milliohms. Best for high-current 12V applications where you want zero heat generation." },
+    { "part": "FQP30N06L", "type": "N-Channel (Logic-Level)", "rating": "60V 32A (Rds=35mΩ)", "whenToUse": "Reliable 60V logic-level MOSFET for 24V power supplies, robotics, and solenoids." },
+    { "part": "2N7000", "type": "N-Channel Small Signal", "rating": "60V 200mA (Rds=5Ω)", "whenToUse": "Tiny TO-92 package for breadboard logic level conversion and switching small loads." },
+    { "part": "IRF520 (Warning!)", "type": "Standard Power N-Ch", "rating": "100V 9.2A", "whenToUse": "Common on cheap red breakout boards, but NOT logic-level! Needs 10V at the gate. Avoid driving directly from 5V Arduino for loads over 1A." }
+  ],
+  "examples": [
+    {
+      "id": "mosfet-led-strip-pwm",
+      "title": "High-Power 12V LED Strip PWM Dimmer",
+      "description": "Smoothly dims a 12V high-power LED strip using an IRLZ44N logic-level N-Channel MOSFET with a 100Ω gate resistor and 10kΩ pull-down resistor.",
+      "parts": ["IRLZ44N MOSFET", "100Ω Resistor", "10kΩ Resistor", "12V Power Supply", "12V LED Strip"],
+      "wiring": [
+        { "part": "Arduino Nano", "pin": "D6 (PWM)", "to": "100Ω Resistor" },
+        { "part": "100Ω Resistor", "pin": "Output leg", "to": "MOSFET Gate (Pin 1)" },
+        { "part": "10kΩ Resistor", "pin": "Between", "to": "MOSFET Gate (Pin 1) and GND" },
+        { "part": "MOSFET", "pin": "Source (Pin 3)", "to": "Common GND" },
+        { "part": "MOSFET", "pin": "Drain (Pin 2)", "to": "12V LED Strip Negative (-)" },
+        { "part": "12V Supply (+)", "pin": "12V", "to": "12V LED Strip Positive (+)" },
+        { "part": "12V Supply (-)", "pin": "GND", "to": "Arduino Nano GND (Shared GND)" }
+      ],
+      "code": [
+        "// 12V LED Strip PWM Dimming with Logic-Level MOSFET",
+        "// Uses an IRLZ44N or IRLB8721 on PWM pin D6.",
+        "// A 10k resistor from Gate to GND prevents floating during boot.",
+        "",
+        "const int MOSFET_PWM_PIN = 6;",
+        "",
+        "void setup() {",
+        "  pinMode(MOSFET_PWM_PIN, OUTPUT);",
+        "  Serial.begin(9600);",
+        "  Serial.println(F(\"MOSFET PWM Dimmer ready.\"));",
+        "}",
+        "",
+        "void loop() {",
+        "  // Fade brightness up smoothly",
+        "  for (int brightness = 0; brightness <= 255; brightness += 5) {",
+        "    analogWrite(MOSFET_PWM_PIN, brightness);",
+        "    delay(20);",
+        "  }",
+        "  delay(500);",
+        "",
+        "  // Fade brightness down smoothly",
+        "  for (int brightness = 255; brightness >= 0; brightness -= 5) {",
+        "    analogWrite(MOSFET_PWM_PIN, brightness);",
+        "    delay(20);",
+        "  }",
+        "  delay(500);",
+        "}"
+      ]
+    }
+  ]
+}

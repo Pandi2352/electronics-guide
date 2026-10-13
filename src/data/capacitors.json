@@ -1,0 +1,113 @@
+{
+  "purpose": "A temporary reservoir for electrical energy. It smooths out voltage dips, filters high-frequency electrical noise, and stabilizes power rails during heavy load spikes so microcontrollers don't crash.",
+  "whenToUse": [
+    {
+      "scenario": "Decoupling Microcontroller & IC Power Rails (Prevent Glitches)",
+      "why": "When chips switch internal logic in nanoseconds, they cause tiny micro-dips on VCC. A capacitor right next to the chip supplies instantaneous current, preventing resets.",
+      "recommended": "100 nF (code 104) Ceramic Capacitor between VCC and GND"
+    },
+    {
+      "scenario": "Bulk Energy Smoothing for Motors, Servos & Wi-Fi Spikes",
+      "why": "DC motors, servos, and ESP32 Wi-Fi bursts draw sudden 500mA+ surges that collapse battery power rails. A bulk electrolytic capacitor acts like a local water tank to cushion the surge.",
+      "recommended": "100 µF to 1000 µF Electrolytic Capacitor across the motor/servo power rail"
+    },
+    {
+      "scenario": "Crystal Oscillator Load Capacitors (Accurate Clocks)",
+      "why": "Microcontroller quartz crystals (16 MHz) require matched capacitive loads to oscillate at their exact intended frequency.",
+      "recommended": "Pair of 22 pF (code 22) Ceramic Capacitors"
+    },
+    {
+      "scenario": "Audio AC Coupling & DC Blocking",
+      "why": "Passes vibrating AC sound signals while blocking steady DC bias voltages from reaching amplifiers or headphones.",
+      "recommended": "1 µF to 10 µF Electrolytic or Film Capacitor"
+    },
+    {
+      "scenario": "Power Supply Rectifier Ripple Smoothing",
+      "why": "Smooths rectified pulsating DC voltage from AC transformers into steady, flat DC voltage.",
+      "recommended": "1000 µF to 4700 µF Electrolytic Capacitor"
+    }
+  ],
+  "basics": [
+    { "title": "What a capacitor does", "text": "It stores a small amount of electric charge, like a tiny bucket that fills and empties very fast. It smooths power dips and filters out noise." },
+    { "title": "Units", "text": "Capacitance is measured in farads (F), but real parts are tiny: 1 µF = 1000 nF = 1 000 000 pF. Ceramic codes always count in pF." },
+    { "title": "Polarity", "text": "Electrolytic and tantalum capacitors have a + and − leg and must go the right way round. Ceramic and film capacitors can go either way." },
+    { "title": "Voltage rating", "text": "Every capacitor has a maximum voltage. Pick one rated well above your circuit, e.g. 16V or 25V for a 5V project." },
+    { "title": "Decoupling", "text": "A 100 nF (104) ceramic capacitor between VCC and GND, right next to a chip or module, removes fast noise. It is the most used capacitor of all." },
+    { "title": "Stay safe", "text": "Large capacitors can stay charged after power is off. Never short them with a screwdriver; discharge them through a resistor." }
+  ],
+  "howToRead": [
+    "The first two digits are the start of the value.",
+    "The third digit is how many zeros to add.",
+    "The answer is in picofarads (pF). Divide by 1000 for nF, and by 1 000 000 for µF.",
+    "A letter after the code is the tolerance, e.g. J = ±5%, K = ±10%."
+  ],
+  "example": "104 → 10 followed by 4 zeros = 100 000 pF = 100 nF = 0.1 µF.",
+  "letters": [
+    { "letter": "F", "tolerance": "±1%" },
+    { "letter": "G", "tolerance": "±2%" },
+    { "letter": "J", "tolerance": "±5%" },
+    { "letter": "K", "tolerance": "±10%" },
+    { "letter": "M", "tolerance": "±20%" },
+    { "letter": "Z", "tolerance": "+80% / −20%" }
+  ],
+  "types": [
+    {
+      "id": "ceramic",
+      "name": "Ceramic",
+      "polarized": false,
+      "range": "1 pF – 10 µF",
+      "marking": "3-digit code, e.g. 104",
+      "looks": "Small flat disc (yellow, orange or blue) or a tiny blob with two legs.",
+      "uses": ["Decoupling next to chips", "Noise filters", "Crystal load capacitors"],
+      "note": "Read the 3-digit code. No polarity, so it can go either way round."
+    },
+    {
+      "id": "electrolytic",
+      "name": "Electrolytic",
+      "polarized": true,
+      "range": "0.1 µF – 10 000 µF",
+      "marking": "Value and voltage printed, e.g. 100µF 25V",
+      "looks": "Can-shaped cylinder with a light stripe down one side.",
+      "uses": ["Smoothing power supplies", "Bulk storage for motors, servos and LED strips"],
+      "note": "The stripe with − signs marks the NEGATIVE leg; the longer leg is positive. Put in backwards, it can bulge or burst."
+    },
+    {
+      "id": "film",
+      "name": "Film (polyester)",
+      "polarized": false,
+      "range": "1 nF – 10 µF",
+      "marking": "Code like 2A104J (2A = 100V, 104 = 100 nF, J = ±5%)",
+      "looks": "Box-shaped, often green, red or yellow, with two legs.",
+      "uses": ["Audio circuits", "Accurate timing", "Mains noise suppression (X2 type)"],
+      "note": "Very stable and accurate. X2-rated types are made for mains use."
+    },
+    {
+      "id": "tantalum",
+      "name": "Tantalum",
+      "polarized": true,
+      "range": "0.1 µF – 470 µF",
+      "marking": "Code like 106 + a stripe at the POSITIVE end",
+      "looks": "Small yellow or orange teardrop, or a tiny block on boards.",
+      "uses": ["Regulator outputs (e.g. AMS1117)", "Compact power filtering"],
+      "note": "Careful: on tantalum the stripe marks the POSITIVE leg, the opposite of electrolytic. Reversed, it can catch fire."
+    }
+  ],
+  "values": [
+    { "pf": 22, "code": "22", "type": "ceramic", "voltage": "50V", "purpose": "Load capacitors for a crystal oscillator.", "uses": ["Pair on a 16 MHz crystal for a breadboard ATmega328P", "Filtering very high-frequency noise"] },
+    { "pf": 100, "code": "101", "type": "ceramic", "voltage": "50V", "purpose": "Tiny filter for high-frequency noise on signal lines.", "uses": ["RF noise filtering", "Op-amp stability"] },
+    { "pf": 1000, "code": "102", "type": "ceramic", "voltage": "50V", "purpose": "Filters fast noise on sensor and signal lines.", "uses": ["Small RC filters", "Reducing switching noise"] },
+    { "pf": 10000, "code": "103", "type": "ceramic", "voltage": "50V", "purpose": "Removes bounce and noise from buttons, encoders and analog inputs.", "uses": ["Button or rotary encoder debounce with 10 kΩ", "Smoothing an analog input"] },
+    { "pf": 100000, "code": "104", "type": "ceramic", "voltage": "50V", "purpose": "The decoupling capacitor: place one next to every chip and module.", "uses": ["Across VCC and GND of every IC", "Across DC motor terminals to cut noise", "Auto-reset circuit when programming a bare ATmega"] },
+    { "pf": 220000, "code": "224", "type": "ceramic", "voltage": "50V", "purpose": "Stronger filtering and regulator stability.", "uses": ["Regulator input/output stability", "RC filter turning PWM into a steadier voltage"] },
+    { "pf": 470000, "code": "474", "type": "ceramic", "voltage": "50V", "purpose": "Smooths PWM into a steady voltage.", "uses": ["PWM-to-analog filter", "Audio coupling"] },
+    { "pf": 1000000, "code": "105", "type": "ceramic", "voltage": "50V", "purpose": "Passes audio signals while blocking DC.", "uses": ["Electret microphone signal coupling", "Small LDO regulators"] },
+    { "pf": 4700000, "code": null, "type": "electrolytic", "voltage": "25V", "purpose": "Light smoothing for sensors and audio.", "uses": ["Smoothing a sensor's power", "Audio amplifier coupling"] },
+    { "pf": 10000000, "code": null, "type": "electrolytic", "voltage": "25V", "purpose": "Bulk capacitor for modules and regulators.", "uses": ["Output capacitor for an AMS1117-3.3", "Next to modules on long wires", "Between RESET and GND to stop auto-reset"] },
+    { "pf": 22000000, "code": null, "type": "electrolytic", "voltage": "25V", "purpose": "Extra smoothing for 3.3V and 5V rails.", "uses": ["Regulator outputs", "Audio output coupling"] },
+    { "pf": 47000000, "code": null, "type": "electrolytic", "voltage": "25V", "purpose": "Smooths supply dips from buzzers and small motors.", "uses": ["Servo or buzzer supply smoothing", "Breadboard power rails"] },
+    { "pf": 100000000, "code": null, "type": "electrolytic", "voltage": "25V", "purpose": "Smooths power for servos, LED strips and Wi-Fi boards.", "uses": ["Across a servo's power wires", "ESP32 Wi-Fi current spikes", "Breadboard power rail"] },
+    { "pf": 220000000, "code": null, "type": "electrolytic", "voltage": "16V", "purpose": "Reservoir for the dust sensor LED and small amplifiers.", "uses": ["GP2Y1010 dust sensor V-LED", "Small audio amplifiers"] },
+    { "pf": 470000000, "code": null, "type": "electrolytic", "voltage": "25V", "purpose": "Big reservoir for motors and several servos.", "uses": ["Motor driver power input", "Projects with many servos"] },
+    { "pf": 1000000000, "code": null, "type": "electrolytic", "voltage": "25V", "purpose": "Large bulk capacitor for LED strips and power supplies.", "uses": ["Across WS2812 LED strip power", "Smoothing after a rectifier"] }
+  ]
+}

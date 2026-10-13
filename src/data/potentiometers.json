@@ -1,0 +1,426 @@
+{
+  "purpose": "A resistor with a moving wiper contact. It creates an adjustable voltage divider, allowing users to dial in continuous analog voltages from 0V to 5V (0 to 1023 in code) or calibrate analog sensor thresholds.",
+  "whenToUse": [
+    {
+      "scenario": "User Input Control Knobs (Volume, Speed, LED Dimming)",
+      "why": "When a project needs intuitive human control for motor speed, audio volume, or lamp brightness. Outer pins connect to 5V and GND, wiper connects to A0 for reading 0–1023.",
+      "recommended": "10 kΩ Linear Potentiometer (B10K)"
+    },
+    {
+      "scenario": "LCD Character Display Contrast Tuning",
+      "why": "Standard 16x2 HD44780 LCD screens are completely blank or solid black unless the V0 contrast pin is fed ~0.5V to 1V. A pot trimmer dials in the perfect crispness.",
+      "recommended": "10 kΩ Blue Trimmer Potentiometer (code 103)"
+    },
+    {
+      "scenario": "Analog Sensor Sensitivity Trimmer (PIR, Sound, Flame)",
+      "why": "Used on breakout sensor boards so you can calibrate the exact distance, sound level, or darkness threshold that triggers the digital output.",
+      "recommended": "10 kΩ or 50 kΩ Multi-Turn Trimmer"
+    },
+    {
+      "scenario": "Audio Volume Control (Logarithmic Taper)",
+      "why": "Human hearing perceives volume exponentially. Using a linear pot makes volume jump suddenly. An audio (logarithmic) taper pot increases volume smoothly to our ears.",
+      "recommended": "10 kΩ or 100 kΩ Logarithmic Potentiometer (A10K / A100K)"
+    }
+  ],
+  "basics": [
+    {
+      "title": "What it is",
+      "text": "A resistor with a knob. Turning the knob moves a contact, called the wiper, along a resistive track, so you choose how the resistance is shared."
+    },
+    {
+      "title": "Three pins",
+      "text": "The two outer pins are the ends of the track; the resistance between them never changes (e.g. 10 kΩ). The middle pin is the wiper that moves."
+    },
+    {
+      "title": "As a voltage divider",
+      "text": "Outer pins to 5V and GND, middle pin to A0. Turning the knob gives any voltage from 0 to 5V, which the Nano reads as 0–1023."
+    },
+    {
+      "title": "As a variable resistor",
+      "text": "Use one outer pin and the wiper to get an adjustable resistance, e.g. to set an LED's brightness or a sensor's threshold."
+    },
+    {
+      "title": "Which value for Arduino",
+      "text": "Use 10 kΩ. The Nano's analog input works best when the source is 10 kΩ or less; bigger pots work, but readings can be a little noisier."
+    },
+    {
+      "title": "Never short it",
+      "text": "When you use only two pins, add a fixed resistor in series. At the end of the turn the resistance becomes 0 Ω, which can short your supply or burn an LED."
+    }
+  ],
+  "howToRead": [
+    "Look for a letter and a value, e.g. B10K. The letter is the taper (how the value changes as you turn) and the number is the full resistance.",
+    "B = linear, A = logarithmic (audio), C = reverse logarithmic.",
+    "K means × 1000 and M means × 1 000 000: 10K = 10 kΩ, 1M = 1 MΩ.",
+    "Small trimmers use a 3-digit code: two digits, then the number of zeros. 103 = 10 followed by 3 zeros = 10 000 Ω = 10 kΩ."
+  ],
+  "example": "B10K = linear, 10 kΩ. A trimmer marked 503 = 50 followed by 3 zeros = 50 kΩ.",
+  "tapers": [
+    {
+      "letter": "B",
+      "name": "Linear",
+      "meaning": "The value changes evenly: half a turn gives half the resistance.",
+      "use": "Arduino inputs, sensor thresholds, most projects"
+    },
+    {
+      "letter": "A",
+      "name": "Logarithmic (audio)",
+      "meaning": "Changes slowly at first, then quickly.",
+      "use": "Volume controls, because our ears hear loudness on a log scale"
+    },
+    {
+      "letter": "C",
+      "name": "Reverse logarithmic",
+      "meaning": "Changes quickly at first, then slowly.",
+      "use": "Rare; some older audio equipment"
+    }
+  ],
+  "taperNote": "Some older European pots used A for linear. If you are not sure, set the knob to the middle and measure with a multimeter: about half the value means linear.",
+  "types": [
+    {
+      "id": "rotary",
+      "name": "Rotary potentiometer",
+      "looks": "Round metal body with a shaft you turn about 300°, and three legs in a row.",
+      "range": "1 kΩ – 1 MΩ",
+      "uses": [
+        "Volume and brightness knobs",
+        "Setting a target value",
+        "Simple analog input"
+      ],
+      "note": "Fit a knob cap on the shaft. The breadboard-friendly ones are usually 10 kΩ."
+    },
+    {
+      "id": "slide",
+      "name": "Slide potentiometer",
+      "looks": "Long flat body with a lever that slides in a straight line.",
+      "range": "10 kΩ – 100 kΩ",
+      "uses": [
+        "Faders on mixing desks",
+        "Straight-line position input"
+      ],
+      "note": "Same idea as a rotary pot, just a straight track. Pins are often at both ends."
+    },
+    {
+      "id": "trimmer",
+      "name": "Trimmer (preset)",
+      "looks": "Small blue square or round part turned with a small screwdriver.",
+      "range": "100 Ω – 1 MΩ",
+      "uses": [
+        "One-time calibration",
+        "Sensitivity knobs on sensor modules",
+        "16x2 LCD contrast"
+      ],
+      "note": "Made to be set and left alone, not turned every day. Usually marked with a 3-digit code like 103."
+    },
+    {
+      "id": "multiturn",
+      "name": "Multi-turn trimmer (3296)",
+      "looks": "Tall blue box with a brass screw on top that takes 10–25 turns from end to end.",
+      "range": "100 Ω – 1 MΩ",
+      "uses": [
+        "Very fine calibration",
+        "Setting an exact reference voltage"
+      ],
+      "note": "Very precise. It may click at the ends; that is normal, it does not lock."
+    },
+    {
+      "id": "dual",
+      "name": "Dual-gang potentiometer",
+      "looks": "Two rotary pots stacked on one shaft, with six legs.",
+      "range": "10 kΩ – 100 kΩ",
+      "uses": [
+        "Stereo volume control",
+        "Changing two things with one knob"
+      ],
+      "note": "Both halves turn together, and each half has its own three pins."
+    },
+    {
+      "id": "digital",
+      "name": "Digital potentiometer",
+      "looks": "A small chip (e.g. X9C103 or MCP4131) with no knob at all.",
+      "range": "10 kΩ – 100 kΩ",
+      "uses": [
+        "Volume or gain set from code",
+        "Adjusting circuits automatically"
+      ],
+      "note": "The Arduino moves the wiper with signals (up/down pins or SPI). Keep voltages within the chip's supply."
+    }
+  ],
+  "values": [
+    {
+      "ohms": 1000,
+      "purpose": "Low value for fine control of small voltages.",
+      "uses": [
+        "Variable LED current (with a fixed resistor in series)",
+        "Transistor bias adjustment"
+      ]
+    },
+    {
+      "ohms": 5000,
+      "purpose": "Low-noise input for analog pins, even with longer wires.",
+      "uses": [
+        "Knob on an analog pin with long wires",
+        "Reference voltage adjustment"
+      ]
+    },
+    {
+      "ohms": 10000,
+      "purpose": "The standard Arduino potentiometer: perfect for analogRead().",
+      "uses": [
+        "Knob on A0 giving 0–1023",
+        "16x2 LCD contrast (V0 pin)",
+        "Servo and motor speed knobs"
+      ]
+    },
+    {
+      "ohms": 20000,
+      "purpose": "Common for amplifier gain and comparator thresholds.",
+      "uses": [
+        "Op-amp gain adjustment",
+        "Comparator threshold trimmer"
+      ]
+    },
+    {
+      "ohms": 50000,
+      "purpose": "Draws less current, which suits battery projects.",
+      "uses": [
+        "Battery-powered knob input",
+        "Audio tone controls"
+      ]
+    },
+    {
+      "ohms": 100000,
+      "purpose": "The sensitivity trimmer found on many sensor modules.",
+      "uses": [
+        "Sensitivity on IR and sound modules",
+        "Audio volume (A100K)"
+      ]
+    },
+    {
+      "ohms": 500000,
+      "purpose": "High value for audio controls and timers.",
+      "uses": [
+        "Guitar volume and tone (A500K)",
+        "555 timer frequency adjustment"
+      ]
+    },
+    {
+      "ohms": 1000000,
+      "purpose": "Very high value for long timing and tiny currents.",
+      "uses": [
+        "Long delays with a 555 timer",
+        "PIR sensor delay adjustment"
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "id": "read-the-knob",
+      "title": "Read the knob",
+      "description": "Print the raw value, percent and voltage, and watch them change in the Serial Plotter as you turn.",
+      "parts": [
+        "10 kΩ potentiometer"
+      ],
+      "wiring": [
+        {
+          "part": "Potentiometer",
+          "pin": "Pin 1 (left)",
+          "to": "GND"
+        },
+        {
+          "part": "Potentiometer",
+          "pin": "Pin 2 (middle, wiper)",
+          "to": "A0"
+        },
+        {
+          "part": "Potentiometer",
+          "pin": "Pin 3 (right)",
+          "to": "5V"
+        }
+      ],
+      "code": [
+        "// Read a potentiometer and show it in the Serial Plotter.",
+        "const int POT_PIN = A0;",
+        "",
+        "void setup() {",
+        "  Serial.begin(9600);",
+        "}",
+        "",
+        "void loop() {",
+        "  int raw = analogRead(POT_PIN);            // 0-1023",
+        "  float volts = raw * 5.0 / 1023.0;         // 0-5 V",
+        "  int percent = map(raw, 0, 1023, 0, 100);  // 0-100 %",
+        "",
+        "  Serial.print(\"raw:\");",
+        "  Serial.print(raw);",
+        "  Serial.print(\"\\tpercent:\");",
+        "  Serial.print(percent);",
+        "  Serial.print(\"\\tvolts:\");",
+        "  Serial.println(volts, 2);",
+        "  delay(50);",
+        "}"
+      ]
+    },
+    {
+      "id": "led-brightness-knob",
+      "title": "LED brightness knob",
+      "description": "Turn the knob to dim or brighten an LED using PWM.",
+      "parts": [
+        "10 kΩ potentiometer",
+        "5mm LED",
+        "220Ω resistor"
+      ],
+      "wiring": [
+        {
+          "part": "Potentiometer",
+          "pin": "Pin 1 (left)",
+          "to": "GND"
+        },
+        {
+          "part": "Potentiometer",
+          "pin": "Pin 2 (middle, wiper)",
+          "to": "A0"
+        },
+        {
+          "part": "Potentiometer",
+          "pin": "Pin 3 (right)",
+          "to": "5V"
+        },
+        {
+          "part": "LED (long leg)",
+          "pin": "+",
+          "to": "D9 via 220Ω"
+        },
+        {
+          "part": "LED (short leg)",
+          "pin": "−",
+          "to": "GND"
+        }
+      ],
+      "code": [
+        "// Knob-controlled LED brightness.",
+        "const int POT_PIN = A0;",
+        "const int LED_PIN = 9;     // must be a PWM pin: 3, 5, 6, 9, 10 or 11",
+        "",
+        "void setup() {",
+        "  pinMode(LED_PIN, OUTPUT);",
+        "}",
+        "",
+        "void loop() {",
+        "  int raw = analogRead(POT_PIN);   // 0-1023",
+        "  int brightness = raw / 4;        // 0-255 for analogWrite",
+        "  analogWrite(LED_PIN, brightness);",
+        "  delay(10);",
+        "}"
+      ]
+    },
+    {
+      "id": "servo-follows-knob",
+      "title": "Servo follows the knob",
+      "description": "The servo arm points wherever you turn the knob, from 0° to 180°.",
+      "parts": [
+        "10 kΩ potentiometer",
+        "SG90 servo"
+      ],
+      "wiring": [
+        {
+          "part": "Potentiometer",
+          "pin": "Pin 1 (left)",
+          "to": "GND"
+        },
+        {
+          "part": "Potentiometer",
+          "pin": "Pin 2 (middle, wiper)",
+          "to": "A0"
+        },
+        {
+          "part": "Potentiometer",
+          "pin": "Pin 3 (right)",
+          "to": "5V"
+        },
+        {
+          "part": "SG90 servo",
+          "pin": "Brown (GND)",
+          "to": "GND"
+        },
+        {
+          "part": "SG90 servo",
+          "pin": "Red (+)",
+          "to": "5V"
+        },
+        {
+          "part": "SG90 servo",
+          "pin": "Orange (signal)",
+          "to": "D9"
+        }
+      ],
+      "code": [
+        "// Turn the knob and the servo follows.",
+        "#include <Servo.h>",
+        "",
+        "const int POT_PIN = A0;",
+        "Servo servo;",
+        "",
+        "void setup() {",
+        "  servo.attach(9);",
+        "}",
+        "",
+        "void loop() {",
+        "  int raw = analogRead(POT_PIN);",
+        "  int angle = map(raw, 0, 1023, 0, 180);",
+        "  servo.write(angle);",
+        "  delay(15);",
+        "}"
+      ]
+    },
+    {
+      "id": "steady-reading",
+      "title": "Steady reading without jitter",
+      "description": "Average several readings and only report real changes, so the number stops flickering.",
+      "parts": [
+        "10 kΩ potentiometer"
+      ],
+      "wiring": [
+        {
+          "part": "Potentiometer",
+          "pin": "Pin 1 (left)",
+          "to": "GND"
+        },
+        {
+          "part": "Potentiometer",
+          "pin": "Pin 2 (middle, wiper)",
+          "to": "A0"
+        },
+        {
+          "part": "Potentiometer",
+          "pin": "Pin 3 (right)",
+          "to": "5V"
+        }
+      ],
+      "code": [
+        "// Steady potentiometer reading: average + ignore tiny changes.",
+        "const int POT_PIN = A0;",
+        "int lastShown = -1;",
+        "",
+        "int readSmooth() {",
+        "  long sum = 0;",
+        "  for (int i = 0; i < 16; i++) sum += analogRead(POT_PIN);",
+        "  return sum / 16;",
+        "}",
+        "",
+        "void setup() {",
+        "  Serial.begin(9600);",
+        "}",
+        "",
+        "void loop() {",
+        "  int value = readSmooth();",
+        "  if (abs(value - lastShown) > 3) {   // only report real changes",
+        "    lastShown = value;",
+        "    Serial.println(value);",
+        "  }",
+        "  delay(20);",
+        "}"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,357 @@
+{
+  "purpose": "An electrically operated switch with total galvanic isolation. A tiny 5V signal from the Arduino safely turns on and off high-voltage, high-current AC or DC devices without any electrical connection between the logic and power circuits.",
+  "whenToUse": [
+    {
+      "scenario": "Switching AC Mains Appliances (Lamps, Fans, Heaters)",
+      "why": "Microcontroller pins cannot touch 110V/230V AC without instant catastrophic destruction. Relays use an air gap and optocoupler to keep lethal mains voltages completely isolated from the Arduino.",
+      "recommended": "Songle SRD-05VDC-SL-C (Mechanical) or Fotek / Omron (Solid State Relay)"
+    },
+    {
+      "scenario": "High-Current DC Loads (12V/24V Pumps, Solenoid Valves, Car Accessories)",
+      "why": "Loads drawing 3A to 10A would melt an Arduino GPIO pin (max 20 mA). Mechanical relays easily handle up to 10A continuous DC.",
+      "recommended": "5V 1-Channel or 2-Channel Relay Module"
+    },
+    {
+      "scenario": "Fail-Safe Default State (Normally Closed / NC)",
+      "why": "When an alarm or cooling fan must stay running even if the Arduino loses power or crashes, wiring to the NC terminal guarantees power stays connected until actively broken.",
+      "recommended": "Mechanical Relay using COM and NC contacts"
+    },
+    {
+      "scenario": "Frequent, Silent Switching (Solid State Relay / SSR)",
+      "why": "Mechanical relays click loudly and wear out after ~100 000 operations. Solid State Relays (SSR) have zero moving parts, are 100% silent, and switch in under 1 millisecond.",
+      "recommended": "SSR-25DA (for high AC loads) or Omron G3MB-202P"
+    }
+  ],
+  "basics": [
+    {
+      "title": "What a relay does",
+      "text": "An electrically operated mechanical or electronic switch. A low-power 5V control signal from an Arduino pin (which can supply only ~20 mA) safely switches high-power devices like 12V motors, water valves, lamps, or solenoids."
+    },
+    {
+      "title": "Galvanic isolation",
+      "text": "The coil circuit connected to your Arduino is physically and magnetically isolated from the high-voltage load contacts. Power surges, motor inductive kicks, or shorts in the load cannot reach the microcontroller."
+    },
+    {
+      "title": "Active-LOW triggers",
+      "text": "Most 5V Arduino relay modules use an active-LOW optocoupler trigger: writing LOW energizes the relay (turns it ON), while writing HIGH de-energizes it (turns it OFF). Multi-channel boards sometimes feature a jumper to select Active-HIGH or Active-LOW."
+    },
+    {
+      "title": "COM, NO and NC contacts",
+      "text": "COM (Common) is the incoming power terminal. NO (Normally Open) connects to COM only when the relay is energized. NC (Normally Closed) connects to COM when the relay is OFF, and breaks the connection when energized."
+    },
+    {
+      "title": "Coil current & USB limits",
+      "text": "Each 5V relay coil consumes about 70–80 mA when engaged. A single relay runs fine off the Nano 5V pin, but 4-channel or 8-channel relay boards will overload the Nano regulator and need a separate 5V power supply."
+    },
+    {
+      "title": "Flyback diode protection",
+      "text": "When an inductor coil turns off, its collapsing magnetic field generates a destructive reverse voltage spike (flyback). Arduino relay breakout boards already include a diode across the coil plus an optocoupler and transistor to keep your Nano safe."
+    }
+  ],
+  "safety": "Warning: Mains electricity (110V/230V AC) can cause fatal electric shocks and fires. Never touch terminal screws when connected to wall outlets. When learning, always stick to safe DC voltages (e.g. 5V, 12V or 24V batteries/adapters).",
+  "terminals": [
+    {
+      "name": "Common",
+      "abbr": "COM",
+      "meaning": "The center terminal connected to the moving contact blade.",
+      "use": "Connect this to the positive wire from your load's external power supply."
+    },
+    {
+      "name": "Normally Open",
+      "abbr": "NO",
+      "meaning": "Disconnected from COM when the relay is unpowered; snaps shut to COM when energized.",
+      "use": "Standard switch: device stays OFF until the Arduino turns the relay ON."
+    },
+    {
+      "name": "Normally Closed",
+      "abbr": "NC",
+      "meaning": "Connected to COM when unpowered; breaks open when the relay is energized.",
+      "use": "Fail-safe: device stays ON until Arduino turns relay ON (e.g. emergency shutoff or alarm)."
+    }
+  ],
+  "jdVccGuide": {
+    "title": "The JD-VCC Jumper (Complete Opto-Isolation)",
+    "text": "On 2/4/8-channel relay boards, there is a 3-pin jumper labelled VCC, JD-VCC, and GND. With the jumper in place, the relay coils draw 5V from the Arduino. If you remove the jumper, you can feed an independent 5V power supply to JD-VCC and GND, keeping the Arduino and coil power completely isolated from each other."
+  },
+  "types": [
+    {
+      "id": "electromechanical",
+      "name": "Electromechanical (EMR)",
+      "technology": "Electromagnetic coil & mechanical spring contacts (e.g. Songle SRD-05VDC-SL-C)",
+      "isolation": "Physical air gap (magnetic coil to contact arm)",
+      "switchingSpeed": "5–15 ms (slow, audible click)",
+      "maxCurrent": "10A @ 250V AC / 30V DC",
+      "looks": "Classic blue rectangular plastic box with 5 pins on a breakout board with 3 screw terminals.",
+      "pros": ["Works with both AC and DC loads", "Very low ON-resistance (no heat sinks needed for moderate currents)", "Cheap and widely available in kits"],
+      "cons": ["Mechanical wear over time (~100 000 cycles)", "Audible clicking noise", "Cannot be switched with PWM (too slow)"],
+      "uses": ["Turning on garden pumps and lights", "Controlling garage doors and solenoid locks", "AC household device switching"],
+      "note": "The most common relay in beginner Arduino kits. Listen for the characteristic mechanical click when it switches."
+    },
+    {
+      "id": "ssr",
+      "name": "Solid State Relay (SSR)",
+      "technology": "Semiconductor optocoupler + Triac / MOSFET (e.g. Fotek SSR-25DA or Omron G3MB-202P)",
+      "isolation": "Pure optical isolation (internal infrared LED & phototriac)",
+      "switchingSpeed": "< 1 ms (fast, silent)",
+      "maxCurrent": "2A to 40A depending on model",
+      "looks": "Sleek black or grey block; hobby modules are often thin Omron G3MB modules on a red PCB.",
+      "pros": ["Completely silent operation (no moving parts)", "Unlimited switching life (no mechanical wear)", "Fast switching, zero-cross switching suppresses electrical noise"],
+      "cons": ["Triac types only switch AC loads, not DC", "Slight voltage drop (~1–2V) generates heat under heavy loads", "Small leakage current even when off"],
+      "uses": ["PID temperature control for heating elements / 3D printer beds", "Silent home automation switching", "Fast light flashing and stage effects"],
+      "note": "Standard Triac SSRs will NOT turn off on DC voltages! Use MOSFET SSRs for DC loads or stick to electromechanical relays."
+    },
+    {
+      "id": "reed",
+      "name": "Reed Relay",
+      "technology": "Hermetically sealed glass capsule with flexible magnetic reeds inside an energizing coil",
+      "isolation": "Glass tube with inert gas",
+      "switchingSpeed": "0.5–2 ms (very fast for mechanical)",
+      "maxCurrent": "0.5A to 1A @ 100V DC",
+      "looks": "Small dual-in-line (DIP) IC package or clear glass tube wrapped in thin copper wire.",
+      "pros": ["Extremely low coil current (often < 10 mA, can be driven directly by some MCU pins)", "Hermetic seal prevents contact oxidation", "Long life (~10–100 million cycles)"],
+      "cons": ["Low current capacity (cannot run heavy motors or heaters)", "Sensitive to external magnetic fields"],
+      "uses": ["Audio signal switching and guitar pedals", "Test equipment and automated instrumentation", "Low-power communication line switching"],
+      "note": "Ideal for clean audio or measuring signals where you need mechanical contact without noisy SSR leakage."
+    },
+    {
+      "id": "latching",
+      "name": "Latching (Bistable) Relay",
+      "technology": "Permanent magnet hold mechanism with dual set/reset coils or pulse-reversal coil",
+      "isolation": "Physical contact air gap",
+      "switchingSpeed": "5–10 ms",
+      "maxCurrent": "2A to 16A",
+      "looks": "Looks like a standard relay box, but usually marked 'Latching' or dual coil pins.",
+      "pros": ["Zero power consumption in steady state (only needs a 20 ms pulse to flip state)", "Maintains state across power outages", "No coil heat generation"],
+      "cons": ["Requires dual-pulse or H-bridge driver circuit to switch directions", "Slightly more complex code"],
+      "uses": ["Battery-powered IoT sensors and remote solar stations", "Power cut memory circuits", "Energy-efficient smart metering"],
+      "note": "The gold standard for low-power and battery setups where keeping a regular relay energized would drain the battery in hours."
+    },
+    {
+      "id": "mosfet-module",
+      "name": "MOSFET Switch Module",
+      "technology": "Power N-Channel or P-Channel MOSFET (e.g. IRF520 or LR7843)",
+      "isolation": "Common ground (non-isolated) or optocoupled driver",
+      "switchingSpeed": "Microseconds (handles high-speed PWM)",
+      "maxCurrent": "5A to 30A DC",
+      "looks": "Small PCB with a 3-pin TO-220 transistor with a metal tab or heatsink.",
+      "pros": ["Supports PWM for dimming DC LEDs and variable motor speed", "Silent, solid-state", "Handles high DC currents efficiently"],
+      "cons": ["DC loads ONLY (cannot switch AC)", "Requires shared ground or optoisolator"],
+      "uses": ["12V/24V LED strip brightness control", "DC motor speed regulation", "Peltier cooler and heater control"],
+      "note": "Not technically a relay, but the best modern alternative whenever you need to switch or dim DC loads."
+    }
+  ],
+  "modules": [
+    {
+      "id": "1-channel-5v",
+      "name": "1-Channel 5V Relay Module",
+      "channels": 1,
+      "trigger": "Active LOW",
+      "coilVoltage": "5V DC (~70 mA)",
+      "contactRating": "10A 250V AC / 10A 30V DC",
+      "purpose": "The standard starter module with one Songle relay, status LED, flyback diode and transistor driver.",
+      "uses": ["Controlling a single 12V fan or lamp", "Watering valve actuator", "Bench power switch"]
+    },
+    {
+      "id": "2-channel-opto",
+      "name": "2-Channel Optocoupled Relay Board",
+      "channels": 2,
+      "trigger": "Configurable (Jumper)",
+      "coilVoltage": "5V DC (~140 mA total)",
+      "contactRating": "10A 250V AC / 10A 30V DC",
+      "purpose": "Two independent relays with EL817 optocouplers and JD-VCC isolation jumper.",
+      "uses": ["Forward/reverse motor polarity control", "Two-zone garden irrigation", "Smart dual-socket power strip"]
+    },
+    {
+      "id": "4-channel-opto",
+      "name": "4-Channel Relay Board",
+      "channels": 4,
+      "trigger": "Active LOW",
+      "coilVoltage": "5V DC (~300 mA all on)",
+      "contactRating": "10A 250V AC / 10A 30V DC",
+      "purpose": "Four relays on one board. Requires external 5V power supply to avoid Nano USB resets.",
+      "uses": ["Home automation room controller", "4-valve automated hydroponics system", "Industrial automation test bench"]
+    },
+    {
+      "id": "ssr-omron",
+      "name": "1-Channel Solid State Relay (G3MB-202P)",
+      "channels": 1,
+      "trigger": "Active HIGH",
+      "coilVoltage": "5V DC (~20 mA)",
+      "contactRating": "2A 240V AC (AC loads only)",
+      "purpose": "Silent, spark-free AC switching with resistive fuse protection.",
+      "uses": ["Silent bedroom lamp automation", "Frequent switching in PID incubators", "Aquarium AC heater controller"]
+    },
+    {
+      "id": "3v3-relay",
+      "name": "3.3V Low-Level Relay Module",
+      "channels": 1,
+      "trigger": "Active LOW",
+      "coilVoltage": "3.3V DC (~80 mA)",
+      "contactRating": "10A 250V AC / 10A 30V DC",
+      "purpose": "Designed specifically for 3.3V microcontrollers like ESP32, ESP8266, and Raspberry Pi without level shifting.",
+      "uses": ["ESP32 Wi-Fi smart switches", "Battery IoT controllers", "Raspberry Pi home automation"]
+    }
+  ],
+  "examples": [
+    {
+      "id": "relay-toggle-active-low",
+      "title": "Active-LOW Relay Toggle (Every 3s)",
+      "description": "The fundamental sketch for standard Arduino relay breakout modules. Demonstrates the inverted logic: LOW turns the relay ON, HIGH turns it OFF.",
+      "triggerType": "active-low",
+      "parts": ["5V 1-Channel Relay Module", "External 12V LED or Load with Power Supply", "Jumper wires"],
+      "wiring": [
+        { "part": "Relay Module", "pin": "VCC", "to": "5V" },
+        { "part": "Relay Module", "pin": "GND", "to": "GND" },
+        { "part": "Relay Module", "pin": "IN", "to": "D7" },
+        { "part": "12V Supply (+)", "pin": "V+", "to": "Relay COM" },
+        { "part": "12V Load (+)", "pin": "Positive wire", "to": "Relay NO" },
+        { "part": "12V Supply (-)", "pin": "GND", "to": "12V Load (-)" }
+      ],
+      "code": [
+        "// Active-LOW 5V Relay Demo",
+        "// Relay turns ON for 3 seconds, then OFF for 3 seconds.",
+        "",
+        "const int RELAY_PIN = 7;",
+        "",
+        "// Most Arduino relay modules are Active-LOW:",
+        "const int RELAY_ON  = LOW;   // Energizes the coil",
+        "const int RELAY_OFF = HIGH;  // Releases the coil",
+        "",
+        "void setup() {",
+        "  // Set pin HIGH BEFORE pinMode to prevent a momentary trigger during boot",
+        "  digitalWrite(RELAY_PIN, RELAY_OFF);",
+        "  pinMode(RELAY_PIN, OUTPUT);",
+        "",
+        "  Serial.begin(9600);",
+        "  Serial.println(F(\"Relay initialized in OFF state.\"));",
+        "}",
+        "",
+        "void loop() {",
+        "  Serial.println(F(\"Turning relay ON (COM connected to NO)...\"));",
+        "  digitalWrite(RELAY_PIN, RELAY_ON);",
+        "  delay(3000);",
+        "",
+        "  Serial.println(F(\"Turning relay OFF...\"));",
+        "  digitalWrite(RELAY_PIN, RELAY_OFF);",
+        "  delay(3000);",
+        "}"
+      ]
+    },
+    {
+      "id": "relay-pushbutton-toggle",
+      "title": "Pushbutton Latch (Toggle Switch)",
+      "description": "Press a momentary pushbutton to toggle the relay between ON and OFF, with software debouncing. Useful for wall-switch replacements.",
+      "triggerType": "active-low",
+      "parts": ["5V Relay Module", "Momentary Pushbutton", "Jumper wires"],
+      "wiring": [
+        { "part": "Relay Module", "pin": "VCC", "to": "5V" },
+        { "part": "Relay Module", "pin": "GND", "to": "GND" },
+        { "part": "Relay Module", "pin": "IN", "to": "D7" },
+        { "part": "Pushbutton", "pin": "Leg 1", "to": "D2" },
+        { "part": "Pushbutton", "pin": "Leg 2", "to": "GND" }
+      ],
+      "code": [
+        "// Toggle Relay with Debounced Pushbutton (Internal Pullup)",
+        "",
+        "const int RELAY_PIN  = 7;",
+        "const int BUTTON_PIN = 2;",
+        "",
+        "const int RELAY_ON  = LOW;",
+        "const int RELAY_OFF = HIGH;",
+        "",
+        "bool relayState = false;",
+        "int lastButtonReading = HIGH;",
+        "unsigned long lastDebounceTime = 0;",
+        "const unsigned long DEBOUNCE_DELAY = 50;",
+        "",
+        "void setup() {",
+        "  digitalWrite(RELAY_PIN, RELAY_OFF);",
+        "  pinMode(RELAY_PIN, OUTPUT);",
+        "  pinMode(BUTTON_PIN, INPUT_PULLUP);",
+        "",
+        "  Serial.begin(9600);",
+        "  Serial.println(F(\"Press the button to toggle the relay.\"));",
+        "}",
+        "",
+        "void loop() {",
+        "  int reading = digitalRead(BUTTON_PIN);",
+        "",
+        "  if (reading != lastButtonReading) {",
+        "    lastDebounceTime = millis();",
+        "  }",
+        "",
+        "  if ((millis() - lastDebounceTime) > DEBOUNCE_DELAY) {",
+        "    static int buttonState = HIGH;",
+        "    if (reading != buttonState) {",
+        "      buttonState = reading;",
+        "      // Trigger only on press down (falling edge)",
+        "      if (buttonState == LOW) {",
+        "        relayState = !relayState;",
+        "        digitalWrite(RELAY_PIN, relayState ? RELAY_ON : RELAY_OFF);",
+        "        Serial.print(F(\"Relay is now: \"));",
+        "        Serial.println(relayState ? F(\"ON\") : F(\"OFF\"));",
+        "      }",
+        "    }",
+        "  }",
+        "",
+        "  lastButtonReading = reading;",
+        "}"
+      ]
+    },
+    {
+      "id": "relay-light-sensor-dark",
+      "title": "Automatic Nightlight (LDR + Relay)",
+      "description": "Reads a photoresistor on an analog pin with hysteresis. When ambient light drops below the threshold, the relay powers an external light.",
+      "triggerType": "active-low",
+      "parts": ["5V Relay Module", "Photoresistor (LDR)", "10 kΩ Resistor", "12V Lamp / LED"],
+      "wiring": [
+        { "part": "Relay Module", "pin": "VCC", "to": "5V" },
+        { "part": "Relay Module", "pin": "GND", "to": "GND" },
+        { "part": "Relay Module", "pin": "IN", "to": "D7" },
+        { "part": "LDR", "pin": "Leg 1", "to": "5V" },
+        { "part": "LDR", "pin": "Leg 2", "to": "A0" },
+        { "part": "10k Resistor", "pin": "Leg 1", "to": "A0" },
+        { "part": "10k Resistor", "pin": "Leg 2", "to": "GND" }
+      ],
+      "code": [
+        "// Automatic Nightlight with Hysteresis to prevent relay chatter",
+        "",
+        "const int RELAY_PIN = 7;",
+        "const int LDR_PIN   = A0;",
+        "",
+        "const int RELAY_ON  = LOW;",
+        "const int RELAY_OFF = HIGH;",
+        "",
+        "// Hysteresis thresholds (0-1023):",
+        "// Turn on when dark (< 400), turn off when bright (> 550)",
+        "const int DARK_THRESHOLD   = 400;",
+        "const int BRIGHT_THRESHOLD = 550;",
+        "",
+        "bool isLightOn = false;",
+        "",
+        "void setup() {",
+        "  digitalWrite(RELAY_PIN, RELAY_OFF);",
+        "  pinMode(RELAY_PIN, OUTPUT);",
+        "",
+        "  Serial.begin(9600);",
+        "}",
+        "",
+        "void loop() {",
+        "  int lightLevel = analogRead(LDR_PIN);",
+        "",
+        "  if (!isLightOn && lightLevel < DARK_THRESHOLD) {",
+        "    isLightOn = true;",
+        "    digitalWrite(RELAY_PIN, RELAY_ON);",
+        "    Serial.println(F(\"Dark detected -> Relay ON\"));",
+        "  } else if (isLightOn && lightLevel > BRIGHT_THRESHOLD) {",
+        "    isLightOn = false;",
+        "    digitalWrite(RELAY_PIN, RELAY_OFF);",
+        "    Serial.println(F(\"Bright detected -> Relay OFF\"));",
+        "  }",
+        "",
+        "  delay(500);",
+        "}"
+      ]
+    }
+  ]
+}

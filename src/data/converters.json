@@ -1,0 +1,150 @@
+{
+  "purpose": "A high-efficiency switch-mode power converter that converts one DC voltage into another with 85% to 95% efficiency. Unlike old linear regulators (like the 7805 or the Nano's onboard regulator) that drop voltage by burning off the difference as dangerous heat, switch-mode DC-DC converters use high-frequency inductors and capacitors to step voltage down (Buck), step voltage up (Boost), or maintain a stable voltage from fluctuating batteries without overheating.",
+  "whenToUse": [
+    {
+      "scenario": "Powering 5V Arduino or Raspberry Pi from 12V or 24V (Car Battery, Solar, Adapter)",
+      "why": "A standard linear regulator dropping 12V to 5V at 500 mA burns (12V - 5V) × 0.5A = 3.5 Watts of pure heat—it will burn your fingers and shut down in seconds! A Buck converter converts this with 92% efficiency, remaining cool to the touch and consuming less current from your battery.",
+      "recommended": "LM2596 (3A) or MP1584 / Mini-360 (Ultra-Compact)"
+    },
+    {
+      "scenario": "Powering 5V or 12V Devices from a Single 3.7V 18650 Lithium Battery",
+      "why": "A single rechargeable 18650 Li-ion battery supplies only 3.7V, which is too low to run 5V Arduino boards or 12V motors and locks. A Boost converter steps 3.7V up to a stable 5V, 9V, or 12V.",
+      "recommended": "MT3608 Step-Up (Boost) Converter Module"
+    },
+    {
+      "scenario": "Battery Voltage Fluctuates Above and Below Your Desired Target (e.g. 4.2V to 3.0V)",
+      "why": "A lithium battery starts at 4.2V fully charged and drops to 3.0V when empty. If your sensors require a fixed 3.3V, a Buck can only step down and a Boost can only step up. A Buck-Boost (or SEPIC) converter automatically steps down when full and steps up when empty.",
+      "recommended": "XL6009 / XL6019 Automatic Buck-Boost Module"
+    },
+    {
+      "scenario": "Powering Multiple Servos, Relays, or LED Strips (High Current 3A to 5A)",
+      "why": "The Arduino Nano's onboard 5V regulator can deliver only ~400 mA before overheating and resetting. Never power servos, motors, or long LED strips from the Arduino 5V pin! Use an external DC-DC Buck converter to supply 3A to 5A directly to the high-power devices.",
+      "recommended": "LM2596 or XL4015 (5A) Step-Down Module"
+    },
+    {
+      "scenario": "Eliminating Audio Noise and Ground Loops in Vehicles",
+      "why": "In cars or audio projects, digital noise from microcontrollers bleeds into audio amplifiers via shared ground wires. An Isolated DC-DC converter (like B0505S) completely breaks the ground loop magnetically.",
+      "recommended": "B0505S-1W Isolated 5V-to-5V Converter"
+    }
+  ],
+  "basics": [
+    {
+      "title": "Buck (Step-Down) vs Boost (Step-Up)",
+      "text": "Buck = Input voltage is HIGHER than output (e.g. 12V in -> 5V out). Boost = Input voltage is LOWER than output (e.g. 3.7V in -> 5V or 12V out). Remember: You cannot step DOWN with a Boost converter, and you cannot step UP with a Buck converter!"
+    },
+    {
+      "title": "Why Linear Regulators Waste So Much Power",
+      "text": "Linear regulators (7805, AMS1117) act like variable resistors. Power Lost as Heat = (V_in - V_out) × Load Current. At 12V in and 5V out, over 58% of your battery energy is burned as useless heat! DC-DC switch-mode converters chop power at 150 kHz+ into an inductor, achieving 90%+ efficiency."
+    },
+    {
+      "title": "The Blue Multi-Turn Trimmer Gotcha!",
+      "text": "The #1 beginner frustration with LM2596 and MT3608 modules! Right out of the box, turning the brass screw 1 or 2 turns seems to do nothing. These are 25-turn precision potentiometers: you must turn the screw 10 to 15 FULL turns COUNTER-CLOCKWISE with a multimeter connected before the voltage begins dropping."
+    },
+    {
+      "title": "Common Ground Rule",
+      "text": "Always connect the DC-DC converter's GND to the Arduino's GND! Standard non-isolated converters have IN- and OUT- connected together internally, creating a shared reference for your digital control signals."
+    }
+  ],
+  "types": [
+    {
+      "id": "buck",
+      "name": "Step-Down (Buck) Converter",
+      "voltageRelation": "V_in > V_out (Always steps voltage down)",
+      "typicalEfficiency": "88% – 95%",
+      "heatDissipation": "Very low (Runs cool up to 2A without heatsink)",
+      "looks": "PCB with a toroidal or shielded wire-wound inductor, electrolytic capacitors, and a multi-turn trimmer screw.",
+      "pros": ["Highest efficiency of all topologies", "Supplies high continuous output currents (up to 3A–5A)", "Compact and cheap"],
+      "cons": ["Input voltage must be at least 1.5V higher than desired output (dropout voltage)"],
+      "uses": ["12V car battery down to 5V USB/Arduino", "24V 3D printer supply down to 5V for Raspberry Pi/OctoPrint", "High-power servo power rail"]
+    },
+    {
+      "id": "boost",
+      "name": "Step-Up (Boost) Converter",
+      "voltageRelation": "V_in < V_out (Always steps voltage up)",
+      "typicalEfficiency": "85% – 92%",
+      "heatDissipation": "Moderate at high boost ratios",
+      "looks": "Small red or blue board with a square inductor and tiny high-frequency boost IC (e.g. MT3608).",
+      "pros": ["Generates 5V, 9V, or 12V from a single 3.7V lithium cell or two AA batteries", "Tiny footprint"],
+      "cons": ["Output current is lower than input current (Conservation of energy: Pin ≈ Pout)", "Cannot output less than input voltage"],
+      "uses": ["Powering 5V Arduino from 3.7V 18650 battery", "Boosting 5V USB power to 12V for solenoid locks", "Portable handheld devices"]
+    },
+    {
+      "id": "buck-boost",
+      "name": "Automatic Buck-Boost / SEPIC",
+      "voltageRelation": "V_in can be higher, equal, or lower than V_out",
+      "typicalEfficiency": "80% – 88%",
+      "heatDissipation": "Moderate",
+      "looks": "Slightly larger PCB with two inductors or dual-winding choke and central control IC.",
+      "pros": ["Rock-solid constant output even as battery drains from 4.2V down to 2.8V", "Handles wide input fluctuations"],
+      "cons": ["Slightly lower efficiency than a pure buck converter", "Slightly higher cost and board size"],
+      "uses": ["Solar panel battery charger input stages", "Automotive electronics during engine crank dips", "Critical 3.3V IoT sensor nodes"]
+    }
+  ],
+  "popularModules": [
+    {
+      "name": "LM2596 Step-Down Module",
+      "topology": "Buck (Step-Down)",
+      "inputRange": "4.0V – 40V DC",
+      "outputRange": "1.25V – 37V DC (Adjustable)",
+      "maxCurrent": "3A (2A continuous recommended)",
+      "whenToUse": "The classic hobbyist power board. Best for converting 12V or 24V power bricks to 5V for Arduino and multi-servo projects."
+    },
+    {
+      "name": "MP1584 / Mini-360 Miniature Buck",
+      "topology": "Buck (Step-Down)",
+      "inputRange": "4.5V – 28V DC",
+      "outputRange": "0.8V – 20V DC (Adjustable)",
+      "maxCurrent": "1.8A continuous (3A peak)",
+      "whenToUse": "Fingernail-sized module running at 1.5 MHz. Best for miniature drone builds and tight project enclosures."
+    },
+    {
+      "name": "MT3608 Step-Up Module",
+      "topology": "Boost (Step-Up)",
+      "inputRange": "2.0V – 24V DC",
+      "outputRange": "5V – 28V DC (Adjustable)",
+      "maxCurrent": "2A peak (~1A continuous at 12V)",
+      "whenToUse": "The go-to boost converter for 3.7V Li-ion battery projects to produce 5V or 12V."
+    },
+    {
+      "name": "XL4015 Heavy-Duty CC/CV Buck",
+      "topology": "Buck with Constant Current",
+      "inputRange": "8V – 36V DC",
+      "outputRange": "1.25V – 32V DC",
+      "maxCurrent": "5A",
+      "whenToUse": "Dual trimmers for voltage and current limit. Perfect for lithium battery charging and driving high-power 10W–30W LEDs."
+    }
+  ],
+  "examples": [
+    {
+      "id": "converter-12v-to-5v-setup",
+      "title": "Safely Stepping 12V Down to 5V for Arduino",
+      "description": "Step-by-step procedure to adjust an LM2596 module with a digital multimeter BEFORE connecting to your expensive Arduino Nano.",
+      "parts": ["LM2596 Buck Converter Module", "12V Power Adapter / Battery", "Digital Multimeter", "Arduino Nano"],
+      "wiring": [
+        { "part": "12V Adapter (+)", "pin": "Positive wire", "to": "LM2596 IN+" },
+        { "part": "12V Adapter (-)", "pin": "Negative wire", "to": "LM2596 IN-" },
+        { "part": "LM2596 OUT+", "pin": "Tuned to 5.0V", "to": "Arduino Nano 5V Pin" },
+        { "part": "LM2596 OUT-", "pin": "Common Ground", "to": "Arduino Nano GND Pin" }
+      ],
+      "code": [
+        "// Safe 5V External Power Verification Sketch",
+        "// IMPORTANT: Never connect the LM2596 output to the Arduino 5V pin until",
+        "// you have measured EXACTLY 5.0V on the output terminals with a multimeter!",
+        "",
+        "void setup() {",
+        "  pinMode(LED_BUILTIN, OUTPUT);",
+        "  Serial.begin(9600);",
+        "  Serial.println(F(\"Arduino powered by external 5V DC-DC buck converter!\"));",
+        "}",
+        "",
+        "void loop() {",
+        "  // Blink built-in LED to confirm healthy regulated power",
+        "  digitalWrite(LED_BUILTIN, HIGH);",
+        "  delay(500);",
+        "  digitalWrite(LED_BUILTIN, LOW);",
+        "  delay(500);",
+        "}"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "purpose": "A current-controlled electronic switch. An Arduino pin can supply only 20 mA. A transistor allows a tiny 2 mA to 5 mA signal from the Arduino to switch a high-current load (up to 800 mA) like a 12V fan, piezobuzzer, solenoid, or high-power LED array in microseconds.",
+  "whenToUse": [
+    {
+      "scenario": "Load Draws More Than 20 mA (Buzzer, Fan, Motor, Lamp)",
+      "why": "Connecting loads over 20 mA directly to an Arduino GPIO pin will damage the internal ATmega328P output silicon. An NPN transistor connects the load to ground safely.",
+      "recommended": "2N2222 (up to 800 mA) or 2N3904 (up to 200 mA)"
+    },
+    {
+      "scenario": "Switching a 12V or 24V Load with a 5V Arduino",
+      "why": "You cannot connect 12V directly to an Arduino pin. An NPN transistor acts as a low-side ground switch: 12V powers the load, and the transistor completes the circuit to ground when triggered by 5V.",
+      "recommended": "2N2222 or TIP120 (for higher currents up to 5A)"
+    },
+    {
+      "scenario": "Logic Inversion & Level Shifting",
+      "why": "When a sensor outputs inverted logic (e.g. LOW when triggered, but code expects HIGH), or when you need a simple open-collector level shifter.",
+      "recommended": "2N3904 or BC547 with 10kΩ pull-up resistor"
+    },
+    {
+      "scenario": "High-Side Switching (PNP Transistor)",
+      "why": "When your device's chassis is tied to ground and you must switch the POSITIVE voltage rail rather than the ground wire.",
+      "recommended": "2N3906 or BC557 PNP transistor"
+    },
+    {
+      "scenario": "When to Choose BJT vs MOSFET",
+      "why": "Choose a BJT (2N2222) for small loads under 500 mA (buzzers, small relays, indicators) because BJTs are dirt cheap, tiny (TO-92), and trigger reliably at just 0.7V. For heavy loads (> 1A, high-power motors, heaters, LED strips), choose a Logic-Level MOSFET instead to avoid BJT heat and base current waste.",
+      "recommended": "BJT for < 500 mA; Logic-Level MOSFET for > 1A"
+    }
+  ],
+  "basics": [
+    {
+      "title": "NPN vs PNP",
+      "text": "NPN is a 'Low-Side' switch: Emitter to GND, Collector to load negative. A HIGH signal on the Base turns it ON. PNP is a 'High-Side' switch: Emitter to VCC, Collector to load positive. A LOW signal on the Base turns it ON. NPN is used in 95% of Arduino projects."
+    },
+    {
+      "title": "Always Use a Base Resistor!",
+      "text": "The Base-Emitter junction behaves like a forward-biased diode with a 0.7V drop. Connecting an Arduino pin directly to the Base without a resistor creates a direct short circuit, destroying the pin. Always put a 1kΩ to 4.7kΩ resistor between the Arduino pin and the Base."
+    },
+    {
+      "title": "Saturation (Switching) vs Active Region (Amplification)",
+      "text": "In digital Arduino projects, we operate the transistor in 'Saturation': driving enough current into the Base so the Collector-Emitter junction turns FULLY ON with minimal resistance (voltage drop ~0.2V)."
+    },
+    {
+      "title": "Base Resistor Formula",
+      "text": "Rb = (V_arduino - 0.7V) / I_base. If your load needs 200 mA and the transistor gain (beta) is 30 in saturation, you need ~6.6 mA base current: (5V - 0.7V) / 0.0066A ≈ 650 Ω. A standard 1 kΩ resistor is perfect for most common switching tasks."
+    }
+  ],
+  "types": [
+    {
+      "id": "npn",
+      "name": "NPN Bipolar Junction Transistor",
+      "polarity": "NPN (Negative-Positive-Negative)",
+      "switchingType": "Low-Side Switch (Ground return)",
+      "trigger": "Active-HIGH (Current into Base turns it ON)",
+      "maxCurrent": "200 mA to 1000 mA (TO-92)",
+      "looks": "Classic small black half-cylinder (TO-92) with 3 legs: Emitter, Base, Collector.",
+      "pros": ["Universal low-side switch for Arduino", "Turns on with standard 5V or 3.3V GPIO", "Cheap and included in every kit"],
+      "cons": ["Small saturation voltage drop (Vce ~0.2V–0.3V) wastes a bit of power", "Requires continuous base current to stay ON"],
+      "uses": ["Driving 5V/12V buzzers and vibration motors", "Driving standalone mechanical relay coils", "High-brightness indicator LEDs"]
+    },
+    {
+      "id": "pnp",
+      "name": "PNP Bipolar Junction Transistor",
+      "polarity": "PNP (Positive-Negative-Positive)",
+      "switchingType": "High-Side Switch (Positive supply rail)",
+      "trigger": "Active-LOW (Pulling Base lower than Emitter turns it ON)",
+      "maxCurrent": "200 mA to 800 mA",
+      "looks": "Same black TO-92 package; look for part numbers starting with 2N3906, BC557, or PN2907.",
+      "pros": ["Enables high-side power switching", "Keeps the load referenced to true ground at all times"],
+      "cons": ["Cannot directly switch voltages higher than 5V from an Arduino pin without an extra NPN pre-driver stage"],
+      "uses": ["High-side power switching", "H-bridge upper switches", "Current mirror circuits"]
+    },
+    {
+      "id": "darlington",
+      "name": "Darlington Pair (e.g. TIP120)",
+      "polarity": "NPN Dual-Transistor in one package",
+      "switchingType": "High-Gain Medium-Power Switch",
+      "trigger": "Active-HIGH",
+      "maxCurrent": "5A (with heatsink) / 60V",
+      "looks": "Larger black TO-220 package with metal mounting tab with hole.",
+      "pros": ["Huge current gain (hFE > 1000) requires under 5 mA from Arduino pin to switch 3A to 5A loads", "Handles higher power than standard TO-92"],
+      "cons": ["Higher saturation voltage drop (~1.2V to 2V) generates noticeable heat under load"],
+      "uses": ["DC motors up to 2A", "Solenoid valves and mechanical door strikes", "High-power 12V halogen bulbs"]
+    }
+  ],
+  "commonParts": [
+    { "part": "2N2222A", "type": "NPN", "rating": "40V 800mA", "whenToUse": "The workhorse NPN transistor for Arduino kits. Best for buzzers, relays, small 5V/12V motors." },
+    { "part": "2N3904", "type": "NPN", "rating": "40V 200mA", "whenToUse": "Low-current general-purpose switching, logic inverters, and signal level shifting." },
+    { "part": "2N3906", "type": "PNP", "rating": "40V 200mA", "whenToUse": "Complement to 2N3904. Used for high-side switching and H-bridge directional circuits." },
+    { "part": "BC547", "type": "NPN", "rating": "45V 100mA", "whenToUse": "European standard small-signal NPN. Very high gain, excellent for audio and sensitive triggers." },
+    { "part": "TIP120", "type": "Darlington NPN", "rating": "60V 5A", "whenToUse": "Driving beefy 12V motors, solenoids, or actuators when a MOSFET is unavailable." }
+  ],
+  "examples": [
+    {
+      "id": "transistor-buzzer-motor",
+      "title": "NPN Low-Side Switch for Buzzer or Motor",
+      "description": "Drives an 80 mA DC buzzer or motor from Arduino pin D9 via a 2N2222 NPN transistor with a 1kΩ base current-limiting resistor and flyback diode.",
+      "parts": ["2N2222 NPN Transistor", "1kΩ Resistor", "1N4007 Diode (for motors)", "12V or 5V Buzzer/Motor"],
+      "wiring": [
+        { "part": "Arduino Nano", "pin": "D9", "to": "1kΩ Resistor input" },
+        { "part": "1kΩ Resistor", "pin": "Output leg", "to": "2N2222 Base (Pin 2)" },
+        { "part": "2N2222", "pin": "Emitter (Pin 1)", "to": "GND" },
+        { "part": "2N2222", "pin": "Collector (Pin 3)", "to": "Load Negative (-)" },
+        { "part": "External Supply (+)", "pin": "VCC", "to": "Load Positive (+)" }
+      ],
+      "code": [
+        "// NPN Transistor Low-Side Switch Demo",
+        "// A 1k resistor protects the Arduino pin from burning out.",
+        "// HIGH turns the transistor ON (Collector connects to Emitter/GND).",
+        "",
+        "const int TRANSISTOR_PIN = 9;",
+        "",
+        "void setup() {",
+        "  pinMode(TRANSISTOR_PIN, OUTPUT);",
+        "  Serial.begin(9600);",
+        "  Serial.println(F(\"Transistor switch initialized.\"));",
+        "}",
+        "",
+        "void loop() {",
+        "  Serial.println(F(\"Transistor ON: Load running...\"));",
+        "  digitalWrite(TRANSISTOR_PIN, HIGH);",
+        "  delay(2000);",
+        "",
+        "  Serial.println(F(\"Transistor OFF: Load stopped...\"));",
+        "  digitalWrite(TRANSISTOR_PIN, LOW);",
+        "  delay(2000);",
+        "}"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,3763 @@
+[
+  {
+    "id": "automatic-night-light",
+    "title": "Automatic night light",
+    "level": "low",
+    "board": "arduino-nano",
+    "summary": "An LED switches on by itself when the room gets dark and off again in daylight.",
+    "time": "20 min",
+    "sensors": [
+      "SEN-005"
+    ],
+    "parts": [
+      "5mm LED",
+      "220Ω resistor",
+      "Breadboard + jumper wires"
+    ],
+    "libraries": [],
+    "concepts": [
+      "digitalRead",
+      "Module threshold trimmer",
+      "if / else"
+    ],
+    "wiring": [
+      {
+        "part": "LDR module",
+        "pin": "VCC",
+        "to": "5V"
+      },
+      {
+        "part": "LDR module",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "LDR module",
+        "pin": "DO",
+        "to": "D2"
+      },
+      {
+        "part": "LED (long leg)",
+        "pin": "+",
+        "to": "D9 via 220Ω"
+      },
+      {
+        "part": "LED (short leg)",
+        "pin": "−",
+        "to": "GND"
+      }
+    ],
+    "steps": [
+      "Place the Nano on the breadboard and connect the LDR module: VCC to 5V, GND to GND, DO to D2.",
+      "Connect the LED's long leg to D9 through the 220Ω resistor and its short leg to GND.",
+      "Upload the sketch and open Tools → Serial Monitor at 9600 baud.",
+      "Cover the LDR with your hand. Turn the blue trimmer until the LED switches on at the darkness you want.",
+      "If it works the wrong way round (on in light), change HIGH to LOW in the dark check."
+    ],
+    "code": [
+      "// Automatic night light: LED turns on when the room gets dark.",
+      "const int LDR_PIN = 2;   // LDR module DO",
+      "const int LED_PIN = 9;   // LED through a 220 ohm resistor",
+      "",
+      "void setup() {",
+      "  pinMode(LDR_PIN, INPUT);",
+      "  pinMode(LED_PIN, OUTPUT);",
+      "  Serial.begin(9600);",
+      "}",
+      "",
+      "void loop() {",
+      "  // Most LDR modules output HIGH when it is dark.",
+      "  bool dark = digitalRead(LDR_PIN) == HIGH;",
+      "  digitalWrite(LED_PIN, dark ? HIGH : LOW);",
+      "  Serial.println(dark ? \"Dark   -> light ON\" : \"Bright -> light OFF\");",
+      "  delay(200);",
+      "}"
+    ],
+    "extensions": [
+      "Use a bare 12 mm LDR on A0 and fade the LED with analogWrite() instead of on/off.",
+      "Add a PIR sensor so the light only comes on when it is dark and someone is there."
+    ]
+  },
+  {
+    "id": "obstacle-alarm",
+    "title": "Obstacle alarm",
+    "level": "low",
+    "board": "arduino-nano",
+    "summary": "A buzzer beeps and an LED lights whenever something comes close to the IR sensor.",
+    "time": "20 min",
+    "sensors": [
+      "SEN-001"
+    ],
+    "parts": [
+      "Buzzer (active or passive)",
+      "Breadboard + jumper wires"
+    ],
+    "libraries": [],
+    "concepts": [
+      "Active-LOW outputs",
+      "tone()",
+      "Onboard LED (D13)"
+    ],
+    "wiring": [
+      {
+        "part": "IR module",
+        "pin": "VCC",
+        "to": "5V"
+      },
+      {
+        "part": "IR module",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "IR module",
+        "pin": "OUT",
+        "to": "D2"
+      },
+      {
+        "part": "Buzzer",
+        "pin": "+",
+        "to": "D8"
+      },
+      {
+        "part": "Buzzer",
+        "pin": "−",
+        "to": "GND"
+      }
+    ],
+    "steps": [
+      "Wire the IR module to 5V, GND and D2, and the buzzer between D8 and GND.",
+      "Upload the sketch.",
+      "Move your hand towards the sensor; the onboard LED and the buzzer should react.",
+      "Adjust the trimmer on the IR module to set how close an object must be."
+    ],
+    "code": [
+      "// Obstacle alarm: beep when something is in front of the IR sensor.",
+      "const int IR_PIN = 2;",
+      "const int BUZZER_PIN = 8;",
+      "const int LED_PIN = 13;   // onboard LED",
+      "",
+      "void setup() {",
+      "  pinMode(IR_PIN, INPUT);",
+      "  pinMode(BUZZER_PIN, OUTPUT);",
+      "  pinMode(LED_PIN, OUTPUT);",
+      "}",
+      "",
+      "void loop() {",
+      "  bool objectNear = digitalRead(IR_PIN) == LOW;   // IR module output is active LOW",
+      "  digitalWrite(LED_PIN, objectNear);",
+      "  if (objectNear) {",
+      "    tone(BUZZER_PIN, 2000, 100);",
+      "    delay(150);",
+      "  }",
+      "}"
+    ],
+    "extensions": [
+      "Count how many times something passes and print the total.",
+      "Mount two IR modules on a robot to avoid walls."
+    ]
+  },
+  {
+    "id": "touch-lamp",
+    "title": "Touch lamp",
+    "level": "low",
+    "board": "arduino-nano",
+    "summary": "Each tap on the touch pad switches an LED lamp on or off.",
+    "time": "15 min",
+    "sensors": [
+      "SEN-020"
+    ],
+    "parts": [
+      "5mm LED",
+      "220Ω resistor",
+      "Breadboard + jumper wires"
+    ],
+    "libraries": [],
+    "concepts": [
+      "Edge detection",
+      "Toggle state with a bool"
+    ],
+    "wiring": [
+      {
+        "part": "TTP223B",
+        "pin": "VCC",
+        "to": "5V"
+      },
+      {
+        "part": "TTP223B",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "TTP223B",
+        "pin": "I/O (OUT)",
+        "to": "D2"
+      },
+      {
+        "part": "LED (long leg)",
+        "pin": "+",
+        "to": "D9 via 220Ω"
+      },
+      {
+        "part": "LED (short leg)",
+        "pin": "−",
+        "to": "GND"
+      }
+    ],
+    "steps": [
+      "Connect the touch module to 5V, GND and D2.",
+      "Connect the LED to D9 through the 220Ω resistor.",
+      "Upload the sketch and tap the pad: the LED toggles once per tap.",
+      "Try sticking the pad behind a thin sheet of plastic; it still works."
+    ],
+    "code": [
+      "// Touch lamp: every tap toggles the LED.",
+      "const int TOUCH_PIN = 2;",
+      "const int LED_PIN = 9;",
+      "",
+      "bool lampOn = false;",
+      "bool wasTouched = false;",
+      "",
+      "void setup() {",
+      "  pinMode(TOUCH_PIN, INPUT);",
+      "  pinMode(LED_PIN, OUTPUT);",
+      "}",
+      "",
+      "void loop() {",
+      "  bool touched = digitalRead(TOUCH_PIN) == HIGH;",
+      "  if (touched && !wasTouched) {   // act only at the moment of the touch",
+      "    lampOn = !lampOn;",
+      "    digitalWrite(LED_PIN, lampOn);",
+      "  }",
+      "  wasTouched = touched;",
+      "  delay(20);",
+      "}"
+    ],
+    "extensions": [
+      "Hold the pad to fade the brightness up and down with analogWrite().",
+      "Drive a relay module instead of the LED to switch a real lamp."
+    ]
+  },
+  {
+    "id": "flame-alert",
+    "title": "Flame alert",
+    "level": "low",
+    "board": "arduino-nano",
+    "summary": "Detects a candle or lighter flame and sounds a pulsing alarm with a flashing red LED.",
+    "time": "20 min",
+    "sensors": [
+      "SEN-002"
+    ],
+    "parts": [
+      "Buzzer",
+      "Red LED",
+      "220Ω resistor",
+      "Breadboard + jumper wires"
+    ],
+    "libraries": [],
+    "concepts": [
+      "Digital input",
+      "tone() / noTone()",
+      "Alarm patterns"
+    ],
+    "wiring": [
+      {
+        "part": "Flame sensor",
+        "pin": "VCC",
+        "to": "5V"
+      },
+      {
+        "part": "Flame sensor",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "Flame sensor",
+        "pin": "DO",
+        "to": "D2"
+      },
+      {
+        "part": "Buzzer",
+        "pin": "+",
+        "to": "D8"
+      },
+      {
+        "part": "Red LED",
+        "pin": "+",
+        "to": "D9 via 220Ω"
+      }
+    ],
+    "steps": [
+      "Wire the flame sensor to 5V, GND and D2; the buzzer to D8; the red LED to D9 through 220Ω.",
+      "Upload the sketch and open the Serial Monitor.",
+      "Light a candle about 30–50 cm away from the sensor (with an adult nearby).",
+      "Turn the trimmer until the alarm triggers reliably but not from room lights."
+    ],
+    "code": [
+      "// Flame alert: pulsing alarm when a flame is detected.",
+      "const int FLAME_PIN = 2;",
+      "const int BUZZER_PIN = 8;",
+      "const int LED_PIN = 9;",
+      "",
+      "void setup() {",
+      "  pinMode(FLAME_PIN, INPUT);",
+      "  pinMode(BUZZER_PIN, OUTPUT);",
+      "  pinMode(LED_PIN, OUTPUT);",
+      "  Serial.begin(9600);",
+      "}",
+      "",
+      "void loop() {",
+      "  if (digitalRead(FLAME_PIN) == LOW) {   // LOW = flame seen on most boards",
+      "    Serial.println(\"FLAME!\");",
+      "    digitalWrite(LED_PIN, HIGH);",
+      "    tone(BUZZER_PIN, 2500);",
+      "    delay(150);",
+      "    digitalWrite(LED_PIN, LOW);",
+      "    noTone(BUZZER_PIN);",
+      "    delay(100);",
+      "  } else {",
+      "    digitalWrite(LED_PIN, LOW);",
+      "    noTone(BUZZER_PIN);",
+      "  }",
+      "}"
+    ],
+    "extensions": [
+      "Add an MQ2 smoke sensor so the alarm also reacts to smoke.",
+      "Turn on a small fan through a relay when a flame is seen."
+    ],
+    "safety": "Only test with a small candle on a non-flammable surface, with an adult present."
+  },
+  {
+    "id": "rain-alarm",
+    "title": "Rain alarm",
+    "level": "low",
+    "board": "arduino-nano",
+    "summary": "Beeps when raindrops land on the rain plate, and powers the sensor only while reading so it lasts longer.",
+    "time": "25 min",
+    "sensors": [
+      "SEN-013"
+    ],
+    "parts": [
+      "Buzzer",
+      "Breadboard + jumper wires"
+    ],
+    "libraries": [],
+    "concepts": [
+      "analogRead",
+      "Powering a sensor from a pin",
+      "Thresholds"
+    ],
+    "wiring": [
+      {
+        "part": "Rain board",
+        "pin": "VCC",
+        "to": "D7"
+      },
+      {
+        "part": "Rain board",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "Rain board",
+        "pin": "AO",
+        "to": "A0"
+      },
+      {
+        "part": "Buzzer",
+        "pin": "+",
+        "to": "D8"
+      }
+    ],
+    "steps": [
+      "Connect the rain plate to the small comparator board with the two wires.",
+      "Wire the board's VCC to D7 (not 5V), GND to GND and AO to A0. The buzzer goes to D8.",
+      "Upload and open the Serial Monitor. Note the reading when the plate is dry.",
+      "Sprinkle a few drops of water: the reading falls. Set WET_BELOW between the dry and wet values."
+    ],
+    "code": [
+      "// Rain alarm: beep when the plate gets wet.",
+      "const int POWER_PIN = 7;    // powers the rain board only while reading",
+      "const int RAIN_PIN = A0;",
+      "const int BUZZER_PIN = 8;",
+      "const int WET_BELOW = 500;  // lower reading = more water on the plate",
+      "",
+      "void setup() {",
+      "  pinMode(POWER_PIN, OUTPUT);",
+      "  pinMode(BUZZER_PIN, OUTPUT);",
+      "  Serial.begin(9600);",
+      "}",
+      "",
+      "int readRain() {",
+      "  digitalWrite(POWER_PIN, HIGH);",
+      "  delay(10);",
+      "  int value = analogRead(RAIN_PIN);",
+      "  digitalWrite(POWER_PIN, LOW);",
+      "  return value;",
+      "}",
+      "",
+      "void loop() {",
+      "  int value = readRain();",
+      "  Serial.print(\"Rain sensor: \");",
+      "  Serial.println(value);",
+      "",
+      "  if (value < WET_BELOW) {",
+      "    tone(BUZZER_PIN, 1500, 300);",
+      "  }",
+      "  delay(1000);",
+      "}"
+    ],
+    "extensions": [
+      "Show dry / drizzle / heavy rain with three LEDs.",
+      "Close a model window with a servo when it starts raining."
+    ]
+  },
+  {
+    "id": "double-clap-switch",
+    "title": "Double-clap switch",
+    "level": "low",
+    "board": "arduino-nano",
+    "summary": "Clap twice to switch a light on, clap twice again to switch it off.",
+    "time": "30 min",
+    "sensors": [
+      "SEN-021"
+    ],
+    "parts": [
+      "LED + 220Ω resistor (or a relay module)",
+      "Breadboard + jumper wires"
+    ],
+    "libraries": [],
+    "concepts": [
+      "millis() timing",
+      "Counting events in a time window",
+      "Debouncing"
+    ],
+    "wiring": [
+      {
+        "part": "Sound sensor",
+        "pin": "VCC",
+        "to": "5V"
+      },
+      {
+        "part": "Sound sensor",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "Sound sensor",
+        "pin": "OUT",
+        "to": "D2"
+      },
+      {
+        "part": "LED / relay IN",
+        "pin": "+",
+        "to": "D7"
+      }
+    ],
+    "steps": [
+      "Wire the sound sensor to 5V, GND and D2, and the LED (or relay IN) to D7.",
+      "In a quiet room, turn the sound sensor's trimmer until its LED just goes off.",
+      "Upload the sketch and open the Serial Monitor. Clap twice quickly.",
+      "If nothing happens, your module may idle LOW: change ACTIVE to HIGH."
+    ],
+    "code": [
+      "// Double-clap switch: two claps within 0.8 s toggle the output.",
+      "const int SOUND_PIN = 2;",
+      "const int OUT_PIN = 7;      // LED or relay module",
+      "const int ACTIVE = LOW;     // change to HIGH if your module idles LOW",
+      "",
+      "int claps = 0;",
+      "unsigned long firstClapAt = 0;",
+      "bool on = false;",
+      "",
+      "void setup() {",
+      "  pinMode(SOUND_PIN, INPUT);",
+      "  pinMode(OUT_PIN, OUTPUT);",
+      "  Serial.begin(9600);",
+      "}",
+      "",
+      "void loop() {",
+      "  if (digitalRead(SOUND_PIN) == ACTIVE) {",
+      "    if (claps == 0) firstClapAt = millis();",
+      "    claps++;",
+      "    delay(150);             // ignore the echo of the same clap",
+      "  }",
+      "",
+      "  // After 0.8 s, decide what the claps meant.",
+      "  if (claps > 0 && millis() - firstClapAt > 800) {",
+      "    if (claps == 2) {",
+      "      on = !on;",
+      "      digitalWrite(OUT_PIN, on);",
+      "      Serial.println(on ? \"ON\" : \"OFF\");",
+      "    }",
+      "    claps = 0;",
+      "  }",
+      "}"
+    ],
+    "extensions": [
+      "Use three claps for a second device.",
+      "Show the clap count on an LCD."
+    ]
+  },
+  {
+    "id": "parking-sensor",
+    "title": "Parking sensor",
+    "level": "low",
+    "board": "arduino-nano",
+    "summary": "Beeps faster as an object gets closer, with a steady tone when it is under 10 cm, just like a car.",
+    "time": "30 min",
+    "sensors": [
+      "SEN-011"
+    ],
+    "parts": [
+      "Buzzer",
+      "Breadboard + jumper wires"
+    ],
+    "libraries": [],
+    "concepts": [
+      "pulseIn()",
+      "Speed of sound",
+      "map()"
+    ],
+    "wiring": [
+      {
+        "part": "HC-SR04",
+        "pin": "VCC",
+        "to": "5V"
+      },
+      {
+        "part": "HC-SR04",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "HC-SR04",
+        "pin": "Trig",
+        "to": "D9"
+      },
+      {
+        "part": "HC-SR04",
+        "pin": "Echo",
+        "to": "D10"
+      },
+      {
+        "part": "Buzzer",
+        "pin": "+",
+        "to": "D8"
+      }
+    ],
+    "steps": [
+      "Wire the HC-SR04: VCC 5V, GND GND, Trig D9, Echo D10. Buzzer on D8.",
+      "Upload and open the Serial Monitor to see the distance in cm.",
+      "Move a book towards the sensor: beeps speed up below 1 m and become steady below 10 cm.",
+      "Point the sensor at hard flat surfaces; soft cloth absorbs the sound."
+    ],
+    "code": [
+      "// Parking sensor: faster beeps as you get closer.",
+      "const int TRIG_PIN = 9;",
+      "const int ECHO_PIN = 10;",
+      "const int BUZZER_PIN = 8;",
+      "",
+      "long readCm() {",
+      "  digitalWrite(TRIG_PIN, LOW);",
+      "  delayMicroseconds(2);",
+      "  digitalWrite(TRIG_PIN, HIGH);",
+      "  delayMicroseconds(10);",
+      "  digitalWrite(TRIG_PIN, LOW);",
+      "  long us = pulseIn(ECHO_PIN, HIGH, 30000);   // give up after 30 ms (about 5 m)",
+      "  return us == 0 ? -1 : us / 58;",
+      "}",
+      "",
+      "void setup() {",
+      "  pinMode(TRIG_PIN, OUTPUT);",
+      "  pinMode(ECHO_PIN, INPUT);",
+      "  pinMode(BUZZER_PIN, OUTPUT);",
+      "  Serial.begin(9600);",
+      "}",
+      "",
+      "void loop() {",
+      "  long cm = readCm();",
+      "  Serial.print(cm);",
+      "  Serial.println(\" cm\");",
+      "",
+      "  if (cm > 0 && cm < 10) {",
+      "    tone(BUZZER_PIN, 2000);                    // very close: steady tone",
+      "    delay(100);",
+      "  } else if (cm > 0 && cm < 100) {",
+      "    noTone(BUZZER_PIN);",
+      "    tone(BUZZER_PIN, 2000, 60);",
+      "    delay(map(cm, 10, 100, 80, 600));          // closer = faster beeps",
+      "  } else {",
+      "    noTone(BUZZER_PIN);",
+      "    delay(100);",
+      "  }",
+      "}"
+    ],
+    "extensions": [
+      "Add green, yellow and red LEDs for far, near and too close.",
+      "Show the distance on a 16x2 I2C LCD."
+    ]
+  },
+  {
+    "id": "plant-thirst-indicator",
+    "title": "Plant thirst indicator",
+    "level": "low",
+    "board": "arduino-nano",
+    "summary": "Green, yellow or red LED shows whether your plant's soil is wet, okay or dry.",
+    "time": "30 min",
+    "sensors": [
+      "SEN-015"
+    ],
+    "parts": [
+      "Green, yellow and red LEDs",
+      "3 × 220Ω resistors",
+      "Breadboard + jumper wires"
+    ],
+    "libraries": [],
+    "concepts": [
+      "analogRead ranges",
+      "Saving the probe from corrosion",
+      "Multiple outputs"
+    ],
+    "wiring": [
+      {
+        "part": "Soil board",
+        "pin": "VCC",
+        "to": "D7"
+      },
+      {
+        "part": "Soil board",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "Soil board",
+        "pin": "AO",
+        "to": "A0"
+      },
+      {
+        "part": "Green LED",
+        "pin": "+",
+        "to": "D4 via 220Ω"
+      },
+      {
+        "part": "Yellow LED",
+        "pin": "+",
+        "to": "D5 via 220Ω"
+      },
+      {
+        "part": "Red LED",
+        "pin": "+",
+        "to": "D6 via 220Ω"
+      }
+    ],
+    "steps": [
+      "Push the soil probe into a pot and connect it to the comparator board.",
+      "Wire the board's VCC to D7, GND to GND, AO to A0. Connect the three LEDs to D4, D5 and D6.",
+      "Upload and open the Serial Monitor. Note readings in dry soil and right after watering.",
+      "Adjust the 500 and 750 limits in the code to match your soil."
+    ],
+    "code": [
+      "// Plant thirst indicator: green = wet, yellow = okay, red = dry.",
+      "const int POWER_PIN = 7;",
+      "const int SOIL_PIN = A0;",
+      "const int GREEN = 4, YELLOW = 5, RED = 6;",
+      "",
+      "void setup() {",
+      "  pinMode(POWER_PIN, OUTPUT);",
+      "  pinMode(GREEN, OUTPUT);",
+      "  pinMode(YELLOW, OUTPUT);",
+      "  pinMode(RED, OUTPUT);",
+      "  Serial.begin(9600);",
+      "}",
+      "",
+      "int readSoil() {",
+      "  digitalWrite(POWER_PIN, HIGH);",
+      "  delay(10);",
+      "  int value = analogRead(SOIL_PIN);   // high = dry, low = wet",
+      "  digitalWrite(POWER_PIN, LOW);",
+      "  return value;",
+      "}",
+      "",
+      "void loop() {",
+      "  int value = readSoil();",
+      "  Serial.print(\"Soil: \");",
+      "  Serial.println(value);",
+      "",
+      "  digitalWrite(GREEN, value < 500);",
+      "  digitalWrite(YELLOW, value >= 500 && value < 750);",
+      "  digitalWrite(RED, value >= 750);",
+      "",
+      "  delay(5000);   // reading less often makes the probe last longer",
+      "}"
+    ],
+    "extensions": [
+      "Swap in the capacitive soil sensor (SEN-014), which does not corrode.",
+      "Chirp a buzzer once an hour when the soil is dry."
+    ]
+  },
+  {
+    "id": "door-open-alarm",
+    "title": "Door open alarm",
+    "level": "low",
+    "board": "arduino-nano",
+    "summary": "Sounds an alarm if a door stays open for more than 3 seconds and reports every open and close.",
+    "time": "20 min",
+    "sensors": [
+      "SEN-050"
+    ],
+    "parts": [
+      "Buzzer",
+      "Breadboard + jumper wires"
+    ],
+    "libraries": [],
+    "concepts": [
+      "INPUT_PULLUP",
+      "State change detection",
+      "Non-blocking timing with millis()"
+    ],
+    "wiring": [
+      {
+        "part": "Reed switch",
+        "pin": "Wire 1",
+        "to": "GND"
+      },
+      {
+        "part": "Reed switch",
+        "pin": "Wire 2",
+        "to": "D2"
+      },
+      {
+        "part": "Buzzer",
+        "pin": "+",
+        "to": "D8"
+      }
+    ],
+    "steps": [
+      "Connect one reed-switch wire to GND and the other to D2. No resistor is needed thanks to INPUT_PULLUP.",
+      "Stick the switch on the door frame and the magnet on the door, about 1 cm apart when closed.",
+      "Upload and open the Serial Monitor. Open and close the door.",
+      "Change ALARM_AFTER_MS to give yourself more or less time."
+    ],
+    "code": [
+      "// Door open alarm: buzz when the door stays open too long.",
+      "const int REED_PIN = 2;",
+      "const int BUZZER_PIN = 8;",
+      "const unsigned long ALARM_AFTER_MS = 3000;   // 3 s to walk through",
+      "",
+      "unsigned long openedAt = 0;",
+      "bool wasOpen = false;",
+      "",
+      "void setup() {",
+      "  pinMode(REED_PIN, INPUT_PULLUP);",
+      "  pinMode(BUZZER_PIN, OUTPUT);",
+      "  Serial.begin(9600);",
+      "}",
+      "",
+      "void loop() {",
+      "  bool open = digitalRead(REED_PIN) == HIGH;   // magnet away = switch open = HIGH",
+      "",
+      "  if (open && !wasOpen) {",
+      "    openedAt = millis();",
+      "    Serial.println(\"Door opened\");",
+      "  }",
+      "  if (!open && wasOpen) {",
+      "    Serial.println(\"Door closed\");",
+      "    noTone(BUZZER_PIN);",
+      "  }",
+      "  if (open && millis() - openedAt > ALARM_AFTER_MS) {",
+      "    tone(BUZZER_PIN, 1800);",
+      "  }",
+      "  wasOpen = open;",
+      "  delay(20);",
+      "}"
+    ],
+    "extensions": [
+      "Use it on a fridge door with a 30-second limit.",
+      "Count how many times the door opens each day."
+    ]
+  },
+  {
+    "id": "serial-plotter-thermometer",
+    "title": "Serial Plotter thermometer",
+    "level": "low",
+    "board": "arduino-nano",
+    "summary": "Reads the LM35 and draws a live temperature graph in the Arduino Serial Plotter, lighting an LED when it is hot.",
+    "time": "15 min",
+    "sensors": [
+      "SEN-074"
+    ],
+    "parts": [
+      "Breadboard + jumper wires"
+    ],
+    "libraries": [],
+    "concepts": [
+      "ADC to voltage",
+      "Averaging noisy readings",
+      "Serial Plotter"
+    ],
+    "wiring": [
+      {
+        "part": "LM35",
+        "pin": "+Vs (left, flat face to you)",
+        "to": "5V"
+      },
+      {
+        "part": "LM35",
+        "pin": "Vout (middle)",
+        "to": "A0"
+      },
+      {
+        "part": "LM35",
+        "pin": "GND (right)",
+        "to": "GND"
+      }
+    ],
+    "steps": [
+      "Hold the LM35 with the flat face towards you: left pin to 5V, middle to A0, right to GND.",
+      "Upload the sketch, then open Tools → Serial Plotter at 9600 baud.",
+      "Pinch the sensor between your fingers and watch the line rise.",
+      "If the LM35 gets hot by itself, power off at once: 5V and GND are swapped."
+    ],
+    "code": [
+      "// Serial Plotter thermometer with an over-temperature LED.",
+      "const int LM35_PIN = A0;",
+      "const int LED_PIN = 13;",
+      "const float HOT_C = 35.0;",
+      "",
+      "void setup() {",
+      "  pinMode(LED_PIN, OUTPUT);",
+      "  Serial.begin(9600);",
+      "}",
+      "",
+      "float readTempC() {",
+      "  long sum = 0;",
+      "  for (int i = 0; i < 10; i++) {   // average 10 readings to reduce noise",
+      "    sum += analogRead(LM35_PIN);",
+      "    delay(5);",
+      "  }",
+      "  float raw = sum / 10.0;",
+      "  return raw * 500.0 / 1023.0;     // 10 mV per degree with a 5 V reference",
+      "}",
+      "",
+      "void loop() {",
+      "  float c = readTempC();",
+      "  Serial.print(\"TempC:\");",
+      "  Serial.println(c, 1);            // Tools > Serial Plotter shows a graph",
+      "  digitalWrite(LED_PIN, c > HOT_C);",
+      "  delay(500);",
+      "}"
+    ],
+    "extensions": [
+      "Run a fan with PWM that speeds up as it gets warmer.",
+      "Use analogReference(INTERNAL) for finer 0.1 °C steps."
+    ]
+  },
+  {
+    "id": "weather-station",
+    "title": "Weather station",
+    "level": "medium",
+    "board": "arduino-nano",
+    "summary": "Shows temperature, humidity, air pressure and altitude on a 16x2 LCD using a DHT22 and a BMP280.",
+    "time": "1 hour",
+    "sensors": [
+      "SEN-018",
+      "SEN-044"
+    ],
+    "parts": [
+      "16x2 I2C LCD",
+      "Breadboard + jumper wires"
+    ],
+    "libraries": [
+      "DHT sensor library (Adafruit)",
+      "Adafruit BMP280",
+      "LiquidCrystal I2C (Frank de Brabander)"
+    ],
+    "concepts": [
+      "I2C bus with two devices",
+      "Using libraries",
+      "Formatting an LCD"
+    ],
+    "wiring": [
+      {
+        "part": "DHT22",
+        "pin": "VCC",
+        "to": "5V"
+      },
+      {
+        "part": "DHT22",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "DHT22",
+        "pin": "DATA",
+        "to": "D2"
+      },
+      {
+        "part": "BMP280",
+        "pin": "VCC",
+        "to": "3.3V"
+      },
+      {
+        "part": "BMP280",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "BMP280",
+        "pin": "SDA",
+        "to": "A4"
+      },
+      {
+        "part": "BMP280",
+        "pin": "SCL",
+        "to": "A5"
+      },
+      {
+        "part": "16x2 I2C LCD",
+        "pin": "VCC",
+        "to": "5V"
+      },
+      {
+        "part": "16x2 I2C LCD",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "16x2 I2C LCD",
+        "pin": "SDA",
+        "to": "A4"
+      },
+      {
+        "part": "16x2 I2C LCD",
+        "pin": "SCL",
+        "to": "A5"
+      }
+    ],
+    "steps": [
+      "Install the three libraries from Tools → Manage Libraries.",
+      "Wire the DHT22 to D2. Wire the BMP280 and the LCD to the same I2C pins, A4 (SDA) and A5 (SCL). Power the BMP280 from 3.3V.",
+      "If the LCD stays blank, turn the contrast trimmer on its back, or try address 0x3F.",
+      "Upload. The LCD shows T/H on line 1 and pressure/altitude on line 2.",
+      "Set your local sea-level pressure in readAltitude() for a correct altitude."
+    ],
+    "code": [
+      "#include <Wire.h>",
+      "#include <DHT.h>",
+      "#include <Adafruit_BMP280.h>",
+      "#include <LiquidCrystal_I2C.h>",
+      "",
+      "DHT dht(2, DHT22);",
+      "Adafruit_BMP280 bmp;",
+      "LiquidCrystal_I2C lcd(0x27, 16, 2);   // try 0x3F if the screen stays blank",
+      "",
+      "void setup() {",
+      "  Serial.begin(9600);",
+      "  dht.begin();",
+      "  lcd.init();",
+      "  lcd.backlight();",
+      "  if (!bmp.begin(0x76)) {             // 0x77 on some boards",
+      "    lcd.print(F(\"BMP280 missing\"));",
+      "    while (true) {}",
+      "  }",
+      "}",
+      "",
+      "void loop() {",
+      "  float t = dht.readTemperature();",
+      "  float h = dht.readHumidity();",
+      "  float p = bmp.readPressure() / 100.0;     // Pa -> hPa",
+      "  float alt = bmp.readAltitude(1013.25);    // set your sea-level pressure",
+      "",
+      "  lcd.clear();",
+      "  if (isnan(t) || isnan(h)) {",
+      "    lcd.print(F(\"DHT22 error\"));",
+      "  } else {",
+      "    lcd.print(F(\"T:\"));",
+      "    lcd.print(t, 1);",
+      "    lcd.print(F(\"C H:\"));",
+      "    lcd.print(h, 0);",
+      "    lcd.print(F(\"%\"));",
+      "  }",
+      "  lcd.setCursor(0, 1);",
+      "  lcd.print(F(\"P:\"));",
+      "  lcd.print(p, 0);",
+      "  lcd.print(F(\"hPa A:\"));",
+      "  lcd.print(alt, 0);",
+      "",
+      "  Serial.print(t); Serial.print(','); Serial.print(h); Serial.print(','); Serial.println(p);",
+      "  delay(2500);",
+      "}"
+    ],
+    "extensions": [
+      "Predict 'rain likely' when pressure falls more than 3 hPa in 3 hours.",
+      "Log readings to a micro SD card every 10 minutes."
+    ]
+  },
+  {
+    "id": "automatic-plant-watering",
+    "title": "Automatic plant watering",
+    "level": "medium",
+    "board": "arduino-nano",
+    "summary": "Waters a plant with a pump when the soil gets dry, stops when it is moist, and refuses to run when the tank is empty.",
+    "time": "1.5 hours",
+    "sensors": [
+      "SEN-014",
+      "SEN-016"
+    ],
+    "parts": [
+      "1-channel relay module",
+      "5V mini submersible pump",
+      "Silicone tubing",
+      "Separate 5V supply for the pump"
+    ],
+    "libraries": [],
+    "concepts": [
+      "Calibration with map()",
+      "Hysteresis (start/stop levels)",
+      "Safety limits",
+      "Relay modules"
+    ],
+    "wiring": [
+      {
+        "part": "Capacitive soil sensor",
+        "pin": "VCC",
+        "to": "5V"
+      },
+      {
+        "part": "Capacitive soil sensor",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "Capacitive soil sensor",
+        "pin": "AOUT",
+        "to": "A0"
+      },
+      {
+        "part": "Water level sensor",
+        "pin": "+",
+        "to": "5V"
+      },
+      {
+        "part": "Water level sensor",
+        "pin": "−",
+        "to": "GND"
+      },
+      {
+        "part": "Water level sensor",
+        "pin": "S",
+        "to": "A1"
+      },
+      {
+        "part": "Relay module",
+        "pin": "VCC",
+        "to": "5V"
+      },
+      {
+        "part": "Relay module",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "Relay module",
+        "pin": "IN",
+        "to": "D7"
+      },
+      {
+        "part": "Pump",
+        "pin": "+",
+        "to": "Relay NO → 5V supply +"
+      }
+    ],
+    "steps": [
+      "Calibrate first: upload a sketch that prints analogRead(A0), then note the value in dry air (DRY) and in a glass of water (WET).",
+      "Put the water level sensor in the tank and the soil sensor in the pot, keeping its top electronics dry.",
+      "Wire the pump through the relay's COM and NO contacts, powered by its own 5V supply (share GND with the Nano).",
+      "Enter your DRY and WET values, then upload and watch the Serial Monitor.",
+      "Let the soil dry out: the pump runs for up to 10 s, then waits 1 minute for the water to soak in."
+    ],
+    "code": [
+      "// Automatic plant watering with tank-empty protection.",
+      "const int SOIL_PIN = A0;      // capacitive soil sensor",
+      "const int TANK_PIN = A1;      // water level sensor in the tank",
+      "const int RELAY_PIN = 7;      // relay -> pump",
+      "const int ALERT_PIN = 13;     // onboard LED: tank empty",
+      "",
+      "const int DRY = 520;          // your reading in dry air",
+      "const int WET = 260;          // your reading in a glass of water",
+      "const int START_AT = 35;      // % moisture: start watering",
+      "const int STOP_AT = 60;       // % moisture: stop watering",
+      "const int TANK_MIN = 150;     // below this the tank is empty",
+      "",
+      "const unsigned long MAX_RUN_MS = 10000;   // never pump longer than 10 s",
+      "const unsigned long SOAK_MS = 60000;      // wait 1 min for water to soak in",
+      "",
+      "const int RELAY_ON = LOW;     // most relay modules switch on with LOW",
+      "const int RELAY_OFF = HIGH;",
+      "",
+      "bool pumping = false;",
+      "unsigned long pumpStartedAt = 0;",
+      "unsigned long pumpStoppedAt = 0;",
+      "",
+      "void pump(bool on) {",
+      "  if (on && !pumping) pumpStartedAt = millis();",
+      "  if (!on && pumping) pumpStoppedAt = millis();",
+      "  pumping = on;",
+      "  digitalWrite(RELAY_PIN, on ? RELAY_ON : RELAY_OFF);",
+      "}",
+      "",
+      "void setup() {",
+      "  digitalWrite(RELAY_PIN, RELAY_OFF);   // set the level before enabling the output",
+      "  pinMode(RELAY_PIN, OUTPUT);",
+      "  pinMode(ALERT_PIN, OUTPUT);",
+      "  Serial.begin(9600);",
+      "}",
+      "",
+      "void loop() {",
+      "  int moisture = constrain(map(analogRead(SOIL_PIN), DRY, WET, 0, 100), 0, 100);",
+      "  bool tankOk = analogRead(TANK_PIN) > TANK_MIN;",
+      "  bool soaked = pumpStoppedAt == 0 || millis() - pumpStoppedAt > SOAK_MS;",
+      "",
+      "  digitalWrite(ALERT_PIN, !tankOk);",
+      "",
+      "  if (!pumping && moisture < START_AT && tankOk && soaked) pump(true);",
+      "  if (pumping && (moisture >= STOP_AT || !tankOk || millis() - pumpStartedAt > MAX_RUN_MS)) pump(false);",
+      "",
+      "  Serial.print(F(\"Moisture: \"));",
+      "  Serial.print(moisture);",
+      "  Serial.print(F(\"%  tank: \"));",
+      "  Serial.print(tankOk ? F(\"ok\") : F(\"EMPTY\"));",
+      "  Serial.print(F(\"  pump: \"));",
+      "  Serial.println(pumping ? F(\"ON\") : F(\"off\"));",
+      "  delay(500);",
+      "}"
+    ],
+    "extensions": [
+      "Show moisture % and tank state on a 16x2 I2C LCD.",
+      "Water only in the morning using a DS3231 real-time clock."
+    ],
+    "safety": "Keep water away from the Nano and the relay. Mount the electronics above the pot."
+  },
+  {
+    "id": "smart-dustbin",
+    "title": "Smart dustbin",
+    "level": "medium",
+    "board": "arduino-nano",
+    "summary": "The lid opens with a servo when a hand comes near and closes 3 seconds after the hand leaves.",
+    "time": "1 hour",
+    "sensors": [
+      "SEN-011"
+    ],
+    "parts": [
+      "SG90 servo",
+      "Small dustbin",
+      "Hot glue / double-sided tape"
+    ],
+    "libraries": [
+      "Servo (built in)"
+    ],
+    "concepts": [
+      "Servo control",
+      "Non-blocking timers",
+      "Mechanical mounting"
+    ],
+    "wiring": [
+      {
+        "part": "HC-SR04",
+        "pin": "VCC",
+        "to": "5V"
+      },
+      {
+        "part": "HC-SR04",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "HC-SR04",
+        "pin": "Trig",
+        "to": "D9"
+      },
+      {
+        "part": "HC-SR04",
+        "pin": "Echo",
+        "to": "D10"
+      },
+      {
+        "part": "SG90 servo",
+        "pin": "Brown (GND)",
+        "to": "GND"
+      },
+      {
+        "part": "SG90 servo",
+        "pin": "Red (+)",
+        "to": "5V"
+      },
+      {
+        "part": "SG90 servo",
+        "pin": "Orange (signal)",
+        "to": "D6"
+      }
+    ],
+    "steps": [
+      "Fix the HC-SR04 on the front of the bin facing outwards.",
+      "Mount the servo at the hinge so its arm lifts the lid; tape the arm to the lid.",
+      "Wire as shown and upload. Test OPEN_ANGLE and CLOSED_ANGLE for your lid and adjust them.",
+      "If the Nano resets when the servo moves, power the servo from a separate 5V supply (shared GND)."
+    ],
+    "code": [
+      "// Smart dustbin: lid opens when a hand comes near.",
+      "#include <Servo.h>",
+      "",
+      "const int TRIG_PIN = 9;",
+      "const int ECHO_PIN = 10;",
+      "const int SERVO_PIN = 6;",
+      "const int OPEN_ANGLE = 100;",
+      "const int CLOSED_ANGLE = 0;",
+      "const int HAND_CM = 20;",
+      "",
+      "Servo lid;",
+      "unsigned long lastSeen = 0;",
+      "bool isOpen = false;",
+      "",
+      "long readCm() {",
+      "  digitalWrite(TRIG_PIN, LOW);",
+      "  delayMicroseconds(2);",
+      "  digitalWrite(TRIG_PIN, HIGH);",
+      "  delayMicroseconds(10);",
+      "  digitalWrite(TRIG_PIN, LOW);",
+      "  long us = pulseIn(ECHO_PIN, HIGH, 30000);",
+      "  return us == 0 ? -1 : us / 58;",
+      "}",
+      "",
+      "void setup() {",
+      "  pinMode(TRIG_PIN, OUTPUT);",
+      "  pinMode(ECHO_PIN, INPUT);",
+      "  lid.attach(SERVO_PIN);",
+      "  lid.write(CLOSED_ANGLE);",
+      "}",
+      "",
+      "void loop() {",
+      "  long cm = readCm();",
+      "  if (cm > 0 && cm < HAND_CM) {",
+      "    lastSeen = millis();",
+      "    if (!isOpen) {",
+      "      lid.write(OPEN_ANGLE);",
+      "      isOpen = true;",
+      "    }",
+      "  }",
+      "  if (isOpen && millis() - lastSeen > 3000) {   // close 3 s after the hand leaves",
+      "    lid.write(CLOSED_ANGLE);",
+      "    isOpen = false;",
+      "  }",
+      "  delay(60);",
+      "}"
+    ],
+    "extensions": [
+      "Add a second ultrasonic sensor inside the lid to show how full the bin is.",
+      "Move the lid slowly by stepping the servo angle a few degrees at a time."
+    ]
+  },
+  {
+    "id": "gas-leak-detector",
+    "title": "Gas leak detector with exhaust fan",
+    "level": "medium",
+    "board": "arduino-nano",
+    "summary": "Watches LPG and smoke levels against a clean-air baseline and starts an exhaust fan with a loud alarm on a leak.",
+    "time": "1 hour",
+    "sensors": [
+      "SEN-028",
+      "SEN-025"
+    ],
+    "parts": [
+      "Buzzer",
+      "1-channel relay module",
+      "12V exhaust fan + supply",
+      "Separate 5V 1A supply for the MQ heaters"
+    ],
+    "libraries": [],
+    "concepts": [
+      "Sensor warm-up",
+      "Baseline calibration",
+      "Averaging",
+      "Driving loads with a relay"
+    ],
+    "wiring": [
+      {
+        "part": "MQ6",
+        "pin": "VCC",
+        "to": "5V (external)"
+      },
+      {
+        "part": "MQ6",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "MQ6",
+        "pin": "AO",
+        "to": "A0"
+      },
+      {
+        "part": "MQ2",
+        "pin": "VCC",
+        "to": "5V (external)"
+      },
+      {
+        "part": "MQ2",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "MQ2",
+        "pin": "AO",
+        "to": "A1"
+      },
+      {
+        "part": "Buzzer",
+        "pin": "+",
+        "to": "D8"
+      },
+      {
+        "part": "Relay module",
+        "pin": "IN",
+        "to": "D7"
+      }
+    ],
+    "steps": [
+      "Power both MQ sensors from a separate 5V supply. Each heater draws about 150 mA, too much for USB. Connect all grounds together.",
+      "Before first use, leave new sensors powered for 24 hours to burn in.",
+      "Upload in clean air. The sketch warms up for 60 s and then records the baseline.",
+      "Test by releasing a tiny puff of gas from an unlit lighter near the MQ6 (never a flame).",
+      "Tune RISE so normal cooking smells don't trigger the alarm."
+    ],
+    "code": [
+      "// Gas leak detector: compares readings with a clean-air baseline.",
+      "const int LPG_PIN = A0;      // MQ6 AO",
+      "const int SMOKE_PIN = A1;    // MQ2 AO",
+      "const int BUZZER_PIN = 8;",
+      "const int FAN_RELAY_PIN = 7;",
+      "const int LED_PIN = 13;",
+      "",
+      "const int RELAY_ON = LOW, RELAY_OFF = HIGH;",
+      "const int RISE = 150;        // alarm when a reading rises this much above clean air",
+      "",
+      "int lpgBase, smokeBase;",
+      "",
+      "int average(int pin) {",
+      "  long sum = 0;",
+      "  for (int i = 0; i < 20; i++) {",
+      "    sum += analogRead(pin);",
+      "    delay(10);",
+      "  }",
+      "  return sum / 20;",
+      "}",
+      "",
+      "void setup() {",
+      "  digitalWrite(FAN_RELAY_PIN, RELAY_OFF);",
+      "  pinMode(FAN_RELAY_PIN, OUTPUT);",
+      "  pinMode(BUZZER_PIN, OUTPUT);",
+      "  pinMode(LED_PIN, OUTPUT);",
+      "  Serial.begin(9600);",
+      "",
+      "  Serial.println(F(\"Warming up sensors for 60 s...\"));",
+      "  for (int s = 60; s > 0; s--) {",
+      "    digitalWrite(LED_PIN, s % 2);",
+      "    delay(1000);",
+      "  }",
+      "  lpgBase = average(LPG_PIN);     // clean air becomes the baseline",
+      "  smokeBase = average(SMOKE_PIN);",
+      "  Serial.print(F(\"Baseline LPG \"));",
+      "  Serial.print(lpgBase);",
+      "  Serial.print(F(\" smoke \"));",
+      "  Serial.println(smokeBase);",
+      "}",
+      "",
+      "void loop() {",
+      "  int lpg = average(LPG_PIN);",
+      "  int smoke = average(SMOKE_PIN);",
+      "  bool danger = lpg > lpgBase + RISE || smoke > smokeBase + RISE;",
+      "",
+      "  digitalWrite(FAN_RELAY_PIN, danger ? RELAY_ON : RELAY_OFF);",
+      "  digitalWrite(LED_PIN, danger);",
+      "  if (danger) tone(BUZZER_PIN, 3000, 200);",
+      "",
+      "  Serial.print(F(\"LPG \"));",
+      "  Serial.print(lpg);",
+      "  Serial.print(F(\"  smoke \"));",
+      "  Serial.print(smoke);",
+      "  Serial.println(danger ? F(\"  << GAS!\") : F(\"\"));",
+      "  delay(300);",
+      "}"
+    ],
+    "extensions": [
+      "Close a gas valve with a servo when a leak is found.",
+      "Send an SMS alert through a SIM800L GSM module."
+    ],
+    "safety": "This is a learning project, not a certified gas alarm. Never test with an open flame, and keep a real gas detector in your kitchen."
+  },
+  {
+    "id": "digital-kitchen-scale",
+    "title": "Digital kitchen scale",
+    "level": "medium",
+    "board": "arduino-nano",
+    "summary": "Weighs up to 5 kg in grams on an LCD, with a tare button to zero the bowl.",
+    "time": "1.5 hours",
+    "sensors": [
+      "SEN-081"
+    ],
+    "parts": [
+      "HX711 load cell amplifier",
+      "16x2 I2C LCD",
+      "Push button",
+      "Two flat boards (base and platform) + screws"
+    ],
+    "libraries": [
+      "HX711 (Bogdan Necula)",
+      "LiquidCrystal I2C (Frank de Brabander)"
+    ],
+    "concepts": [
+      "Strain gauges",
+      "24-bit ADC",
+      "Calibration factor",
+      "Tare"
+    ],
+    "wiring": [
+      {
+        "part": "Load cell",
+        "pin": "Red",
+        "to": "HX711 E+"
+      },
+      {
+        "part": "Load cell",
+        "pin": "Black",
+        "to": "HX711 E−"
+      },
+      {
+        "part": "Load cell",
+        "pin": "White",
+        "to": "HX711 A−"
+      },
+      {
+        "part": "Load cell",
+        "pin": "Green",
+        "to": "HX711 A+"
+      },
+      {
+        "part": "HX711",
+        "pin": "VCC",
+        "to": "5V"
+      },
+      {
+        "part": "HX711",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "HX711",
+        "pin": "DT",
+        "to": "D3"
+      },
+      {
+        "part": "HX711",
+        "pin": "SCK",
+        "to": "D4"
+      },
+      {
+        "part": "Tare button",
+        "pin": "one leg",
+        "to": "D5"
+      },
+      {
+        "part": "Tare button",
+        "pin": "other leg",
+        "to": "GND"
+      },
+      {
+        "part": "16x2 I2C LCD",
+        "pin": "VCC",
+        "to": "5V"
+      },
+      {
+        "part": "16x2 I2C LCD",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "16x2 I2C LCD",
+        "pin": "SDA",
+        "to": "A4"
+      },
+      {
+        "part": "16x2 I2C LCD",
+        "pin": "SCL",
+        "to": "A5"
+      }
+    ],
+    "steps": [
+      "Screw the load cell between the base board and the platform so it can bend (Z shape). The arrow points down.",
+      "Wire the load cell to the HX711, and the HX711, LCD and tare button to the Nano.",
+      "Calibrate: set calibration = 1.0, upload, empty the platform, then place a known weight (e.g. a 500 g pack).",
+      "Divide the number shown by the real weight in grams. Put that number in calibration and upload again.",
+      "Press the tare button with an empty bowl on the scale to zero it."
+    ],
+    "code": [
+      "// Digital kitchen scale with tare button.",
+      "#include <HX711.h>",
+      "#include <LiquidCrystal_I2C.h>",
+      "",
+      "const int DT_PIN = 3;",
+      "const int SCK_PIN = 4;",
+      "const int TARE_PIN = 5;           // push button to GND",
+      "float calibration = 420.0;        // change this after calibrating (see steps)",
+      "",
+      "HX711 scale;",
+      "LiquidCrystal_I2C lcd(0x27, 16, 2);",
+      "",
+      "void setup() {",
+      "  pinMode(TARE_PIN, INPUT_PULLUP);",
+      "  Serial.begin(9600);",
+      "  lcd.init();",
+      "  lcd.backlight();",
+      "  lcd.print(F(\"Scale starting\"));",
+      "",
+      "  scale.begin(DT_PIN, SCK_PIN);",
+      "  scale.set_scale(calibration);",
+      "  scale.tare();                    // empty platform = 0 g",
+      "  lcd.clear();",
+      "}",
+      "",
+      "void loop() {",
+      "  if (digitalRead(TARE_PIN) == LOW) {",
+      "    lcd.clear();",
+      "    lcd.print(F(\"Tare...\"));",
+      "    scale.tare();",
+      "    delay(300);",
+      "    lcd.clear();",
+      "  }",
+      "",
+      "  float grams = scale.get_units(5);  // average of 5 readings",
+      "  if (fabs(grams) < 1.0) grams = 0;  // hide tiny drift around zero",
+      "",
+      "  lcd.setCursor(0, 0);",
+      "  lcd.print(F(\"Weight:         \"));",
+      "  lcd.setCursor(0, 1);",
+      "  lcd.print(grams, 1);",
+      "  lcd.print(F(\" g        \"));",
+      "  Serial.println(grams, 1);",
+      "}"
+    ],
+    "extensions": [
+      "Count identical items (screws, coins) by dividing the total weight by one item's weight.",
+      "Add a unit button to switch between g, kg and oz."
+    ]
+  },
+  {
+    "id": "ir-remote-switch-board",
+    "title": "IR remote switch board",
+    "level": "medium",
+    "board": "arduino-nano",
+    "summary": "Turns four relays on and off with keys 1–4 on the IR remote, with OK switching everything off.",
+    "time": "1 hour",
+    "sensors": [
+      "SEN-004"
+    ],
+    "parts": [
+      "4-channel relay module",
+      "Breadboard + jumper wires"
+    ],
+    "libraries": [
+      "IRremote (Armin Joachimsmeyer) v4+"
+    ],
+    "concepts": [
+      "IR protocols (NEC)",
+      "Lookup tables with arrays",
+      "Ignoring repeat codes"
+    ],
+    "wiring": [
+      {
+        "part": "IR receiver",
+        "pin": "VCC",
+        "to": "5V"
+      },
+      {
+        "part": "IR receiver",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "IR receiver",
+        "pin": "S / OUT",
+        "to": "D2"
+      },
+      {
+        "part": "Relay module",
+        "pin": "VCC",
+        "to": "5V"
+      },
+      {
+        "part": "Relay module",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "Relay module",
+        "pin": "IN1–IN4",
+        "to": "D4–D7"
+      }
+    ],
+    "steps": [
+      "Install the IRremote library (version 4 or newer).",
+      "Wire the receiver to D2 and the relay inputs IN1–IN4 to D4–D7.",
+      "Upload, open the Serial Monitor and press each remote key. Note the codes it prints.",
+      "If your remote's codes differ, put them in the KEYS array and upload again."
+    ],
+    "code": [
+      "// IR remote switch board: keys 1-4 toggle relays, OK switches all off.",
+      "#include <IRremote.hpp>",
+      "",
+      "const int IR_PIN = 2;",
+      "const uint8_t RELAYS[] = {4, 5, 6, 7};",
+      "const uint8_t KEYS[]   = {0x45, 0x46, 0x47, 0x44};   // keys 1-4 on the kit remote",
+      "const uint8_t KEY_ALL_OFF = 0x1C;                     // OK key",
+      "bool state[4] = {false, false, false, false};",
+      "",
+      "void setRelay(int i, bool on) {",
+      "  state[i] = on;",
+      "  digitalWrite(RELAYS[i], on ? LOW : HIGH);   // relay modules switch on with LOW",
+      "}",
+      "",
+      "void setup() {",
+      "  Serial.begin(9600);",
+      "  for (int i = 0; i < 4; i++) {",
+      "    digitalWrite(RELAYS[i], HIGH);",
+      "    pinMode(RELAYS[i], OUTPUT);",
+      "  }",
+      "  IrReceiver.begin(IR_PIN, ENABLE_LED_FEEDBACK);",
+      "  Serial.println(F(\"Press remote keys...\"));",
+      "}",
+      "",
+      "void loop() {",
+      "  if (!IrReceiver.decode()) return;",
+      "",
+      "  bool isRepeat = IrReceiver.decodedIRData.flags & IRDATA_FLAGS_IS_REPEAT;",
+      "  uint8_t cmd = IrReceiver.decodedIRData.command;",
+      "  IrReceiver.resume();",
+      "  if (isRepeat) return;                       // ignore held-down repeats",
+      "",
+      "  Serial.print(F(\"Key 0x\"));",
+      "  Serial.println(cmd, HEX);",
+      "",
+      "  for (int i = 0; i < 4; i++) {",
+      "    if (cmd == KEYS[i]) setRelay(i, !state[i]);",
+      "  }",
+      "  if (cmd == KEY_ALL_OFF) {",
+      "    for (int i = 0; i < 4; i++) setRelay(i, false);",
+      "  }",
+      "}"
+    ],
+    "extensions": [
+      "Save relay states in EEPROM so they come back after a power cut.",
+      "Use the arrow keys to dim an LED strip with PWM."
+    ],
+    "safety": "Practise with low-voltage loads (LEDs, 12V fans). Switching mains through relays needs proper enclosures and an experienced adult."
+  },
+  {
+    "id": "dual-sensor-intruder-alarm",
+    "title": "Dual-sensor intruder alarm",
+    "level": "medium",
+    "board": "arduino-nano",
+    "summary": "Combines a PIR and a microwave radar and only sounds the alarm when both detect movement, cutting false alarms.",
+    "time": "1 hour",
+    "sensors": [
+      "SEN-019",
+      "SEN-099"
+    ],
+    "parts": [
+      "Buzzer",
+      "Breadboard + jumper wires"
+    ],
+    "libraries": [],
+    "concepts": [
+      "Sensor fusion",
+      "Time windows",
+      "Reducing false alarms"
+    ],
+    "wiring": [
+      {
+        "part": "PIR",
+        "pin": "VCC",
+        "to": "5V"
+      },
+      {
+        "part": "PIR",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "PIR",
+        "pin": "OUT",
+        "to": "D2"
+      },
+      {
+        "part": "RCWL-0516",
+        "pin": "VIN",
+        "to": "5V"
+      },
+      {
+        "part": "RCWL-0516",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "RCWL-0516",
+        "pin": "OUT",
+        "to": "D3"
+      },
+      {
+        "part": "Buzzer",
+        "pin": "+",
+        "to": "D8"
+      }
+    ],
+    "steps": [
+      "Wire the PIR to D2 and the radar to D3. Point both at the same area.",
+      "Set the PIR's delay trimmer to the minimum and its jumper to repeat trigger (H).",
+      "Upload. Wait 60 s for the PIR to settle; the Serial Monitor says 'Armed'.",
+      "Walk in front: the onboard LED shows single triggers, and the buzzer only sounds when both agree."
+    ],
+    "code": [
+      "// Dual-sensor intruder alarm: PIR + microwave radar must both trigger.",
+      "const int PIR_PIN = 2;",
+      "const int RADAR_PIN = 3;",
+      "const int BUZZER_PIN = 8;",
+      "const int LED_PIN = 13;",
+      "const unsigned long WINDOW_MS = 2000;   // both must trigger within 2 s",
+      "",
+      "unsigned long pirAt = 0, radarAt = 0;",
+      "",
+      "void setup() {",
+      "  pinMode(PIR_PIN, INPUT);",
+      "  pinMode(RADAR_PIN, INPUT);",
+      "  pinMode(BUZZER_PIN, OUTPUT);",
+      "  pinMode(LED_PIN, OUTPUT);",
+      "  Serial.begin(9600);",
+      "  Serial.println(F(\"PIR warming up (60 s)...\"));",
+      "  delay(60000);",
+      "  Serial.println(F(\"Armed\"));",
+      "}",
+      "",
+      "void loop() {",
+      "  unsigned long now = millis();",
+      "  if (digitalRead(PIR_PIN) == HIGH) pirAt = now;",
+      "  if (digitalRead(RADAR_PIN) == HIGH) radarAt = now;",
+      "",
+      "  bool pirRecent = pirAt && now - pirAt < WINDOW_MS;",
+      "  bool radarRecent = radarAt && now - radarAt < WINDOW_MS;",
+      "  digitalWrite(LED_PIN, pirRecent || radarRecent);   // shows single triggers",
+      "",
+      "  if (pirRecent && radarRecent) {",
+      "    Serial.println(F(\"INTRUDER!\"));",
+      "    for (int i = 0; i < 10; i++) {",
+      "      tone(BUZZER_PIN, 2000, 150);",
+      "      delay(300);",
+      "    }",
+      "    pirAt = radarAt = 0;",
+      "  }",
+      "}"
+    ],
+    "extensions": [
+      "Add a reed switch on the door as a third trigger.",
+      "Arm and disarm with a 4-digit code on a touch keypad."
+    ]
+  },
+  {
+    "id": "water-tank-level-monitor",
+    "title": "Water tank level monitor",
+    "level": "medium",
+    "board": "arduino-nano",
+    "summary": "A waterproof ultrasonic probe on the tank lid shows the water level in % on an LCD and beeps when nearly full or empty.",
+    "time": "1.5 hours",
+    "sensors": [
+      "SEN-012"
+    ],
+    "parts": [
+      "16x2 I2C LCD",
+      "Buzzer",
+      "Weatherproof box for the electronics"
+    ],
+    "libraries": [
+      "LiquidCrystal I2C (Frank de Brabander)"
+    ],
+    "concepts": [
+      "Median filter",
+      "Mapping distance to %",
+      "Blind zone"
+    ],
+    "wiring": [
+      {
+        "part": "JSN-SR04T",
+        "pin": "5V",
+        "to": "5V"
+      },
+      {
+        "part": "JSN-SR04T",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "JSN-SR04T",
+        "pin": "Trig",
+        "to": "D9"
+      },
+      {
+        "part": "JSN-SR04T",
+        "pin": "Echo",
+        "to": "D10"
+      },
+      {
+        "part": "Buzzer",
+        "pin": "+",
+        "to": "D8"
+      },
+      {
+        "part": "16x2 I2C LCD",
+        "pin": "VCC",
+        "to": "5V"
+      },
+      {
+        "part": "16x2 I2C LCD",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "16x2 I2C LCD",
+        "pin": "SDA",
+        "to": "A4"
+      },
+      {
+        "part": "16x2 I2C LCD",
+        "pin": "SCL",
+        "to": "A5"
+      }
+    ],
+    "steps": [
+      "Mount the probe in the tank lid pointing straight down, at least 25 cm above the highest water level.",
+      "Measure the distance from the probe to the tank bottom (EMPTY_CM) and to the water when full (FULL_CM).",
+      "Put both numbers in the sketch and upload.",
+      "Keep the Nano and LCD in a weatherproof box. Only the probe goes on the tank."
+    ],
+    "code": [
+      "// Water tank level monitor with JSN-SR04T.",
+      "#include <LiquidCrystal_I2C.h>",
+      "",
+      "const int TRIG_PIN = 9;",
+      "const int ECHO_PIN = 10;",
+      "const int BUZZER_PIN = 8;",
+      "const int EMPTY_CM = 120;   // probe to tank bottom",
+      "const int FULL_CM = 25;     // probe to water when full (keep >= 25 cm)",
+      "",
+      "LiquidCrystal_I2C lcd(0x27, 16, 2);",
+      "",
+      "long readCm() {",
+      "  digitalWrite(TRIG_PIN, LOW);",
+      "  delayMicroseconds(5);",
+      "  digitalWrite(TRIG_PIN, HIGH);",
+      "  delayMicroseconds(20);            // JSN-SR04T likes a longer trigger pulse",
+      "  digitalWrite(TRIG_PIN, LOW);",
+      "  long us = pulseIn(ECHO_PIN, HIGH, 40000);",
+      "  return us == 0 ? -1 : us / 58;",
+      "}",
+      "",
+      "long medianCm() {                   // middle of 5 readings ignores odd echoes",
+      "  long r[5];",
+      "  for (int i = 0; i < 5; i++) {",
+      "    r[i] = readCm();",
+      "    delay(60);",
+      "  }",
+      "  for (int i = 0; i < 4; i++)",
+      "    for (int j = i + 1; j < 5; j++)",
+      "      if (r[j] < r[i]) { long t = r[i]; r[i] = r[j]; r[j] = t; }",
+      "  return r[2];",
+      "}",
+      "",
+      "void setup() {",
+      "  pinMode(TRIG_PIN, OUTPUT);",
+      "  pinMode(ECHO_PIN, INPUT);",
+      "  pinMode(BUZZER_PIN, OUTPUT);",
+      "  lcd.init();",
+      "  lcd.backlight();",
+      "}",
+      "",
+      "void loop() {",
+      "  long cm = medianCm();",
+      "  lcd.clear();",
+      "  if (cm < 0) {",
+      "    lcd.print(F(\"No echo\"));",
+      "  } else {",
+      "    int level = constrain(map(cm, EMPTY_CM, FULL_CM, 0, 100), 0, 100);",
+      "    lcd.print(F(\"Tank: \"));",
+      "    lcd.print(level);",
+      "    lcd.print(F(\"%\"));",
+      "    lcd.setCursor(0, 1);",
+      "    lcd.print(cm);",
+      "    lcd.print(F(\" cm to water\"));",
+      "    if (level >= 95 || level <= 10) tone(BUZZER_PIN, 2000, 300);",
+      "  }",
+      "  delay(1000);",
+      "}"
+    ],
+    "extensions": [
+      "Switch the water pump motor on at 20% and off at 95% with a relay.",
+      "Show litres instead of % using the tank's diameter."
+    ]
+  },
+  {
+    "id": "two-sensor-line-follower",
+    "title": "Two-sensor line follower",
+    "level": "medium",
+    "board": "arduino-nano",
+    "summary": "A small robot car follows a black tape track using two TCRT5000 sensors and an L298N motor driver.",
+    "time": "2 hours",
+    "sensors": [
+      "SEN-007"
+    ],
+    "parts": [
+      "2 × TCRT5000 modules",
+      "2WD robot chassis with motors",
+      "L298N motor driver",
+      "7.4V battery pack",
+      "Black electrical tape"
+    ],
+    "libraries": [],
+    "concepts": [
+      "Motor drivers and PWM",
+      "Simple decision logic",
+      "Sensor placement"
+    ],
+    "wiring": [
+      {
+        "part": "Left TCRT5000",
+        "pin": "DO",
+        "to": "D2"
+      },
+      {
+        "part": "Right TCRT5000",
+        "pin": "DO",
+        "to": "D3"
+      },
+      {
+        "part": "Both TCRT5000",
+        "pin": "VCC / GND",
+        "to": "5V / GND"
+      },
+      {
+        "part": "L298N",
+        "pin": "ENA",
+        "to": "D5"
+      },
+      {
+        "part": "L298N",
+        "pin": "IN1",
+        "to": "D7"
+      },
+      {
+        "part": "L298N",
+        "pin": "IN2",
+        "to": "D8"
+      },
+      {
+        "part": "L298N",
+        "pin": "ENB",
+        "to": "D6"
+      },
+      {
+        "part": "L298N",
+        "pin": "IN3",
+        "to": "D11"
+      },
+      {
+        "part": "L298N",
+        "pin": "IN4",
+        "to": "D12"
+      },
+      {
+        "part": "L298N",
+        "pin": "12V",
+        "to": "Battery +"
+      },
+      {
+        "part": "L298N",
+        "pin": "GND",
+        "to": "Battery − and Nano GND"
+      }
+    ],
+    "steps": [
+      "Build the chassis. Mount the two sensors at the front, 3–5 mm above the floor and slightly wider apart than the tape.",
+      "Wire the sensors to D2/D3 and the L298N as shown. Join the battery GND to the Nano GND.",
+      "Hold each sensor over black tape and adjust its trimmer until its LED changes clearly between black and white.",
+      "Put the robot on the track with the line between the sensors and switch on.",
+      "If it turns the wrong way, swap that motor's two wires on the L298N."
+    ],
+    "code": [
+      "// Two-sensor line follower.",
+      "const int LEFT_SENSOR = 2;",
+      "const int RIGHT_SENSOR = 3;",
+      "const int ON_LINE = HIGH;        // TCRT5000 DO is HIGH over black on most boards",
+      "",
+      "const int ENA = 5, IN1 = 7, IN2 = 8;     // left motor",
+      "const int ENB = 6, IN3 = 11, IN4 = 12;   // right motor",
+      "const int SPEED = 150;",
+      "const int TURN = 90;",
+      "",
+      "void setMotor(int en, int a, int b, int speed) {",
+      "  digitalWrite(a, speed >= 0 ? HIGH : LOW);",
+      "  digitalWrite(b, speed >= 0 ? LOW : HIGH);",
+      "  analogWrite(en, min(abs(speed), 255));",
+      "}",
+      "",
+      "void drive(int left, int right) {",
+      "  setMotor(ENA, IN1, IN2, left);",
+      "  setMotor(ENB, IN3, IN4, right);",
+      "}",
+      "",
+      "void setup() {",
+      "  int outputs[] = {ENA, IN1, IN2, ENB, IN3, IN4};",
+      "  for (int p : outputs) pinMode(p, OUTPUT);",
+      "  pinMode(LEFT_SENSOR, INPUT);",
+      "  pinMode(RIGHT_SENSOR, INPUT);",
+      "  delay(2000);                    // time to put the robot on the track",
+      "}",
+      "",
+      "void loop() {",
+      "  bool left = digitalRead(LEFT_SENSOR) == ON_LINE;",
+      "  bool right = digitalRead(RIGHT_SENSOR) == ON_LINE;",
+      "",
+      "  if (!left && !right) drive(SPEED, SPEED);        // line between sensors: straight",
+      "  else if (left && !right) drive(-TURN, TURN);     // line under left: turn left",
+      "  else if (!left && right) drive(TURN, -TURN);     // line under right: turn right",
+      "  else drive(0, 0);                                // both on black: stop",
+      "}"
+    ],
+    "extensions": [
+      "Upgrade to the 5-sensor array and PID control (see the High-level project).",
+      "Add an HC-SR04 so the robot stops for obstacles on the track."
+    ]
+  },
+  {
+    "id": "water-usage-meter",
+    "title": "Water usage meter",
+    "level": "medium",
+    "board": "arduino-nano",
+    "summary": "Measures water flow in litres per minute and the total litres used, shown on an LCD with a reset button.",
+    "time": "1 hour",
+    "sensors": [
+      "SEN-052"
+    ],
+    "parts": [
+      "16x2 I2C LCD",
+      "Push button",
+      "1/2-inch pipe fittings"
+    ],
+    "libraries": [
+      "LiquidCrystal I2C (Frank de Brabander)"
+    ],
+    "concepts": [
+      "Hardware interrupts",
+      "volatile variables",
+      "Pulses to flow rate"
+    ],
+    "wiring": [
+      {
+        "part": "Flow sensor",
+        "pin": "Red",
+        "to": "5V"
+      },
+      {
+        "part": "Flow sensor",
+        "pin": "Black",
+        "to": "GND"
+      },
+      {
+        "part": "Flow sensor",
+        "pin": "Yellow",
+        "to": "D2"
+      },
+      {
+        "part": "Reset button",
+        "pin": "one leg",
+        "to": "D4"
+      },
+      {
+        "part": "Reset button",
+        "pin": "other leg",
+        "to": "GND"
+      },
+      {
+        "part": "16x2 I2C LCD",
+        "pin": "VCC",
+        "to": "5V"
+      },
+      {
+        "part": "16x2 I2C LCD",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "16x2 I2C LCD",
+        "pin": "SDA",
+        "to": "A4"
+      },
+      {
+        "part": "16x2 I2C LCD",
+        "pin": "SCL",
+        "to": "A5"
+      }
+    ],
+    "steps": [
+      "Fit the flow sensor in the pipe with the arrow pointing in the direction of the water flow.",
+      "Wire the yellow signal to D2, which is an interrupt pin and catches every pulse.",
+      "Upload and run water through: flow (L/min) and total litres appear on the LCD.",
+      "Check accuracy by filling a 1 litre bottle; adjust PULSES_PER_LITRE if needed."
+    ],
+    "code": [
+      "// Water usage meter with YF-S201 flow sensor.",
+      "#include <LiquidCrystal_I2C.h>",
+      "",
+      "const int FLOW_PIN = 2;                  // interrupt pin",
+      "const int RESET_PIN = 4;                 // push button to GND",
+      "const float PULSES_PER_LITRE = 450.0;    // YF-S201: 7.5 Hz per L/min x 60",
+      "",
+      "volatile unsigned long pulses = 0;",
+      "unsigned long totalPulses = 0;",
+      "unsigned long lastCalc = 0;",
+      "",
+      "LiquidCrystal_I2C lcd(0x27, 16, 2);",
+      "",
+      "void onPulse() { pulses++; }",
+      "",
+      "void setup() {",
+      "  pinMode(FLOW_PIN, INPUT_PULLUP);",
+      "  pinMode(RESET_PIN, INPUT_PULLUP);",
+      "  attachInterrupt(digitalPinToInterrupt(FLOW_PIN), onPulse, FALLING);",
+      "  lcd.init();",
+      "  lcd.backlight();",
+      "}",
+      "",
+      "void loop() {",
+      "  if (digitalRead(RESET_PIN) == LOW) totalPulses = 0;",
+      "",
+      "  if (millis() - lastCalc >= 1000) {",
+      "    lastCalc = millis();",
+      "    noInterrupts();                      // copy the counter safely",
+      "    unsigned long count = pulses;",
+      "    pulses = 0;",
+      "    interrupts();",
+      "",
+      "    totalPulses += count;",
+      "    float litresPerMin = count / 7.5;    // pulses in 1 s = Hz; Hz / 7.5 = L/min",
+      "",
+      "    lcd.setCursor(0, 0);",
+      "    lcd.print(F(\"Flow \"));",
+      "    lcd.print(litresPerMin, 1);",
+      "    lcd.print(F(\" L/min   \"));",
+      "    lcd.setCursor(0, 1);",
+      "    lcd.print(F(\"Total \"));",
+      "    lcd.print(totalPulses / PULSES_PER_LITRE, 2);",
+      "    lcd.print(F(\" L     \"));",
+      "  }",
+      "}"
+    ],
+    "extensions": [
+      "Close a solenoid valve after exactly 500 ml for a smart dispenser.",
+      "Warn about a leak when water flows non-stop for 30 minutes."
+    ]
+  },
+  {
+    "id": "finger-heart-rate-monitor",
+    "title": "Finger heart-rate monitor",
+    "level": "high",
+    "board": "arduino-nano",
+    "summary": "Detects heartbeats from the light reflected by your fingertip and shows an averaged BPM on an LCD.",
+    "time": "2 hours",
+    "sensors": [
+      "SEN-042"
+    ],
+    "parts": [
+      "16x2 I2C LCD",
+      "Velcro strap or clip to hold the finger"
+    ],
+    "libraries": [
+      "SparkFun MAX3010x Pulse and Proximity Sensor Library",
+      "LiquidCrystal I2C (Frank de Brabander)"
+    ],
+    "concepts": [
+      "Photoplethysmography (PPG)",
+      "Beat detection",
+      "Moving average",
+      "Keeping sampling fast"
+    ],
+    "wiring": [
+      {
+        "part": "MAX30102",
+        "pin": "VIN",
+        "to": "5V"
+      },
+      {
+        "part": "MAX30102",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "MAX30102",
+        "pin": "SDA",
+        "to": "A4"
+      },
+      {
+        "part": "MAX30102",
+        "pin": "SCL",
+        "to": "A5"
+      },
+      {
+        "part": "16x2 I2C LCD",
+        "pin": "VCC",
+        "to": "5V"
+      },
+      {
+        "part": "16x2 I2C LCD",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "16x2 I2C LCD",
+        "pin": "SDA",
+        "to": "A4"
+      },
+      {
+        "part": "16x2 I2C LCD",
+        "pin": "SCL",
+        "to": "A5"
+      }
+    ],
+    "steps": [
+      "Install the SparkFun MAX3010x and LiquidCrystal I2C libraries.",
+      "Wire the sensor and LCD on the shared I2C pins A4/A5.",
+      "Upload, open the Serial Monitor at 115200 baud.",
+      "Rest your fingertip on the sensor with light, steady pressure. Keep still for 10 seconds.",
+      "Compare the BPM with a phone app or by counting your pulse for 15 s × 4."
+    ],
+    "code": [
+      "// Finger heart-rate monitor with MAX30102.",
+      "#include <Wire.h>",
+      "#include <MAX30105.h>",
+      "#include <heartRate.h>",
+      "#include <LiquidCrystal_I2C.h>",
+      "",
+      "MAX30105 sensor;",
+      "LiquidCrystal_I2C lcd(0x27, 16, 2);",
+      "",
+      "const byte RATE_SIZE = 4;        // average the last 4 beats",
+      "byte rates[RATE_SIZE];",
+      "byte rateSpot = 0;",
+      "unsigned long lastBeat = 0;",
+      "int beatAvg = 0;",
+      "unsigned long lastDraw = 0;",
+      "",
+      "void setup() {",
+      "  Serial.begin(115200);",
+      "  lcd.init();",
+      "  lcd.backlight();",
+      "  if (!sensor.begin(Wire, I2C_SPEED_FAST)) {",
+      "    lcd.print(F(\"MAX30102 missing\"));",
+      "    while (true) {}",
+      "  }",
+      "  sensor.setup();                    // default settings",
+      "  sensor.setPulseAmplitudeRed(0x0A); // dim red LED just shows it is on",
+      "  sensor.setPulseAmplitudeGreen(0);",
+      "}",
+      "",
+      "void loop() {",
+      "  long ir = sensor.getIR();",
+      "",
+      "  if (checkForBeat(ir)) {",
+      "    unsigned long now = millis();",
+      "    float bpm = 60.0 / ((now - lastBeat) / 1000.0);",
+      "    lastBeat = now;",
+      "    if (bpm > 20 && bpm < 255) {",
+      "      rates[rateSpot++] = (byte)bpm;",
+      "      rateSpot %= RATE_SIZE;",
+      "      int sum = 0;",
+      "      for (byte i = 0; i < RATE_SIZE; i++) sum += rates[i];",
+      "      beatAvg = sum / RATE_SIZE;",
+      "    }",
+      "  }",
+      "",
+      "  // Update the LCD only twice a second so no samples are missed.",
+      "  if (millis() - lastDraw > 500) {",
+      "    lastDraw = millis();",
+      "    lcd.setCursor(0, 0);",
+      "    if (ir < 50000) {",
+      "      lcd.print(F(\"Place finger    \"));",
+      "      beatAvg = 0;",
+      "    } else {",
+      "      lcd.print(F(\"BPM: \"));",
+      "      lcd.print(beatAvg);",
+      "      lcd.print(F(\"          \"));",
+      "    }",
+      "    Serial.print(F(\"IR=\"));",
+      "    Serial.print(ir);",
+      "    Serial.print(F(\" BPM=\"));",
+      "    Serial.println(beatAvg);",
+      "  }",
+      "}"
+    ],
+    "extensions": [
+      "Blink an LED and click a buzzer on every beat.",
+      "Move to an ESP32 to also calculate SpO2 (the Nano has too little RAM for that algorithm)."
+    ],
+    "safety": "For learning only. It is not a medical device and must not be used for health decisions."
+  },
+  {
+    "id": "smart-energy-meter",
+    "title": "Smart energy meter",
+    "level": "high",
+    "board": "arduino-nano",
+    "summary": "Measures mains voltage, current, real power and kWh used by an appliance, shown on an LCD.",
+    "time": "3 hours",
+    "sensors": [
+      "SEN-054",
+      "SEN-059"
+    ],
+    "parts": [
+      "16x2 I2C LCD",
+      "Insulated enclosure",
+      "Mains-rated wire, plug and socket",
+      "Screw terminals",
+      "Multimeter (for calibration)"
+    ],
+    "libraries": [
+      "EmonLib (OpenEnergyMonitor)",
+      "LiquidCrystal I2C (Frank de Brabander)"
+    ],
+    "concepts": [
+      "AC and RMS",
+      "Real vs apparent power",
+      "Calibration against a reference",
+      "Energy = power × time"
+    ],
+    "wiring": [
+      {
+        "part": "ZMPT101B",
+        "pin": "VCC",
+        "to": "5V"
+      },
+      {
+        "part": "ZMPT101B",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "ZMPT101B",
+        "pin": "OUT",
+        "to": "A1"
+      },
+      {
+        "part": "ACS712 20A",
+        "pin": "VCC",
+        "to": "5V"
+      },
+      {
+        "part": "ACS712 20A",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "ACS712 20A",
+        "pin": "OUT",
+        "to": "A0"
+      },
+      {
+        "part": "16x2 I2C LCD",
+        "pin": "VCC",
+        "to": "5V"
+      },
+      {
+        "part": "16x2 I2C LCD",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "16x2 I2C LCD",
+        "pin": "SDA",
+        "to": "A4"
+      },
+      {
+        "part": "16x2 I2C LCD",
+        "pin": "SCL",
+        "to": "A5"
+      }
+    ],
+    "steps": [
+      "Build everything inside an insulated enclosure. The ZMPT101B input goes across live and neutral; the ACS712 sits in series with the live wire to the socket.",
+      "Have an experienced adult check all mains wiring before plugging in.",
+      "Upload, plug in a known load such as a 100 W bulb, and measure the voltage with a multimeter.",
+      "Adjust V_CAL until Vrms matches the multimeter, then adjust I_CAL until the current matches a clamp meter or the bulb's rating.",
+      "Leave it running: the kWh figure grows over time."
+    ],
+    "code": [
+      "// Smart energy meter: V, A, W and kWh with EmonLib.",
+      "#include <EmonLib.h>",
+      "#include <LiquidCrystal_I2C.h>",
+      "",
+      "EnergyMonitor emon;",
+      "LiquidCrystal_I2C lcd(0x27, 16, 2);",
+      "",
+      "const float V_CAL = 500.0;     // tune until Vrms matches your multimeter",
+      "const float I_CAL = 10.0;      // ACS712-20A: 100 mV/A -> start at 10, then tune",
+      "const float PHASE_CAL = 1.7;",
+      "",
+      "float kWh = 0;",
+      "unsigned long lastMs = 0;",
+      "",
+      "void setup() {",
+      "  Serial.begin(9600);",
+      "  lcd.init();",
+      "  lcd.backlight();",
+      "  emon.voltage(A1, V_CAL, PHASE_CAL);   // ZMPT101B OUT",
+      "  emon.current(A0, I_CAL);              // ACS712 OUT",
+      "  lastMs = millis();",
+      "}",
+      "",
+      "void loop() {",
+      "  emon.calcVI(20, 2000);                // 20 half-cycles, 2 s timeout",
+      "",
+      "  float v = emon.Vrms;",
+      "  float a = emon.Irms;",
+      "  float w = emon.realPower;",
+      "  if (a < 0.15) { a = 0; w = 0; }       // ignore sensor noise with no load",
+      "  if (w < 0) w = 0;",
+      "",
+      "  unsigned long now = millis();",
+      "  kWh += w * (now - lastMs) / 3600000.0 / 1000.0;   // W x hours / 1000",
+      "  lastMs = now;",
+      "",
+      "  lcd.setCursor(0, 0);",
+      "  lcd.print(v, 0);",
+      "  lcd.print(F(\"V \"));",
+      "  lcd.print(a, 2);",
+      "  lcd.print(F(\"A    \"));",
+      "  lcd.setCursor(0, 1);",
+      "  lcd.print(w, 0);",
+      "  lcd.print(F(\"W \"));",
+      "  lcd.print(kWh, 3);",
+      "  lcd.print(F(\"kWh  \"));",
+      "",
+      "  Serial.print(v); Serial.print(','); Serial.print(a); Serial.print(','); Serial.println(w);",
+      "}"
+    ],
+    "extensions": [
+      "Show the cost in ₹ using your electricity tariff per unit.",
+      "Save kWh to EEPROM every 10 minutes so it survives power cuts."
+    ],
+    "safety": "DANGER: mains voltage can kill. Do this only with an experienced adult, inside a closed insulated box, and never touch the circuit while it is plugged in."
+  },
+  {
+    "id": "self-balancing-robot",
+    "title": "Self-balancing robot",
+    "level": "high",
+    "board": "arduino-nano",
+    "summary": "A two-wheeled robot that stays upright by reading its tilt from an MPU6050 and correcting it with a PID loop.",
+    "time": "1 day",
+    "sensors": [
+      "SEN-040"
+    ],
+    "parts": [
+      "2 × geared DC motors with wheels",
+      "L298N motor driver",
+      "2S Li-ion battery (7.4V)",
+      "Tall, light chassis (e.g. stacked acrylic plates)"
+    ],
+    "libraries": [
+      "Wire (built in)"
+    ],
+    "concepts": [
+      "Complementary filter",
+      "PID control",
+      "Gyro calibration",
+      "Control loop timing"
+    ],
+    "wiring": [
+      {
+        "part": "MPU6050",
+        "pin": "VCC",
+        "to": "5V"
+      },
+      {
+        "part": "MPU6050",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "MPU6050",
+        "pin": "SDA",
+        "to": "A4"
+      },
+      {
+        "part": "MPU6050",
+        "pin": "SCL",
+        "to": "A5"
+      },
+      {
+        "part": "L298N",
+        "pin": "ENA",
+        "to": "D5"
+      },
+      {
+        "part": "L298N",
+        "pin": "IN1",
+        "to": "D7"
+      },
+      {
+        "part": "L298N",
+        "pin": "IN2",
+        "to": "D8"
+      },
+      {
+        "part": "L298N",
+        "pin": "ENB",
+        "to": "D6"
+      },
+      {
+        "part": "L298N",
+        "pin": "IN3",
+        "to": "D11"
+      },
+      {
+        "part": "L298N",
+        "pin": "IN4",
+        "to": "D12"
+      },
+      {
+        "part": "L298N",
+        "pin": "12V",
+        "to": "Battery +"
+      },
+      {
+        "part": "L298N",
+        "pin": "GND",
+        "to": "Battery − and Nano GND"
+      }
+    ],
+    "steps": [
+      "Build a tall chassis with the battery on top. A higher centre of mass makes balancing easier.",
+      "Mount the MPU6050 flat and firmly in the middle, with its X axis pointing forward.",
+      "Upload with the robot held upright and still. The first second calibrates the gyro.",
+      "Tune: set Ki and Kd to 0. Raise Kp until it oscillates, add Kd until it calms, then add a little Ki.",
+      "If the motors push the wrong way, swap each motor's wires. Adjust setpoint by 0.5° until it stops drifting."
+    ],
+    "code": [
+      "// Self-balancing robot: MPU6050 + complementary filter + PID.",
+      "#include <Wire.h>",
+      "",
+      "const int MPU = 0x68;",
+      "const int ENA = 5, IN1 = 7, IN2 = 8;     // left motor",
+      "const int ENB = 6, IN3 = 11, IN4 = 12;   // right motor",
+      "",
+      "// Tune: start with Ki = Kd = 0, raise Kp until it oscillates, then add Kd, then a little Ki.",
+      "float Kp = 25.0, Ki = 0.8, Kd = 0.6;",
+      "float setpoint = 0.0;      // angle where your robot balances",
+      "",
+      "float angle = 0, integral = 0, gyroOffset = 0;",
+      "unsigned long lastUs;",
+      "",
+      "int16_t readWord() {",
+      "  int16_t hi = Wire.read();",
+      "  return (hi << 8) | Wire.read();",
+      "}",
+      "",
+      "void readMPU(int16_t &ax, int16_t &az, int16_t &gy) {",
+      "  Wire.beginTransmission(MPU);",
+      "  Wire.write(0x3B);                       // start at ACCEL_XOUT_H",
+      "  Wire.endTransmission(false);",
+      "  Wire.requestFrom(MPU, 14);",
+      "  ax = readWord(); readWord(); az = readWord();   // accel X, (Y), Z",
+      "  readWord();                                      // temperature",
+      "  readWord(); gy = readWord(); readWord();         // gyro (X), Y, (Z)",
+      "}",
+      "",
+      "void setMotor(int en, int a, int b, int speed) {",
+      "  digitalWrite(a, speed >= 0 ? HIGH : LOW);",
+      "  digitalWrite(b, speed >= 0 ? LOW : HIGH);",
+      "  analogWrite(en, min(abs(speed), 255));",
+      "}",
+      "",
+      "void setup() {",
+      "  int outputs[] = {ENA, IN1, IN2, ENB, IN3, IN4};",
+      "  for (int p : outputs) pinMode(p, OUTPUT);",
+      "  Wire.begin();",
+      "  Wire.beginTransmission(MPU);",
+      "  Wire.write(0x6B);                       // wake the MPU6050",
+      "  Wire.write(0);",
+      "  Wire.endTransmission();",
+      "",
+      "  // Hold the robot still: measure the gyro's resting offset.",
+      "  int16_t ax, az, gy;",
+      "  long sum = 0;",
+      "  for (int i = 0; i < 500; i++) {",
+      "    readMPU(ax, az, gy);",
+      "    sum += gy;",
+      "    delay(2);",
+      "  }",
+      "  gyroOffset = sum / 500.0;",
+      "  readMPU(ax, az, gy);",
+      "  angle = atan2((float)ax, (float)az) * RAD_TO_DEG;",
+      "  lastUs = micros();",
+      "}",
+      "",
+      "void loop() {",
+      "  int16_t ax, az, gy;",
+      "  readMPU(ax, az, gy);",
+      "",
+      "  unsigned long now = micros();",
+      "  float dt = (now - lastUs) / 1000000.0;",
+      "  lastUs = now;",
+      "",
+      "  float accAngle = atan2((float)ax, (float)az) * RAD_TO_DEG;",
+      "  float rate = (gy - gyroOffset) / 131.0;                    // deg/s at +-250 deg/s range",
+      "  angle = 0.98 * (angle + rate * dt) + 0.02 * accAngle;     // complementary filter",
+      "",
+      "  if (fabs(angle) > 40) {                // fallen over: stop the motors",
+      "    setMotor(ENA, IN1, IN2, 0);",
+      "    setMotor(ENB, IN3, IN4, 0);",
+      "    integral = 0;",
+      "    return;",
+      "  }",
+      "",
+      "  float error = angle - setpoint;",
+      "  integral = constrain(integral + error * dt, -50, 50);",
+      "  int out = (int)(Kp * error + Ki * integral + Kd * rate);",
+      "",
+      "  setMotor(ENA, IN1, IN2, out);",
+      "  setMotor(ENB, IN3, IN4, out);",
+      "}"
+    ],
+    "extensions": [
+      "Add wheel encoders so it can hold its position, not just stay upright.",
+      "Steer it with an IR remote by nudging the setpoint."
+    ]
+  },
+  {
+    "id": "gesture-controlled-room",
+    "title": "Gesture-controlled room",
+    "level": "high",
+    "board": "arduino-nano",
+    "summary": "Swipe up or down to switch a lamp, and left or right to open or close a servo window blind, without touching anything.",
+    "time": "2 hours",
+    "sensors": [
+      "SEN-049"
+    ],
+    "parts": [
+      "AMS1117-3.3 regulator module",
+      "I2C logic level shifter",
+      "Relay module or LED",
+      "SG90 servo"
+    ],
+    "libraries": [
+      "SparkFun APDS9960 RGB and Gesture Sensor",
+      "Servo (built in)"
+    ],
+    "concepts": [
+      "3.3V devices on a 5V board",
+      "Interrupt-driven sensors",
+      "switch / case"
+    ],
+    "wiring": [
+      {
+        "part": "APDS9960",
+        "pin": "VCC",
+        "to": "3.3V (AMS1117)"
+      },
+      {
+        "part": "APDS9960",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "APDS9960",
+        "pin": "SDA",
+        "to": "A4 via level shifter"
+      },
+      {
+        "part": "APDS9960",
+        "pin": "SCL",
+        "to": "A5 via level shifter"
+      },
+      {
+        "part": "APDS9960",
+        "pin": "INT",
+        "to": "D2"
+      },
+      {
+        "part": "Lamp relay / LED",
+        "pin": "IN",
+        "to": "D7"
+      },
+      {
+        "part": "SG90 servo",
+        "pin": "Signal",
+        "to": "D9"
+      }
+    ],
+    "steps": [
+      "Power the APDS9960 from an AMS1117-3.3 module, not the Nano's weak 3V3 pin.",
+      "Pass SDA and SCL through the level shifter (LV side 3.3V, HV side 5V).",
+      "Upload and open the Serial Monitor. It should print 'Gesture sensor ready'.",
+      "Swipe your hand 5–10 cm above the sensor, smoothly and not too fast."
+    ],
+    "code": [
+      "// Gesture-controlled room: swipe to control a lamp and a servo blind.",
+      "#include <Wire.h>",
+      "#include <Servo.h>",
+      "#include <SparkFun_APDS9960.h>",
+      "",
+      "const int INT_PIN = 2;",
+      "const int LAMP_PIN = 7;     // relay or LED",
+      "const int SERVO_PIN = 9;",
+      "",
+      "SparkFun_APDS9960 apds;",
+      "Servo blind;",
+      "volatile bool gestureReady = false;",
+      "int angle = 90;",
+      "",
+      "void onGesture() { gestureReady = true; }",
+      "",
+      "void setup() {",
+      "  Serial.begin(9600);",
+      "  pinMode(LAMP_PIN, OUTPUT);",
+      "  pinMode(INT_PIN, INPUT);",
+      "  blind.attach(SERVO_PIN);",
+      "  blind.write(angle);",
+      "",
+      "  attachInterrupt(digitalPinToInterrupt(INT_PIN), onGesture, FALLING);",
+      "  if (apds.init() && apds.enableGestureSensor(true)) {",
+      "    Serial.println(F(\"Gesture sensor ready - swipe!\"));",
+      "  } else {",
+      "    Serial.println(F(\"APDS9960 not found. Check 3.3V power and wiring.\"));",
+      "  }",
+      "}",
+      "",
+      "void handleGesture() {",
+      "  if (!apds.isGestureAvailable()) return;",
+      "  switch (apds.readGesture()) {",
+      "    case DIR_UP:    digitalWrite(LAMP_PIN, HIGH); Serial.println(F(\"UP: lamp on\")); break;",
+      "    case DIR_DOWN:  digitalWrite(LAMP_PIN, LOW);  Serial.println(F(\"DOWN: lamp off\")); break;",
+      "    case DIR_LEFT:  angle = max(0, angle - 30);   blind.write(angle); Serial.println(F(\"LEFT\")); break;",
+      "    case DIR_RIGHT: angle = min(180, angle + 30); blind.write(angle); Serial.println(F(\"RIGHT\")); break;",
+      "    default: break;",
+      "  }",
+      "}",
+      "",
+      "void loop() {",
+      "  if (gestureReady) {",
+      "    detachInterrupt(digitalPinToInterrupt(INT_PIN));",
+      "    handleGesture();",
+      "    gestureReady = false;",
+      "    attachInterrupt(digitalPinToInterrupt(INT_PIN), onGesture, FALLING);",
+      "  }",
+      "}"
+    ],
+    "extensions": [
+      "Use NEAR / FAR gestures to dim the lamp.",
+      "Read ambient light from the same chip to open the blind at sunrise."
+    ]
+  },
+  {
+    "id": "fingerprint-door-lock",
+    "title": "Fingerprint door lock",
+    "level": "high",
+    "board": "arduino-nano",
+    "summary": "Unlocks a solenoid lock for enrolled fingerprints, flashes red for unknown ones, and locks out for 30 s after 3 failed tries.",
+    "time": "3 hours",
+    "sensors": [
+      "SEN-088"
+    ],
+    "parts": [
+      "1-channel relay module",
+      "12V solenoid lock + 12V supply",
+      "Green and red LEDs + 220Ω",
+      "Buzzer"
+    ],
+    "libraries": [
+      "Adafruit Fingerprint Sensor Library",
+      "SoftwareSerial (built in)"
+    ],
+    "concepts": [
+      "UART with SoftwareSerial",
+      "Enrolling templates",
+      "Security lockout"
+    ],
+    "wiring": [
+      {
+        "part": "AS608",
+        "pin": "V+",
+        "to": "3.3V"
+      },
+      {
+        "part": "AS608",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "AS608",
+        "pin": "TX",
+        "to": "D2"
+      },
+      {
+        "part": "AS608",
+        "pin": "RX",
+        "to": "D3"
+      },
+      {
+        "part": "Relay module",
+        "pin": "IN",
+        "to": "D7"
+      },
+      {
+        "part": "Green LED",
+        "pin": "+",
+        "to": "D5 via 220Ω"
+      },
+      {
+        "part": "Red LED",
+        "pin": "+",
+        "to": "D6 via 220Ω"
+      },
+      {
+        "part": "Buzzer",
+        "pin": "+",
+        "to": "D8"
+      }
+    ],
+    "steps": [
+      "Install the Adafruit Fingerprint library and wire the AS608 (TX → D2, RX → D3).",
+      "Open File → Examples → Adafruit Fingerprint → enroll, set the pins to 2 and 3, and enroll your fingers (IDs 1, 2, 3…).",
+      "Wire the solenoid lock through the relay's COM/NO contacts with its own 12V supply.",
+      "Upload this sketch. Enrolled fingers unlock for 3 s; unknown fingers flash red."
+    ],
+    "code": [
+      "// Fingerprint door lock with lockout after 3 failures.",
+      "#include <Adafruit_Fingerprint.h>",
+      "#include <SoftwareSerial.h>",
+      "",
+      "SoftwareSerial fpSerial(2, 3);           // RX <- sensor TX, TX -> sensor RX",
+      "Adafruit_Fingerprint finger(&fpSerial);",
+      "",
+      "const int LOCK_PIN = 7;                  // relay driving the solenoid lock",
+      "const int GREEN_LED = 5, RED_LED = 6, BUZZER_PIN = 8;",
+      "const unsigned long UNLOCK_MS = 3000;",
+      "",
+      "int failures = 0;",
+      "",
+      "// Returns the matched ID, -1 for an unknown finger, -2 when no finger is present.",
+      "int scanFinger() {",
+      "  if (finger.getImage() != FINGERPRINT_OK) return -2;",
+      "  if (finger.image2Tz() != FINGERPRINT_OK) return -1;",
+      "  if (finger.fingerFastSearch() != FINGERPRINT_OK) return -1;",
+      "  return finger.fingerID;",
+      "}",
+      "",
+      "void setup() {",
+      "  Serial.begin(9600);",
+      "  digitalWrite(LOCK_PIN, HIGH);          // relay off = locked",
+      "  pinMode(LOCK_PIN, OUTPUT);",
+      "  pinMode(GREEN_LED, OUTPUT);",
+      "  pinMode(RED_LED, OUTPUT);",
+      "  pinMode(BUZZER_PIN, OUTPUT);",
+      "",
+      "  finger.begin(57600);",
+      "  if (!finger.verifyPassword()) {",
+      "    Serial.println(F(\"Fingerprint sensor not found\"));",
+      "    while (true) {}",
+      "  }",
+      "  finger.getTemplateCount();",
+      "  Serial.print(F(\"Enrolled fingers: \"));",
+      "  Serial.println(finger.templateCount);",
+      "}",
+      "",
+      "void loop() {",
+      "  int id = scanFinger();",
+      "",
+      "  if (id >= 0) {",
+      "    Serial.print(F(\"Welcome, ID \"));",
+      "    Serial.println(id);",
+      "    failures = 0;",
+      "    digitalWrite(GREEN_LED, HIGH);",
+      "    digitalWrite(LOCK_PIN, LOW);         // unlock",
+      "    tone(BUZZER_PIN, 2000, 100);",
+      "    delay(UNLOCK_MS);",
+      "    digitalWrite(LOCK_PIN, HIGH);        // lock again",
+      "    digitalWrite(GREEN_LED, LOW);",
+      "  } else if (id == -1) {",
+      "    failures++;",
+      "    Serial.println(F(\"Unknown finger\"));",
+      "    digitalWrite(RED_LED, HIGH);",
+      "    tone(BUZZER_PIN, 400, 500);",
+      "    delay(800);",
+      "    digitalWrite(RED_LED, LOW);",
+      "    if (failures >= 3) {",
+      "      Serial.println(F(\"Too many tries - locked for 30 s\"));",
+      "      for (int i = 0; i < 30; i++) {",
+      "        digitalWrite(RED_LED, i % 2);",
+      "        delay(1000);",
+      "      }",
+      "      digitalWrite(RED_LED, LOW);",
+      "      failures = 0;",
+      "    }",
+      "  }",
+      "  delay(50);",
+      "}"
+    ],
+    "extensions": [
+      "Log every entry with date and time to an SD card using a DS3231 RTC.",
+      "Add a master finger that can enroll new users without a PC."
+    ]
+  },
+  {
+    "id": "air-quality-logger",
+    "title": "Air quality logger",
+    "level": "high",
+    "board": "arduino-nano",
+    "summary": "Records temperature, humidity, gas level and dust density every 10 seconds to a CSV file on a micro SD card.",
+    "time": "3 hours",
+    "sensors": [
+      "SEN-030",
+      "SEN-063",
+      "SEN-018"
+    ],
+    "parts": [
+      "Micro SD card reader + FAT32 card",
+      "150Ω resistor",
+      "220µF capacitor",
+      "5V 1A supply"
+    ],
+    "libraries": [
+      "SD + SPI (built in)",
+      "DHT sensor library (Adafruit)"
+    ],
+    "concepts": [
+      "SPI bus",
+      "CSV data logging",
+      "Precisely timed sensor pulses",
+      "Opening files in Excel"
+    ],
+    "wiring": [
+      {
+        "part": "DHT22",
+        "pin": "DATA",
+        "to": "D2"
+      },
+      {
+        "part": "MQ135",
+        "pin": "AO",
+        "to": "A0"
+      },
+      {
+        "part": "Dust sensor",
+        "pin": "Vo (pin 5)",
+        "to": "A1"
+      },
+      {
+        "part": "Dust sensor",
+        "pin": "LED (pin 3)",
+        "to": "D7"
+      },
+      {
+        "part": "Dust sensor",
+        "pin": "V-LED (pin 1)",
+        "to": "5V via 150Ω + 220µF to GND"
+      },
+      {
+        "part": "SD reader",
+        "pin": "CS",
+        "to": "D10"
+      },
+      {
+        "part": "SD reader",
+        "pin": "MOSI",
+        "to": "D11"
+      },
+      {
+        "part": "SD reader",
+        "pin": "MISO",
+        "to": "D12"
+      },
+      {
+        "part": "SD reader",
+        "pin": "SCK",
+        "to": "D13"
+      }
+    ],
+    "steps": [
+      "Format the SD card as FAT32 and insert it.",
+      "Wire the dust sensor's LED circuit with the 150Ω resistor and 220µF capacitor as shown.",
+      "Power the board from a 5V 1A supply, because the MQ135 heater needs more than USB comfortably gives.",
+      "Upload, let it run for 15 minutes (the MQ135 warms up), then copy AIRLOG.CSV to your PC.",
+      "Open the CSV in Excel or Google Sheets and draw a chart of each column."
+    ],
+    "code": [
+      "// Air quality logger: DHT22 + MQ135 + GP2Y1010 dust -> SD card CSV.",
+      "#include <SPI.h>",
+      "#include <SD.h>",
+      "#include <DHT.h>",
+      "",
+      "const int SD_CS = 10;",
+      "const int MQ135_PIN = A0;",
+      "const int DUST_PIN = A1;       // GP2Y1010 Vo",
+      "const int DUST_LED = 7;        // GP2Y1010 LED pin (LOW = LED on)",
+      "const unsigned long LOG_EVERY_MS = 10000;",
+      "",
+      "DHT dht(2, DHT22);",
+      "unsigned long lastLog = 0;",
+      "",
+      "float readDust() {             // returns ug/m3",
+      "  digitalWrite(DUST_LED, LOW); // LED on",
+      "  delayMicroseconds(280);",
+      "  int raw = analogRead(DUST_PIN);",
+      "  delayMicroseconds(40);",
+      "  digitalWrite(DUST_LED, HIGH);",
+      "  float volts = raw * 5.0 / 1024.0;",
+      "  float mgPerM3 = 0.17 * volts - 0.1;",
+      "  return max(0.0, mgPerM3) * 1000.0;",
+      "}",
+      "",
+      "void setup() {",
+      "  Serial.begin(9600);",
+      "  pinMode(DUST_LED, OUTPUT);",
+      "  digitalWrite(DUST_LED, HIGH);",
+      "  dht.begin();",
+      "",
+      "  if (!SD.begin(SD_CS)) {",
+      "    Serial.println(F(\"SD card failed - check wiring and FAT32 format\"));",
+      "    while (true) {}",
+      "  }",
+      "  if (!SD.exists(\"AIRLOG.CSV\")) {",
+      "    File f = SD.open(\"AIRLOG.CSV\", FILE_WRITE);",
+      "    f.println(F(\"seconds,tempC,humidity,mq135,dust_ugm3\"));",
+      "    f.close();",
+      "  }",
+      "  Serial.println(F(\"Logging every 10 s\"));",
+      "}",
+      "",
+      "void loop() {",
+      "  if (millis() - lastLog < LOG_EVERY_MS) return;",
+      "  lastLog = millis();",
+      "",
+      "  float t = dht.readTemperature();",
+      "  float h = dht.readHumidity();",
+      "  int gas = analogRead(MQ135_PIN);",
+      "",
+      "  float dust = 0;                // average 10 dust samples",
+      "  for (int i = 0; i < 10; i++) {",
+      "    dust += readDust();",
+      "    delay(10);",
+      "  }",
+      "  dust /= 10;",
+      "",
+      "  File f = SD.open(\"AIRLOG.CSV\", FILE_WRITE);",
+      "  if (f) {",
+      "    f.print(millis() / 1000); f.print(',');",
+      "    f.print(t, 1); f.print(',');",
+      "    f.print(h, 1); f.print(',');",
+      "    f.print(gas); f.print(',');",
+      "    f.println(dust, 0);",
+      "    f.close();",
+      "  }",
+      "  Serial.print(F(\"T=\")); Serial.print(t, 1);",
+      "  Serial.print(F(\" H=\")); Serial.print(h, 1);",
+      "  Serial.print(F(\" gas=\")); Serial.print(gas);",
+      "  Serial.print(F(\" dust=\")); Serial.println(dust, 0);",
+      "}"
+    ],
+    "extensions": [
+      "Add a DS3231 RTC so each row has a real date and time.",
+      "Turn on an air purifier fan through a relay when dust is high."
+    ]
+  },
+  {
+    "id": "ecg-heart-monitor",
+    "title": "ECG heart monitor",
+    "level": "high",
+    "board": "arduino-nano",
+    "summary": "Plots your heart's electrical signal live in the Serial Plotter and calculates BPM from the R-peaks, with lead-off detection.",
+    "time": "2 hours",
+    "sensors": [
+      "SEN-046"
+    ],
+    "parts": [
+      "3 ECG gel electrodes",
+      "Laptop running on battery"
+    ],
+    "libraries": [],
+    "concepts": [
+      "Fixed-rate sampling",
+      "Adaptive thresholds",
+      "Peak detection",
+      "Electrical safety"
+    ],
+    "wiring": [
+      {
+        "part": "AD8232",
+        "pin": "3.3V",
+        "to": "3.3V"
+      },
+      {
+        "part": "AD8232",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "AD8232",
+        "pin": "OUTPUT",
+        "to": "A0"
+      },
+      {
+        "part": "AD8232",
+        "pin": "LO+",
+        "to": "D10"
+      },
+      {
+        "part": "AD8232",
+        "pin": "LO−",
+        "to": "D11"
+      }
+    ],
+    "steps": [
+      "Unplug the laptop charger. Run on battery only.",
+      "Stick the electrodes: red (RA) on the right chest, yellow (LA) on the left chest, green (RL) on the lower right abdomen.",
+      "Upload, then open Tools → Serial Plotter at 115200 baud.",
+      "Sit still and breathe normally. You should see a repeating PQRST waveform.",
+      "If the line drops to 0, a lead is off: press the electrodes firmly."
+    ],
+    "code": [
+      "// ECG heart monitor: 250 Hz sampling, R-peak BPM, lead-off detection.",
+      "const int ECG_PIN = A0;",
+      "const int LO_PLUS = 10;",
+      "const int LO_MINUS = 11;",
+      "const unsigned long SAMPLE_US = 4000;   // 250 samples per second",
+      "",
+      "unsigned long nextSample;",
+      "int maxV = 512, minV = 512;",
+      "unsigned long lastPeak = 0;",
+      "int bpm = 0;",
+      "bool aboveThreshold = false;",
+      "",
+      "void setup() {",
+      "  Serial.begin(115200);",
+      "  pinMode(LO_PLUS, INPUT);",
+      "  pinMode(LO_MINUS, INPUT);",
+      "  nextSample = micros();",
+      "}",
+      "",
+      "void loop() {",
+      "  if ((long)(micros() - nextSample) < 0) return;   // wait for the next sample time",
+      "  nextSample += SAMPLE_US;",
+      "",
+      "  if (digitalRead(LO_PLUS) || digitalRead(LO_MINUS)) {",
+      "    Serial.println(F(\"ecg:0\\tbpm:0\"));            // a lead is off",
+      "    return;",
+      "  }",
+      "",
+      "  int v = analogRead(ECG_PIN);",
+      "",
+      "  // Slowly decaying max/min give a threshold that follows the signal.",
+      "  maxV = max(v, maxV - 1);",
+      "  minV = min(v, minV + 1);",
+      "  int threshold = minV + (maxV - minV) * 6 / 10;",
+      "",
+      "  unsigned long now = millis();",
+      "  if (!aboveThreshold && v > threshold && now - lastPeak > 300) {   // R-peak",
+      "    if (lastPeak) bpm = (bpm * 3 + 60000 / (now - lastPeak)) / 4;    // smooth",
+      "    lastPeak = now;",
+      "    aboveThreshold = true;",
+      "  }",
+      "  if (v < threshold) aboveThreshold = false;",
+      "",
+      "  Serial.print(F(\"ecg:\"));",
+      "  Serial.print(v);",
+      "  Serial.print(F(\"\\tbpm:\"));",
+      "  Serial.println(bpm);",
+      "}"
+    ],
+    "extensions": [
+      "Flash an LED on each R-peak.",
+      "Record 30-second clips to an SD card and view them on a PC."
+    ],
+    "safety": "Never connect electrodes while the computer or Nano is powered from a mains charger. This is not a medical device."
+  },
+  {
+    "id": "pid-line-follower",
+    "title": "PID line follower with encoders",
+    "level": "high",
+    "board": "arduino-nano",
+    "summary": "A fast line follower that uses five sensors to find the line's exact position, PID steering, and wheel encoders to report speed.",
+    "time": "1 day",
+    "sensors": [
+      "SEN-008",
+      "SEN-024"
+    ],
+    "parts": [
+      "2 × motor encoders + 20-slot discs",
+      "2WD chassis",
+      "L298N motor driver",
+      "7.4V battery"
+    ],
+    "libraries": [],
+    "concepts": [
+      "Weighted position error",
+      "PID tuning",
+      "Interrupt counters",
+      "Recovering a lost line"
+    ],
+    "wiring": [
+      {
+        "part": "IR 5 array",
+        "pin": "S1–S5",
+        "to": "A0–A4"
+      },
+      {
+        "part": "IR 5 array",
+        "pin": "VCC / GND",
+        "to": "5V / GND"
+      },
+      {
+        "part": "Left encoder",
+        "pin": "OUT",
+        "to": "D2"
+      },
+      {
+        "part": "Right encoder",
+        "pin": "OUT",
+        "to": "D3"
+      },
+      {
+        "part": "L298N",
+        "pin": "ENA",
+        "to": "D5"
+      },
+      {
+        "part": "L298N",
+        "pin": "IN1",
+        "to": "D7"
+      },
+      {
+        "part": "L298N",
+        "pin": "IN2",
+        "to": "D8"
+      },
+      {
+        "part": "L298N",
+        "pin": "ENB",
+        "to": "D6"
+      },
+      {
+        "part": "L298N",
+        "pin": "IN3",
+        "to": "D11"
+      },
+      {
+        "part": "L298N",
+        "pin": "IN4",
+        "to": "D12"
+      },
+      {
+        "part": "L298N",
+        "pin": "12V",
+        "to": "Battery +"
+      },
+      {
+        "part": "L298N",
+        "pin": "GND",
+        "to": "Battery − and Nano GND"
+      }
+    ],
+    "steps": [
+      "Mount the 5-sensor bar at the front, 5 mm above the floor and centred on the robot.",
+      "Fit the 20-slot discs on the motor shafts with the encoders around them.",
+      "Upload a quick test that prints each sensor; set ON_LINE to HIGH or LOW to match your board over black.",
+      "Start with Kd = 0: raise Kp until it follows smoothly but wobbles, then add Kd to remove the wobble.",
+      "Increase BASE_SPEED step by step, re-tuning Kd each time."
+    ],
+    "code": [
+      "// PID line follower with a 5-sensor array and wheel encoders.",
+      "const uint8_t SENSORS[5] = {A0, A1, A2, A3, A4};",
+      "const int WEIGHTS[5] = {-2, -1, 0, 1, 2};",
+      "const int ON_LINE = HIGH;        // flip to LOW if your array reads LOW on black",
+      "",
+      "const int ENA = 5, IN1 = 7, IN2 = 8;     // left motor",
+      "const int ENB = 6, IN3 = 11, IN4 = 12;   // right motor",
+      "const int ENC_LEFT = 2, ENC_RIGHT = 3;   // encoders on interrupt pins",
+      "",
+      "float Kp = 35, Ki = 0, Kd = 12;",
+      "const int BASE_SPEED = 150;",
+      "",
+      "float lastError = 0, integral = 0;",
+      "volatile unsigned long ticksL = 0, ticksR = 0;",
+      "unsigned long lastReport = 0;",
+      "",
+      "void countLeft()  { ticksL++; }",
+      "void countRight() { ticksR++; }",
+      "",
+      "void setMotor(int en, int a, int b, int speed) {",
+      "  speed = constrain(speed, -255, 255);",
+      "  digitalWrite(a, speed >= 0 ? HIGH : LOW);",
+      "  digitalWrite(b, speed >= 0 ? LOW : HIGH);",
+      "  analogWrite(en, abs(speed));",
+      "}",
+      "",
+      "// Line position from -2 (far left) to +2 (far right). False if no sensor sees it.",
+      "bool readLine(float &position) {",
+      "  int sum = 0, count = 0;",
+      "  for (int i = 0; i < 5; i++) {",
+      "    if (digitalRead(SENSORS[i]) == ON_LINE) {",
+      "      sum += WEIGHTS[i];",
+      "      count++;",
+      "    }",
+      "  }",
+      "  if (count == 0) return false;",
+      "  position = (float)sum / count;",
+      "  return true;",
+      "}",
+      "",
+      "void setup() {",
+      "  Serial.begin(9600);",
+      "  int outputs[] = {ENA, IN1, IN2, ENB, IN3, IN4};",
+      "  for (int p : outputs) pinMode(p, OUTPUT);",
+      "  for (int i = 0; i < 5; i++) pinMode(SENSORS[i], INPUT);",
+      "  pinMode(ENC_LEFT, INPUT_PULLUP);",
+      "  pinMode(ENC_RIGHT, INPUT_PULLUP);",
+      "  attachInterrupt(digitalPinToInterrupt(ENC_LEFT), countLeft, RISING);",
+      "  attachInterrupt(digitalPinToInterrupt(ENC_RIGHT), countRight, RISING);",
+      "  delay(2000);",
+      "}",
+      "",
+      "void loop() {",
+      "  float error;",
+      "  if (!readLine(error)) {",
+      "    error = lastError > 0 ? 2.5 : -2.5;    // line lost: keep turning towards where it was",
+      "  }",
+      "",
+      "  integral = constrain(integral + error, -100, 100);",
+      "  float correction = Kp * error + Ki * integral + Kd * (error - lastError);",
+      "  lastError = error;",
+      "",
+      "  setMotor(ENA, IN1, IN2, BASE_SPEED + correction);   // line on the right -> left wheel faster",
+      "  setMotor(ENB, IN3, IN4, BASE_SPEED - correction);",
+      "",
+      "  if (millis() - lastReport >= 500) {        // wheel speed every 0.5 s",
+      "    lastReport = millis();",
+      "    noInterrupts();",
+      "    unsigned long l = ticksL, r = ticksR;",
+      "    ticksL = ticksR = 0;",
+      "    interrupts();",
+      "    // 20-slot disc: ticks per 0.5 s x 2 / 20 x 60 = ticks x 6 RPM",
+      "    Serial.print(F(\"RPM L \"));",
+      "    Serial.print(l * 6);",
+      "    Serial.print(F(\"  R \"));",
+      "    Serial.println(r * 6);",
+      "  }",
+      "  delay(5);",
+      "}"
+    ],
+    "extensions": [
+      "Detect crossings (all 5 sensors on black) and count them for a delivery-robot route.",
+      "Use the encoders to hold both wheels at the same RPM on straight sections."
+    ]
+  },
+  {
+    "id": "wearable-fall-detector",
+    "title": "Wearable fall detector",
+    "level": "high",
+    "board": "arduino-nano",
+    "summary": "Recognises the free-fall → impact → lying-still pattern of a real fall and sounds an alarm that can be cancelled with a button.",
+    "time": "3 hours",
+    "sensors": [
+      "SEN-039"
+    ],
+    "parts": [
+      "Buzzer",
+      "Push button",
+      "Li-ion battery + TP4056 charger + 5V boost",
+      "Small case and strap"
+    ],
+    "libraries": [
+      "Wire (built in)"
+    ],
+    "concepts": [
+      "State machines",
+      "Vector magnitude",
+      "Reading registers over I2C",
+      "Avoiding false alarms"
+    ],
+    "wiring": [
+      {
+        "part": "ADXL345",
+        "pin": "VCC",
+        "to": "5V"
+      },
+      {
+        "part": "ADXL345",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "ADXL345",
+        "pin": "SDA",
+        "to": "A4"
+      },
+      {
+        "part": "ADXL345",
+        "pin": "SCL",
+        "to": "A5"
+      },
+      {
+        "part": "ADXL345",
+        "pin": "SDO",
+        "to": "GND (address 0x53)"
+      },
+      {
+        "part": "ADXL345",
+        "pin": "CS",
+        "to": "3.3V (I2C mode)"
+      },
+      {
+        "part": "Buzzer",
+        "pin": "+",
+        "to": "D8"
+      },
+      {
+        "part": "Cancel button",
+        "pin": "one leg",
+        "to": "D4"
+      },
+      {
+        "part": "Cancel button",
+        "pin": "other leg",
+        "to": "GND"
+      }
+    ],
+    "steps": [
+      "Wire the ADXL345 in I2C mode (CS high, SDO to GND).",
+      "Upload and open the Serial Monitor.",
+      "Test safely: drop the device onto a pillow from about 50 cm and leave it still. After 2.5 s the alarm starts.",
+      "Press the cancel button to stop the alarm.",
+      "Walk, sit and jump with it to make sure normal movement does not trigger it; adjust the 0.4 g and 2.5 g limits if needed."
+    ],
+    "code": [
+      "// Wearable fall detector: free fall -> impact -> stillness = alarm.",
+      "#include <Wire.h>",
+      "",
+      "const int ADXL = 0x53;",
+      "const int BUZZER_PIN = 8;",
+      "const int LED_PIN = 13;",
+      "const int CANCEL_PIN = 4;        // push button to GND",
+      "",
+      "enum State { NORMAL, FREE_FALL, IMPACT, ALARM };",
+      "State state = NORMAL;",
+      "unsigned long stateAt = 0, lowGSince = 0;",
+      "",
+      "void writeReg(byte reg, byte value) {",
+      "  Wire.beginTransmission(ADXL);",
+      "  Wire.write(reg);",
+      "  Wire.write(value);",
+      "  Wire.endTransmission();",
+      "}",
+      "",
+      "float readG() {                  // total acceleration in g",
+      "  Wire.beginTransmission(ADXL);",
+      "  Wire.write(0x32);              // DATAX0",
+      "  Wire.endTransmission(false);",
+      "  Wire.requestFrom(ADXL, 6);",
+      "  int16_t v[3];",
+      "  for (int i = 0; i < 3; i++) {",
+      "    byte lo = Wire.read();",
+      "    byte hi = Wire.read();",
+      "    v[i] = (int16_t)((hi << 8) | lo);",
+      "  }",
+      "  float x = v[0] * 0.0039, y = v[1] * 0.0039, z = v[2] * 0.0039;   // 3.9 mg per count",
+      "  return sqrt(x * x + y * y + z * z);",
+      "}",
+      "",
+      "void setState(State s) {",
+      "  state = s;",
+      "  stateAt = millis();",
+      "}",
+      "",
+      "void setup() {",
+      "  Serial.begin(9600);",
+      "  pinMode(BUZZER_PIN, OUTPUT);",
+      "  pinMode(LED_PIN, OUTPUT);",
+      "  pinMode(CANCEL_PIN, INPUT_PULLUP);",
+      "  Wire.begin();",
+      "  writeReg(0x31, 0x0B);          // full resolution, +-16 g",
+      "  writeReg(0x2C, 0x0A);          // 100 samples per second",
+      "  writeReg(0x2D, 0x08);          // start measuring",
+      "}",
+      "",
+      "void loop() {",
+      "  float g = readG();",
+      "  unsigned long now = millis();",
+      "  unsigned long inState = now - stateAt;",
+      "",
+      "  switch (state) {",
+      "    case NORMAL:                 // free fall: total g near 0 for 60 ms",
+      "      if (g < 0.4) {",
+      "        if (!lowGSince) lowGSince = now;",
+      "        if (now - lowGSince > 60) setState(FREE_FALL);",
+      "      } else {",
+      "        lowGSince = 0;",
+      "      }",
+      "      break;",
+      "",
+      "    case FREE_FALL:              // expect a hard impact within 1 s",
+      "      if (g > 2.5) setState(IMPACT);",
+      "      else if (inState > 1000) { lowGSince = 0; setState(NORMAL); }",
+      "      break;",
+      "",
+      "    case IMPACT:                 // lying still for 2 s after impact = real fall",
+      "      if (inState > 500 && fabs(g - 1.0) > 0.3) { lowGSince = 0; setState(NORMAL); }",
+      "      else if (inState > 2500) { setState(ALARM); Serial.println(F(\"FALL DETECTED\")); }",
+      "      break;",
+      "",
+      "    case ALARM:",
+      "      digitalWrite(LED_PIN, (now / 250) % 2);",
+      "      if ((now / 250) % 2) tone(BUZZER_PIN, 2500);",
+      "      else noTone(BUZZER_PIN);",
+      "      if (digitalRead(CANCEL_PIN) == LOW) {",
+      "        noTone(BUZZER_PIN);",
+      "        digitalWrite(LED_PIN, LOW);",
+      "        lowGSince = 0;",
+      "        setState(NORMAL);",
+      "        Serial.println(F(\"Alarm cancelled\"));",
+      "      }",
+      "      break;",
+      "  }",
+      "  delay(10);",
+      "}"
+    ],
+    "extensions": [
+      "Send an SMS with a SIM800L when the alarm is not cancelled within 30 s.",
+      "Use the ADXL345's built-in free-fall interrupt to save battery."
+    ]
+  },
+  {
+    "id": "thermocouple-pid-controller",
+    "title": "Thermocouple PID temperature controller",
+    "level": "high",
+    "board": "arduino-nano",
+    "summary": "Holds a heater at a set temperature up to 300 °C using a K-type thermocouple, PID control through an SSR, and a rotary knob for the setpoint.",
+    "time": "4 hours",
+    "sensors": [
+      "SEN-048"
+    ],
+    "parts": [
+      "SSR-25DA solid-state relay",
+      "Rotary encoder (KY-040)",
+      "16x2 I2C LCD",
+      "Heater (e.g. small hot plate)",
+      "Insulated enclosure"
+    ],
+    "libraries": [
+      "MAX6675 library (Adafruit)",
+      "LiquidCrystal I2C (Frank de Brabander)"
+    ],
+    "concepts": [
+      "PID with derivative on measurement",
+      "Time-proportional output",
+      "Fault handling",
+      "Reading an encoder"
+    ],
+    "wiring": [
+      {
+        "part": "MAX6675",
+        "pin": "VCC",
+        "to": "5V"
+      },
+      {
+        "part": "MAX6675",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "MAX6675",
+        "pin": "SO",
+        "to": "D4"
+      },
+      {
+        "part": "MAX6675",
+        "pin": "CS",
+        "to": "D5"
+      },
+      {
+        "part": "MAX6675",
+        "pin": "SCK",
+        "to": "D6"
+      },
+      {
+        "part": "Rotary encoder",
+        "pin": "CLK",
+        "to": "D2"
+      },
+      {
+        "part": "Rotary encoder",
+        "pin": "DT",
+        "to": "D3"
+      },
+      {
+        "part": "Rotary encoder",
+        "pin": "SW",
+        "to": "D9"
+      },
+      {
+        "part": "SSR",
+        "pin": "Input +",
+        "to": "D8"
+      },
+      {
+        "part": "SSR",
+        "pin": "Input −",
+        "to": "GND"
+      },
+      {
+        "part": "16x2 I2C LCD",
+        "pin": "VCC",
+        "to": "5V"
+      },
+      {
+        "part": "16x2 I2C LCD",
+        "pin": "GND",
+        "to": "GND"
+      },
+      {
+        "part": "16x2 I2C LCD",
+        "pin": "SDA",
+        "to": "A4"
+      },
+      {
+        "part": "16x2 I2C LCD",
+        "pin": "SCL",
+        "to": "A5"
+      }
+    ],
+    "steps": [
+      "Wire the MAX6675, encoder and LCD. The SSR's input side goes to D8 and GND.",
+      "Let an experienced adult wire the heater through the SSR's output side inside an enclosure.",
+      "Upload. Turn the knob to set the target (steps of 5 °C), press it to start or stop.",
+      "Tune Kp first (with Ki and Kd small), then Kd to reduce overshoot, then Ki to remove the final error.",
+      "If the reading goes down when heated, swap the thermocouple's + and − wires."
+    ],
+    "code": [
+      "// Thermocouple PID temperature controller with SSR and rotary encoder.",
+      "#include <max6675.h>",
+      "#include <LiquidCrystal_I2C.h>",
+      "",
+      "const int TC_SO = 4, TC_CS = 5, TC_SCK = 6;",
+      "const int ENC_CLK = 2, ENC_DT = 3, ENC_SW = 9;",
+      "const int SSR_PIN = 8;                 // solid-state relay input",
+      "const float MAX_SAFE_C = 300.0;        // hard cut-off",
+      "",
+      "MAX6675 thermocouple(TC_SCK, TC_CS, TC_SO);",
+      "LiquidCrystal_I2C lcd(0x27, 16, 2);",
+      "",
+      "float setpoint = 100.0;",
+      "bool running = false;",
+      "float tempC = 0;",
+      "float Kp = 8.0, Ki = 0.05, Kd = 40.0;  // tune for your heater",
+      "float integral = 0, lastTemp = 0;",
+      "float output = 0;                      // 0-100 % heater power",
+      "const unsigned long WINDOW_MS = 2000;  // SSR on-time is a share of this window",
+      "unsigned long windowStart = 0, lastRead = 0, lastDraw = 0;",
+      "int lastClk = HIGH;",
+      "int lastBtn = HIGH;",
+      "",
+      "void readEncoder() {",
+      "  int clk = digitalRead(ENC_CLK);",
+      "  if (clk != lastClk && clk == LOW) {",
+      "    setpoint += (digitalRead(ENC_DT) != clk) ? 5 : -5;",
+      "    setpoint = constrain(setpoint, 0, MAX_SAFE_C - 20);",
+      "  }",
+      "  lastClk = clk;",
+      "",
+      "  int btn = digitalRead(ENC_SW);",
+      "  if (btn == LOW && lastBtn == HIGH) {   // press toggles RUN / STOP",
+      "    running = !running;",
+      "    integral = 0;",
+      "  }",
+      "  lastBtn = btn;",
+      "}",
+      "",
+      "void setup() {",
+      "  pinMode(ENC_CLK, INPUT_PULLUP);",
+      "  pinMode(ENC_DT, INPUT_PULLUP);",
+      "  pinMode(ENC_SW, INPUT_PULLUP);",
+      "  pinMode(SSR_PIN, OUTPUT);",
+      "  digitalWrite(SSR_PIN, LOW);",
+      "  lcd.init();",
+      "  lcd.backlight();",
+      "  delay(500);                          // MAX6675 needs time after power-up",
+      "  lastTemp = thermocouple.readCelsius();",
+      "}",
+      "",
+      "void loop() {",
+      "  readEncoder();",
+      "  unsigned long now = millis();",
+      "",
+      "  // The MAX6675 updates about 4 times a second.",
+      "  if (now - lastRead >= 250) {",
+      "    lastRead = now;",
+      "    tempC = thermocouple.readCelsius();",
+      "",
+      "    bool fault = isnan(tempC) || tempC > MAX_SAFE_C;",
+      "    if (fault) running = false;",
+      "",
+      "    if (running) {",
+      "      float error = setpoint - tempC;",
+      "      integral = constrain(integral + error * 0.25, -500, 500);",
+      "      float derivative = (tempC - lastTemp) / 0.25;   // on measurement: no kick on setpoint change",
+      "      output = constrain(Kp * error + Ki * integral - Kd * derivative, 0, 100);",
+      "    } else {",
+      "      output = 0;",
+      "    }",
+      "    lastTemp = tempC;",
+      "  }",
+      "",
+      "  // Time-proportional control: heater on for output% of each 2 s window.",
+      "  if (now - windowStart >= WINDOW_MS) windowStart = now;",
+      "  digitalWrite(SSR_PIN, running && (now - windowStart) < output / 100.0 * WINDOW_MS);",
+      "",
+      "  if (now - lastDraw >= 500) {",
+      "    lastDraw = now;",
+      "    lcd.setCursor(0, 0);",
+      "    lcd.print(F(\"T:\"));",
+      "    if (isnan(tempC)) {",
+      "      lcd.print(F(\"ERR   \"));",
+      "    } else {",
+      "      lcd.print(tempC, 1);",
+      "      lcd.print(F(\"C \"));",
+      "    }",
+      "    lcd.print(running ? F(\"RUN \") : F(\"STOP\"));",
+      "    lcd.setCursor(0, 1);",
+      "    lcd.print(F(\"Set:\"));",
+      "    lcd.print(setpoint, 0);",
+      "    lcd.print(F(\"C P:\"));",
+      "    lcd.print(output, 0);",
+      "    lcd.print(F(\"%  \"));",
+      "  }",
+      "}"
+    ],
+    "extensions": [
+      "Follow a reflow-soldering profile (preheat, soak, reflow, cool) instead of a single setpoint.",
+      "Log temperature and output % to the Serial Plotter to tune PID visually."
+    ],
+    "safety": "DANGER: the heater side runs on mains and gets very hot. Use an enclosure, a fuse and supervision from an experienced adult, and never leave it running unattended."
+  }
+]
