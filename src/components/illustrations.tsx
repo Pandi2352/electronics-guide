@@ -652,4 +652,53 @@ export function ConverterDrawing({ className = "" }: { className?: string }) {
   );
 }
 
+/** Sidebar icon: Inductor coil symbol. */
+export function InductorIcon({ size = 18 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M2 13h2a2 2 0 1 1 4 0 2 2 0 1 1 4 0 2 2 0 1 1 4 0 2 2 0 1 1 4 0h2" />
+    </svg>
+  );
+}
+
+/** Sidebar icon: Optocoupler (isolated optical barrier). */
+export function OptocouplerIcon({ size = 18 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <rect x="4" y="4" width="6" height="16" rx="2" />
+      <rect x="14" y="4" width="6" height="16" rx="2" />
+      <path d="M10 10l2 2-2 2" />
+      <line x1="1" y1="8" x2="4" y2="8" />
+      <line x1="1" y1="16" x2="4" y2="16" />
+      <line x1="20" y1="8" x2="23" y2="8" />
+      <line x1="20" y1="16" x2="23" y2="16" />
+    </svg>
+  );
+}
+
+/** Sidebar icon: Buzzer / Speaker acoustic sounder. */
+export function BuzzerIcon({ size = 18 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <polygon points="10 6 5 9 2 9 2 15 5 15 10 18 10 6" fill="currentColor" fillOpacity="0.15" />
+      <path d="M14 9a4 4 0 0 1 0 6" />
+      <path d="M17.5 6.5a8 8 0 0 1 0 11" />
+    </svg>
+  );
+}
+
+/** Sidebar icon: 3-pin Linear Voltage Regulator (TO-220 / LDO). */
+export function RegulatorIcon({ size = 18 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <rect x="5" y="5" width="14" height="11" rx="2" />
+      <rect x="7" y="2" width="10" height="3" rx="1" fill="currentColor" fillOpacity="0.2" />
+      <line x1="8" y1="16" x2="8" y2="22" />
+      <line x1="12" y1="16" x2="12" y2="22" />
+      <line x1="16" y1="16" x2="16" y2="22" />
+    </svg>
+  );
+}
+
+
 

@@ -396,4 +396,121 @@ export interface ConverterGuide {
   examples: RelayExample[];
 }
 
+export interface InductorType {
+  id: string;
+  name: string;
+  summary: string;
+  applications: string;
+}
+
+export interface InductorPart {
+  value: string;
+  code: string;
+  current: string;
+  package: string;
+  purpose: string;
+}
+
+export interface ComponentWiringRow {
+  from: string;
+  to: string;
+  note?: string;
+}
+
+export interface ComponentExample {
+  id: string;
+  title: string;
+  description: string;
+  difficulty?: string;
+  parts: string[];
+  wiring: ComponentWiringRow[];
+  code: string | string[];
+}
+
+export interface InductorGuide {
+  purpose: string;
+  whenToUse: WhenToUseItem[];
+  basics: TitleText[];
+  types: InductorType[];
+  commonParts: InductorPart[];
+  examples: ComponentExample[];
+}
+
+export interface OptocouplerType {
+  id: string;
+  name: string;
+  summary: string;
+  applications: string;
+}
+
+export interface OptocouplerPart {
+  part: string;
+  channels: number;
+  package: string;
+  isolation: string;
+  vceMax: string;
+  purpose: string;
+}
+
+export interface OptocouplerGuide {
+  purpose: string;
+  whenToUse: WhenToUseItem[];
+  basics: TitleText[];
+  types: OptocouplerType[];
+  commonParts: OptocouplerPart[];
+  examples: ComponentExample[];
+}
+
+export interface BuzzerType {
+  id: string;
+  name: string;
+  summary: string;
+  applications: string;
+}
+
+export interface BuzzerPart {
+  type: string;
+  voltage: string;
+  current: string;
+  frequency: string;
+  decibels: string;
+  control: string;
+}
+
+export interface BuzzerGuide {
+  purpose: string;
+  whenToUse: WhenToUseItem[];
+  basics: TitleText[];
+  types: BuzzerType[];
+  commonParts: BuzzerPart[];
+  examples: ComponentExample[];
+}
+
+export interface RegulatorType {
+  id: string;
+  name: string;
+  summary: string;
+  applications: string;
+}
+
+export interface RegulatorPart {
+  part: string;
+  vout: string;
+  vinMax: string;
+  maxCurrent: string;
+  dropout: string;
+  package: string;
+  purpose: string;
+}
+
+export interface RegulatorGuide {
+  purpose: string;
+  whenToUse: WhenToUseItem[];
+  basics: TitleText[];
+  types: RegulatorType[];
+  popularRegulators: RegulatorPart[];
+  examples: ComponentExample[];
+}
+
+
 

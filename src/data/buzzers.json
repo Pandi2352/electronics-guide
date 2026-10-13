@@ -1,0 +1,79 @@
+{
+  "purpose": "Converts electrical signals into audible sound waves and acoustic tones. Essential for providing instant auditory feedback, security alarms, timer countdowns, and system health status beeps on standalone IoT projects without requiring an attached screen.",
+  "whenToUse": [
+    {
+      "scenario": "Active Buzzer for Instant Alarms & Beeps (Simple HIGH/LOW)",
+      "why": "When you only need a clear, loud single-frequency warning beep (e.g. burglar alarm, microwave timer, door chime). Contains its own built-in oscillator; apply 5V and it sounds immediately.",
+      "recommended": "5V Active Buzzer (sealed top sticker with '+' mark)"
+    },
+    {
+      "scenario": "Passive Buzzer for Musical Melodies & Multi-Frequency Tones",
+      "why": "When you want to play custom tunes (like the Super Mario theme or 8-bit game effects) or generate varying pitch tones based on sensor distance. Has no internal oscillator; you supply the frequency via Arduino's tone() function.",
+      "recommended": "5V Passive Piezo Buzzer (green bottom PCB, exposed coil)"
+    },
+    {
+      "scenario": "User Interaction Keystroke & Confirmation Feedback",
+      "why": "Short, crisp 20ms clicks confirm button presses, RFID card badge swipes, or keypad entries so the user knows their input was registered.",
+      "recommended": "Passive Piezo Buzzer with 100Ω current limiting resistor"
+    },
+    {
+      "scenario": "Loud Industrial & Outdoor Sirens (12V High Decibel)",
+      "why": "When a small 85dB breadboard buzzer is too quiet for a large room or noisy workshop. Driven by an external 12V power supply through an NPN transistor or MOSFET switch.",
+      "recommended": "12V 110dB Piezo Alarm Siren driven by 2N2222 or IRLZ44N"
+    }
+  ],
+  "basics": [
+    {
+      "title": "The Golden Rule: Active vs Passive",
+      "text": "Active Buzzers have an internal oscillating circuit inside the black housing: simply write digitalWrite(pin, HIGH) and it beeps. Passive Buzzers have no internal circuit: writing HIGH makes only a tiny click! You MUST send an alternating AC frequency using tone(pin, 440) to vibrate the diaphragm."
+    },
+    {
+      "title": "How to tell them apart visually",
+      "text": "Look at the underside: Active buzzers have their bottom sealed with black potted epoxy. Passive buzzers typically have an exposed green circuit board with visible solder traces. Also, active buzzers usually come with a removable peel-off paper label on top."
+    },
+    {
+      "title": "Pin Current & Protection",
+      "text": "A standard piezo element draws only 10–20mA, which is safe for an Arduino Nano pin directly. However, electromagnetic buzzers can pull 50mA+ and kick back inductive voltage when switching off; always use an NPN transistor (2N2222) and a 1N4148 flyback diode for large buzzers!"
+    }
+  ],
+  "types": [
+    {
+      "id": "active",
+      "name": "Active Piezo Buzzer",
+      "summary": "Self-oscillating acoustic transducer. Produces a loud ~2.3 kHz fixed tone as soon as DC voltage (3.3V–5V) is applied.",
+      "applications": "Burglar alarms, countdown timers, warning indicators"
+    },
+    {
+      "id": "passive",
+      "name": "Passive Piezo Buzzer",
+      "summary": "Pure speaker diaphragm. Requires an external square wave frequency (PWM) from the microcontroller to create sound. Can play any musical note from 31 Hz to 65,535 Hz.",
+      "applications": "Melody players, frequency sounders, variable-pitch distance feedback"
+    },
+    {
+      "id": "magnetic",
+      "name": "Electromagnetic Buzzer",
+      "summary": "Uses a tiny magnetic coil to vibrate a ferromagnetic metal disc. Offers deeper bass tones at lower frequencies, but draws more current (30–80mA).",
+      "applications": "Automotive dashboard chime, appliance feedback, computer motherboards"
+    }
+  ],
+  "commonParts": [
+    { "type": "Active", "voltage": "5V DC", "current": "25 mA", "frequency": "2300 Hz", "decibels": "85 dB", "control": "digitalWrite(pin, HIGH)" },
+    { "type": "Passive", "voltage": "3.3V–5V AC", "current": "15 mA", "frequency": "Custom (31–65k Hz)", "decibels": "80 dB", "control": "tone(pin, frequency)" },
+    { "type": "Active (3.3V)", "voltage": "3.3V DC", "current": "20 mA", "frequency": "2700 Hz", "decibels": "82 dB", "control": "digitalWrite(pin, HIGH) for ESP32/Pico" },
+    { "type": "12V Siren", "voltage": "9V–15V DC", "current": "120 mA", "frequency": "Warble 3 kHz", "decibels": "105 dB", "control": "Transistor driver switch" }
+  ],
+  "examples": [
+    {
+      "id": "tone-melody",
+      "title": "Playing Tones & Notes with a Passive Buzzer",
+      "description": "Generate musical frequencies on pin D8 using the built-in Arduino tone() library.",
+      "difficulty": "Easy",
+      "parts": ["Passive Buzzer", "100Ω Resistor (protects pin)", "Breadboard jumper wires"],
+      "wiring": [
+        { "from": "Arduino Pin D8", "to": "100Ω Resistor -> Buzzer Positive (+)", "note": "PWM frequency output" },
+        { "from": "Buzzer Negative (-)", "to": "Arduino GND", "note": "Common ground" }
+      ],
+      "code": "// Passive Buzzer Melody Example\nconst int BUZZER_PIN = 8;\n\n// Musical note frequencies in Hz\n#define NOTE_C4 262\n#define NOTE_E4 330\n#define NOTE_G4 392\n#define NOTE_C5 523\n\nvoid setup() {\n  // Play a celebratory 4-note ascending chord on boot\n  int melody[] = { NOTE_C4, NOTE_E4, NOTE_G4, NOTE_C5 };\n  int duration = 150; // milliseconds\n\n  for (int i = 0; i < 4; i++) {\n    tone(BUZZER_PIN, melody[i], duration);\n    delay(duration * 1.30); // small pause between notes\n  }\n  noTone(BUZZER_PIN); // Stop sound\n}\n\nvoid loop() {\n  // Silence during main loop\n}"
+    }
+  ]
+}

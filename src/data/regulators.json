@@ -1,0 +1,88 @@
+{
+  "purpose": "Steps down higher or fluctuating DC input voltages into an ultra-steady, noise-free fixed voltage rail (such as 3.3V or 5V). Because linear regulators operate as an automatically adjusting transistor divider rather than a high-speed switch, they generate zero electrical switching noise, making them the gold standard for microcontrollers, RF radios, and sensitive analog sensor ADCs.",
+  "whenToUse": [
+    {
+      "scenario": "Powering 3.3V Wireless Radios & Sensors (ESP8266, NRF24L01, SD Cards)",
+      "why": "The built-in 3.3V pin on clone Arduino Nanos can only deliver a tiny ~50mA from its USB chip. When an ESP8266 or NRF24L01 bursts transmit power, it draws 250mA, collapsing the Nano's rail. A dedicated AMS1117-3.3V supplies up to 1A with zero sweat.",
+      "recommended": "AMS1117-3.3V LDO Regulator (with 10µF capacitors on in/out)"
+    },
+    {
+      "scenario": "Stepping a 9V Battery or 12V Wall Adapter Down to 5V",
+      "why": "When powering your project from a 9V block or 12V power adapter. The classic 7805 safely handles up to 35V input and delivers 1.5A of clean 5V DC.",
+      "recommended": "L7805CV (TO-220 package, add a heatsink for loads > 500mA)"
+    },
+    {
+      "scenario": "Clean Power for Analog Sensors, ADCs, Audio & Op-Amps",
+      "why": "Switch-mode DC-DC converters create high-frequency 100kHz ripple that corrupts sensitive audio and causes analog sensor readings (like thermocouple MAX6675 or ECG AD8232) to jump erratically. Linear regulators deliver pure DC silence.",
+      "recommended": "Ultra-Low-Noise LDO (LP2985 or MCP1700)"
+    },
+    {
+      "scenario": "Custom Adjustable DC Power Rails (1.25V to 30V)",
+      "why": "When you need a non-standard voltage (like 4.2V for charging a lithium battery or 6V for digital servos). Two external resistors set the exact desired voltage.",
+      "recommended": "LM317 Adjustable Regulator (Vout = 1.25V * (1 + R2/R1))"
+    }
+  ],
+  "basics": [
+    {
+      "title": "Dropout Voltage (Standard vs LDO)",
+      "text": "Dropout voltage is the minimum headroom voltage difference required between Vin and Vout. A classic 7805 has a 2.0V dropout (needs at least 7.0V in to give 5V out). A Low-Dropout (LDO) regulator like the AMS1117 needs only ~1.1V, and modern CMOS LDOs like MCP1700 need just 0.18V!"
+    },
+    {
+      "title": "The Heat Formula: P_diss = (Vin - Vout) * I_load",
+      "text": "Linear regulators discard excess voltage as pure heat. If you feed 12V into an AMS1117 to get 3.3V at 500mA: Power Wasted = (12V - 3.3V) * 0.5A = 4.35 Watts! The chip will become scalding hot within seconds without a heatsink. For large voltage gaps and high currents, use a DC-DC Buck converter instead."
+    },
+    {
+      "title": "Essential Decoupling Capacitors",
+      "text": "Linear regulators MUST have capacitors placed close to their Vin and Vout pins (typically 10 µF electrolytic + 0.1 µF ceramic). Without these capacitors, the internal error amplifier feedback loop will self-oscillate into high-frequency screeching and erratic voltage output."
+    }
+  ],
+  "types": [
+    {
+      "id": "fixed-ldo",
+      "name": "Fixed Low-Dropout (LDO) Regulator (AMS1117)",
+      "summary": "Modern 3-pin regulator requiring very low headroom. Extremely popular as SMD SOT-223 and breakout boards for 3.3V and 5.0V microcontroller rails.",
+      "applications": "ESP32 boards, Arduino Nano on-board regulator, 3.3V sensor supply rails"
+    },
+    {
+      "id": "standard-linear",
+      "name": "Standard 78xx Series Linear Regulator (7805)",
+      "summary": "Classic through-hole TO-220 workhorse. Indestructible internal thermal overload and short-circuit protection. Delivers up to 1.5A.",
+      "applications": "Bench power supplies, 12V to 5V automotive adapters, robotics logic rails"
+    },
+    {
+      "id": "adjustable",
+      "name": "Adjustable Linear Regulator (LM317)",
+      "summary": "Outputs any voltage from 1.25V to 37V set by a pair of external resistors or a trimmer potentiometer.",
+      "applications": "Variable bench power supplies, custom battery charging circuits, precision current limiters"
+    },
+    {
+      "id": "low-quiescent",
+      "name": "Ultra-Low Quiescent Current LDO (MCP1700 / HT7333)",
+      "summary": "Consumes less than 4 µA of idle current itself. Essential for battery-powered IoT devices sleeping for months on coin cells.",
+      "applications": "Battery IoT sensor nodes, solar-powered environmental beacons, wearable electronics"
+    }
+  ],
+  "popularRegulators": [
+    { "part": "AMS1117-3.3", "vout": "3.3V Fixed", "vinMax": "15V", "maxCurrent": "1.0 A", "dropout": "1.1 V", "package": "SOT-223 / Module", "purpose": "3.3V rail for ESP8266 & wireless sensor breakout" },
+    { "part": "L7805CV", "vout": "5.0V Fixed", "vinMax": "35V", "maxCurrent": "1.5 A", "dropout": "2.0 V", "package": "TO-220 Through-Hole", "purpose": "Classic 12V down to 5V logic supply" },
+    { "part": "LM317T", "vout": "1.25V–37V Adj", "vinMax": "40V", "maxCurrent": "1.5 A", "dropout": "1.5 V", "package": "TO-220 Through-Hole", "purpose": "Adjustable bench voltage generator" },
+    { "part": "MCP1700-3302", "vout": "3.3V Fixed", "vinMax": "6.0V", "maxCurrent": "250 mA", "dropout": "0.18 V", "package": "TO-92 / SOT-23", "purpose": "Ultra-low power 1.6µA sleep current for battery nodes" },
+    { "part": "AMS1117-5.0", "vout": "5.0V Fixed", "vinMax": "15V", "maxCurrent": "1.0 A", "dropout": "1.1 V", "package": "SOT-223 / Module", "purpose": "General-purpose 5V regulator module" }
+  ],
+  "examples": [
+    {
+      "id": "ams1117-wiring",
+      "title": "Wiring AMS1117-3.3V for High-Current Radios",
+      "description": "Provide clean 3.3V power to power-hungry ESP8266 or NRF24L01 transceivers without brownouts.",
+      "difficulty": "Easy",
+      "parts": ["AMS1117-3.3V Module", "10 µF Capacitor (Input)", "10 µF Capacitor (Output)"],
+      "wiring": [
+        { "from": "Arduino 5V Pin", "to": "AMS1117 VIN", "note": "Power source (5.0V)" },
+        { "from": "Arduino GND", "to": "AMS1117 GND", "note": "Common ground rail" },
+        { "from": "AMS1117 VOUT", "to": "ESP8266 / NRF24L01 VCC", "note": "Clean, heavy 3.3V rail up to 1000mA" },
+        { "from": "AMS1117 GND", "to": "Module GND", "note": "Return path" }
+      ],
+      "code": "// No code needed: Linear regulation operates continuously at the hardware level.\n// The AMS1117-3.3V supplies up to 1000mA with stable voltage during RF bursts."
+    }
+  ]
+}

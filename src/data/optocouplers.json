@@ -1,0 +1,88 @@
+{
+  "purpose": "Transfers electrical control signals across a barrier of complete physical isolation using light. Inside a light-tight chip, an infrared LED shines onto a phototransistor. Because there is zero copper connection between input and output, lethal 240V mains surges or high-power motor noise can never physically reach your microcontroller.",
+  "whenToUse": [
+    {
+      "scenario": "Commercial Relay Modules (The JD-VCC Safety Jumper)",
+      "why": "When mechanical relays click, their electro-magnetic coils kick back nasty voltage transients. An optocoupler on the module isolates the Arduino's delicate GPIO pin from the noisy coil power supply.",
+      "recommended": "PC817 (4-pin DIP, found on virtually every Arduino relay board)"
+    },
+    {
+      "scenario": "Interfacing with 24V Industrial PLCs & Factory Sensors",
+      "why": "Industrial machinery standardizes on 24V DC logic. Feeding 24V directly into a 5V Arduino or 3.3V ESP32 pin instantly incinerates the silicon. An optocoupler safely reads 24V pulses while outputting clean 5V/3.3V to the MCU.",
+      "recommended": "PC817 or EL817 with a 2.2 kΩ current-limiting resistor"
+    },
+    {
+      "scenario": "AC Mains Zero-Cross Detection & Light Dimming",
+      "why": "To dim an AC incandescent bulb or control an electric heater with a TRIAC, the Arduino must detect the exact moment the 240V AC sine wave crosses 0V. An optocoupler safely signals this microsecond pulse with 5,000V isolation.",
+      "recommended": "4N35 / H11AA1 (AC input optocoupler) or MOC3021 (random phase) / MOC3041 (zero-cross)"
+    },
+    {
+      "scenario": "Breaking Ground Loops & Audio Hum in Studio/MIDI Gear",
+      "why": "When separate audio or musical devices share common ground wires, stray currents create an audible 50Hz/60Hz ground hum. The MIDI specification mandates optoisolation on all inputs to guarantee silence.",
+      "recommended": "6N138 (High-gain Darlington) or 6N137 (High-speed 10 MBd logic)"
+    }
+  ],
+  "basics": [
+    {
+      "title": "How it works inside",
+      "text": "Pins 1 & 2 are connected to an internal infrared LED. Pins 3 & 4 (or 4 & 5) are connected to a silicon phototransistor. When your Arduino pin goes HIGH, the internal LED glows. Photons strike the phototransistor base, causing it to conduct. Light carries the signal — electricity never touches!"
+    },
+    {
+      "title": "Current Transfer Ratio (CTR)",
+      "text": "The optical gain ratio between output collector current and input LED forward current: CTR = (I_C / I_F) * 100%. A typical PC817 has a CTR of 50% to 300%."
+    },
+    {
+      "title": "Active-Low Pull-Up Output",
+      "text": "The phototransistor output is normally wired between your Arduino input pin and GND, with an internal or external 10kΩ pull-up resistor. When the input LED lights up, the phototransistor pulls the Arduino pin LOW."
+    }
+  ],
+  "types": [
+    {
+      "id": "phototransistor",
+      "name": "Phototransistor Output (PC817, 4N35)",
+      "summary": "Standard DC optocoupler. Simple 4-pin or 6-pin DIP package. Switches up to 50mA DC at moderate speeds (up to 80 kHz).",
+      "applications": "Arduino relay modules, DC motor isolation, 24V PLC input boards"
+    },
+    {
+      "id": "photo-triac",
+      "name": "Photo-TRIAC Output (MOC3021, MOC3041)",
+      "summary": "Drives AC loads directly or triggers external power TRIACs (BTA16, BTA41) for controlling 110V/240V AC lamps, fans, and heaters.",
+      "applications": "Mains light dimmers, AC solid-state relays (SSR), heater controllers"
+    },
+    {
+      "id": "high-speed",
+      "name": "High-Speed Logic Output (6N137, HCPL-2601)",
+      "summary": "Features a built-in logic gate and amplifier capable of handling 10 Mbps data rates. Used for isolated serial communications.",
+      "applications": "Isolated RS-485 Modbus, CAN bus isolation, MIDI musical instrument interface"
+    },
+    {
+      "id": "darlington",
+      "name": "Darlington Output (4N32, 6N138)",
+      "summary": "Dual transistor output providing ultra-high sensitivity (CTR up to 500%). Conducts full output current with just 1mA LED input current.",
+      "applications": "Battery-powered triggers, low-current sensor inputs, MIDI receivers"
+    }
+  ],
+  "commonParts": [
+    { "part": "PC817", "channels": 1, "package": "DIP-4", "isolation": "5,000 V RMS", "vceMax": "35V", "purpose": "Standard on Arduino relay boards & industrial inputs" },
+    { "part": "4N35", "channels": 1, "package": "DIP-6", "isolation": "3,550 V RMS", "vceMax": "30V", "purpose": "General-purpose with Base pin accessible for calibration" },
+    { "part": "MOC3021", "channels": 1, "package": "DIP-6", "isolation": "7,500 V PK", "vceMax": "400V AC", "purpose": "Phase-angle AC dimmer control with TRIAC" },
+    { "part": "MOC3041", "channels": 1, "package": "DIP-6", "isolation": "7,500 V PK", "vceMax": "400V AC", "purpose": "Zero-crossing AC solid-state relay driver" },
+    { "part": "6N137", "channels": 1, "package": "DIP-8", "isolation": "2,500 V RMS", "vceMax": "5V Logic", "purpose": "High-speed 10 Mbps isolated UART & SPI buses" }
+  ],
+  "examples": [
+    {
+      "id": "pc817-switch",
+      "title": "Safe 24V Signal Isolation with PC817",
+      "description": "Read a high-voltage industrial 24V button or sensor input without risking your 5V Arduino Nano.",
+      "difficulty": "Easy",
+      "parts": ["PC817 Optocoupler", "1 kΩ Resistor (Input)", "10 kΩ Resistor (Pull-up)"],
+      "wiring": [
+        { "from": "Arduino Pin D2", "to": "PC817 Collector (Pin 4)", "note": "Pin configured with INPUT_PULLUP" },
+        { "from": "PC817 Emitter (Pin 3)", "to": "Arduino GND", "note": "Ground on Arduino side" },
+        { "from": "24V Signal (+)", "to": "1.2kΩ Resistor -> PC817 Anode (Pin 1)", "note": "Limits LED current to ~18mA" },
+        { "from": "PC817 Cathode (Pin 2)", "to": "24V Power Supply GND", "note": "Completely separate isolated ground!" }
+      ],
+      "code": "// PC817 Isolated Input Example\nconst int ISOLATED_PIN = 2;\n\nvoid setup() {\n  Serial.begin(9600);\n  pinMode(ISOLATED_PIN, INPUT_PULLUP); // Active-low via internal pull-up\n}\n\nvoid loop() {\n  // When 24V is applied, internal LED lights, phototransistor pulls D2 to LOW\n  bool is24VActive = (digitalRead(ISOLATED_PIN) == LOW);\n\n  if (is24VActive) {\n    Serial.println(\"24V Signal DETECTED! Isolated & safe.\");\n  }\n  delay(100);\n}"
+    }
+  ]
+}

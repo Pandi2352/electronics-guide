@@ -1,0 +1,87 @@
+{
+  "purpose": "Stores electrical energy in a magnetic field and opposes sudden changes in electric current. Works as the indispensable counterpart to capacitors for smoothing current ripple, filtering high-frequency electromagnetic interference (EMI), and storing magnetic energy in switch-mode DC-DC converters.",
+  "whenToUse": [
+    {
+      "scenario": "Switch-Mode DC-DC Buck & Boost Converters",
+      "why": "When the converter's internal MOSFET switches OFF, the inductor's collapsing magnetic field forces current to keep flowing through the freewheeling diode to the load, providing continuous power without massive voltage drop.",
+      "recommended": "22 µH to 100 µH Shielded Power Inductor (3A rating for LM2596 / MT3608)"
+    },
+    {
+      "scenario": "High-Frequency Noise & USB EMI Choking (Ferrite Beads)",
+      "why": "Digital microcontrollers switch pins in nanoseconds, radiating radio-frequency noise down USB cables and power rails. A ferrite bead acts as a high-frequency resistor, absorbing the RF buzz without wasting DC power.",
+      "recommended": "Ferrite Bead (FB) or Clip-on Ferrite Core for USB/power cables"
+    },
+    {
+      "scenario": "LC Low-Pass Power Filters for Sensitive Analog ADCs",
+      "why": "DC motors and Wi-Fi bursts inject ripple onto the 5V line. Pairing an inductor with a capacitor (LC filter) creates a sharp 12 dB/octave barrier that keeps the microcontroller's analog voltage reference (AREF) pristine.",
+      "recommended": "10 µH Inductor + 10 µF Electrolytic Capacitor"
+    },
+    {
+      "scenario": "Audio Speaker Crossovers & Tone Filters",
+      "why": "Inductive reactance increases as sound frequency rises (XL = 2πfL). Placing an inductor in series with a woofer lets deep bass pass through while blocking piercing treble.",
+      "recommended": "Air Core Inductors (0.5 mH to 2.5 mH)"
+    }
+  ],
+  "basics": [
+    {
+      "title": "What it is",
+      "text": "A coil of insulated wire, usually wound around a magnetic ferrite or iron core. When current flows through it, it builds a magnetic field. When current drops, the field collapses and dumps energy back into the circuit to fight the change."
+    },
+    {
+      "title": "How it differs from a Capacitor",
+      "text": "Capacitors oppose sudden changes in VOLTAGE by storing electric charge. Inductors oppose sudden changes in CURRENT by storing magnetic flux. Together, they form tuned resonant circuits (radios) and ripple-free power supplies."
+    },
+    {
+      "title": "Inductance Unit: Henry (H)",
+      "text": "Measured in Henries (H), but hobby circuits use microhenries (µH) or millihenries (mH). Common power inductor values: 10 µH, 22 µH, 47 µH, 100 µH."
+    }
+  ],
+  "types": [
+    {
+      "id": "toroidal",
+      "name": "Toroidal Inductor (Doughnut Core)",
+      "summary": "Coil wrapped around a circular donut ring. Keeps the magnetic field completely contained inside the ring, causing almost zero electromagnetic interference to nearby microcontroller pins.",
+      "applications": "Switch-mode power supplies, mains filters, audio amplifiers"
+    },
+    {
+      "id": "ferrite-drum",
+      "name": "Drum Core (Bobbin) Inductor",
+      "summary": "Radial-leaded coil wrapped around a vertical ferrite bobbin with heat-shrink sleeve. Cheap, compact, and easy to insert into breadboards.",
+      "applications": "Arduino DC-DC breakout boards, LED driver modules"
+    },
+    {
+      "id": "ferrite-bead",
+      "name": "Ferrite Bead / Choke",
+      "summary": "A tiny cylinder of sintered iron oxide slipped over a single wire. It acts like zero ohms at DC, but turns into a resistor at 100MHz+ to kill radio noise.",
+      "applications": "USB cable chokes, microcontroller VCC decoupling, RF filtering"
+    },
+    {
+      "id": "air-core",
+      "name": "Air Core Inductor",
+      "summary": "A coil with no magnetic core. Never saturates under high current, making it ideal for high-power radio transmitters and high-fidelity speaker crossovers.",
+      "applications": "FM transmitters, antenna tuning, audio speaker crossovers"
+    }
+  ],
+  "commonParts": [
+    { "value": "10 µH", "code": "100", "current": "2.0A", "package": "Radial Drum", "purpose": "DC-DC Buck converter output filtering" },
+    { "value": "22 µH", "code": "220", "current": "3.0A", "package": "Toroidal", "purpose": "LM2596 5V step-down regulator" },
+    { "value": "33 µH", "code": "330", "current": "3.0A", "package": "Shielded SMD", "purpose": "High-efficiency battery boost converter" },
+    { "value": "100 µH", "code": "101", "current": "1.5A", "package": "Radial Drum", "purpose": "LC noise filter for analog sensors" },
+    { "value": "220 µH", "code": "221", "current": "0.8A", "package": "Through-Hole", "purpose": "Step-up LED booster circuit" }
+  ],
+  "examples": [
+    {
+      "id": "lc-filter",
+      "title": "LC Ripple Filter for Clean Sensor Power",
+      "description": "Clean up noisy 5V from an unstable USB or motor supply before feeding your ADC sensor pins.",
+      "difficulty": "Easy",
+      "parts": ["10 µH Drum Inductor", "10 µF Electrolytic Capacitor", "0.1 µF Ceramic Capacitor"],
+      "wiring": [
+        { "from": "Noisy 5V Rail", "to": "Inductor Pin 1", "note": "Power input" },
+        { "from": "Inductor Pin 2", "to": "Clean 5V Output (Sensor VCC)", "note": "Chokes high-freq ripple" },
+        { "from": "Clean 5V Output", "to": "Capacitor (+) to GND", "note": "Bypasses remaining noise" }
+      ],
+      "code": "// No code needed: Passive LC filter operates continuously at the hardware level."
+    }
+  ]
+}

@@ -3,26 +3,34 @@ import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { CircuitBoard, Cpu, Hammer, Menu, Radar, Search, X } from "lucide-react";
 import GlobalSearchModal from "./GlobalSearchModal";
 import {
+  buzzerGuide,
   capacitorGuide,
   converterGuide,
   diodeGuide,
   icGuide,
+  inductorGuide,
   modules,
   mosfetGuide,
+  optocouplerGuide,
   potGuide,
   projects,
+  regulatorGuide,
   relayGuide,
   resistorGuide,
   sensors,
   transistorGuide,
 } from "../data";
 import {
+  BuzzerIcon,
   CapacitorIcon,
   ConverterIcon,
   DiodeIcon,
   IcIcon,
+  InductorIcon,
   MosfetIcon,
+  OptocouplerIcon,
   PotIcon,
+  RegulatorIcon,
   RelayIcon,
   ResistorIcon,
   TransistorIcon,
@@ -40,7 +48,7 @@ const NAV_GROUPS: { title: string; items: NavItem[] }[] = [
     title: "Sensors & Boards",
     items: [
       { to: "/sensors", label: "Sensors", icon: <Radar size={18} strokeWidth={1.75} aria-hidden />, count: sensors.length },
-      { to: "/modules", label: "Modules", icon: <CircuitBoard size={18} strokeWidth={1.75} aria-hidden />, count: modules.length },
+      { to: "/modules", label: "Modules (Boards)", icon: <CircuitBoard size={18} strokeWidth={1.75} aria-hidden />, count: modules.length },
     ],
   },
   {
@@ -48,17 +56,21 @@ const NAV_GROUPS: { title: string; items: NavItem[] }[] = [
     items: [
       { to: "/resistors", label: "Resistors", icon: <ResistorIcon />, count: resistorGuide.values.length },
       { to: "/capacitors", label: "Capacitors", icon: <CapacitorIcon />, count: capacitorGuide.values.length },
+      { to: "/inductors", label: "Inductors", icon: <InductorIcon />, count: inductorGuide.types.length },
       { to: "/potentiometers", label: "Potentiometers", icon: <PotIcon />, count: potGuide.values.length },
       { to: "/diodes", label: "Diodes", icon: <DiodeIcon />, count: diodeGuide.types.length },
       { to: "/transistors", label: "Transistors", icon: <TransistorIcon />, count: transistorGuide.types.length },
       { to: "/mosfets", label: "MOSFETs", icon: <MosfetIcon />, count: mosfetGuide.types.length },
+      { to: "/optocouplers", label: "Optocouplers", icon: <OptocouplerIcon />, count: optocouplerGuide.types.length },
       { to: "/relays", label: "Relays", icon: <RelayIcon />, count: relayGuide.types.length },
+      { to: "/buzzers", label: "Buzzers", icon: <BuzzerIcon />, count: buzzerGuide.types.length },
       { to: "/ics", label: "ICs", icon: <IcIcon />, count: icGuide.types.length },
     ],
   },
   {
     title: "Power",
     items: [
+      { to: "/regulators", label: "Voltage Regulators", icon: <RegulatorIcon />, count: regulatorGuide.types.length },
       { to: "/converters", label: "DC-DC Converters", icon: <ConverterIcon />, count: converterGuide.popularModules.length },
     ],
   },

@@ -10,16 +10,24 @@ import transistorsJson from "./transistors.json";
 import mosfetsJson from "./mosfets.json";
 import icsJson from "./ics.json";
 import convertersJson from "./converters.json";
+import inductorsJson from "./inductors.json";
+import optocouplersJson from "./optocouplers.json";
+import buzzersJson from "./buzzers.json";
+import regulatorsJson from "./regulators.json";
 import type {
   BoardModule,
+  BuzzerGuide,
   CapacitorGuide,
   ConverterGuide,
   DiodeGuide,
   IcGuide,
+  InductorGuide,
   Level,
   MosfetGuide,
+  OptocouplerGuide,
   PotGuide,
   Project,
+  RegulatorGuide,
   RelayGuide,
   ResistorGuide,
   Sensor,
@@ -309,6 +317,10 @@ export const transistorGuide = transistorsJson as unknown as TransistorGuide;
 export const mosfetGuide = mosfetsJson as unknown as MosfetGuide;
 export const icGuide = icsJson as unknown as IcGuide;
 export const converterGuide = convertersJson as unknown as ConverterGuide;
+export const inductorGuide = inductorsJson as unknown as InductorGuide;
+export const optocouplerGuide = optocouplersJson as unknown as OptocouplerGuide;
+export const buzzerGuide = buzzersJson as unknown as BuzzerGuide;
+export const regulatorGuide = regulatorsJson as unknown as RegulatorGuide;
 
 export const sensorBySku = new Map(sensors.map((s) => [s.sku, s]));
 export const moduleById = new Map(modules.map((m) => [m.id, m]));

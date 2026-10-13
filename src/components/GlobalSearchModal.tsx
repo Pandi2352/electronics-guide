@@ -17,7 +17,7 @@ export interface SearchItem {
   id: string;
   title: string;
   subtitle: string;
-  category: "Sensors" | "Components" | "Projects" | "Boards";
+  category: "Sensors" | "Components" | "Projects" | "Boards" | "Power";
   path: string;
   keywords: string;
   tag?: string;
@@ -88,6 +88,46 @@ const COMPONENT_SEARCH_ITEMS: SearchItem[] = [
     tone: "amber",
   },
   {
+    id: "comp-inductors",
+    title: "Inductors & Magnetic Filtering (R-L-C)",
+    subtitle: "Chokes, ferrite beads, buck coils, LC low-pass filters & back-EMF suppression",
+    category: "Components",
+    path: "/inductors",
+    keywords: "inductor coil choke henry microhenry uh mh ferrite bead lc filter ripple switching noise resonance",
+    tag: "Passive",
+    tone: "teal",
+  },
+  {
+    id: "comp-optocouplers",
+    title: "Optocouplers & High-Voltage Isolation",
+    subtitle: "Optical signal transfer, PC817, 4N35, separating noisy motors and 24V PLCs from 5V Arduino",
+    category: "Components",
+    path: "/optocouplers",
+    keywords: "optocoupler opto-isolator pc817 4n35 galvanic isolation ground loop noise plc 24v safety phototransistor",
+    tag: "Semiconductor",
+    tone: "amber",
+  },
+  {
+    id: "comp-buzzers",
+    title: "Buzzers & Audible Feedback",
+    subtitle: "Active vs Passive buzzers, PWM tone() generation, siren alarms, beeps & audio signals",
+    category: "Components",
+    path: "/buzzers",
+    keywords: "buzzer piezo active passive tone pitch frequency sound audio beeper melody alarm audio haptic",
+    tag: "Acoustic",
+    tone: "rose",
+  },
+  {
+    id: "comp-regulators",
+    title: "Linear Voltage Regulators (LDO)",
+    subtitle: "AMS1117-3.3V, 7805 5V, LM317 adjustable, power dissipation Pdiss and heatsink sizing",
+    category: "Power",
+    path: "/regulators",
+    keywords: "regulator ldo ams1117 7805 lm317 linear drop out voltage 5v 3.3v heat power dissipation heatsink",
+    tag: "Power",
+    tone: "green",
+  },
+  {
     id: "comp-relays",
     title: "Relays & High Voltage AC Switching",
     subtitle: "Galvanic isolation, COM/NO/NC terminals, 5V coil, JD-VCC optocoupler jumper",
@@ -111,7 +151,7 @@ const COMPONENT_SEARCH_ITEMS: SearchItem[] = [
     id: "comp-converters",
     title: "DC-DC Converters (Buck & Boost)",
     subtitle: "Switch-mode power efficiency, LM2596 step-down, MT3608 step-up, heat reduction",
-    category: "Components",
+    category: "Power",
     path: "/converters",
     keywords: "dc-dc converter buck boost step-down step-up lm2596 mt3608 xl6009 efficiency regulator power heat",
     tag: "Power",
@@ -219,7 +259,7 @@ function buildSearchIndex(): SearchItem[] {
 
 const SEARCH_INDEX = buildSearchIndex();
 
-const CATEGORY_FILTERS = ["All", "Sensors", "Components", "Projects", "Boards"] as const;
+const CATEGORY_FILTERS = ["All", "Sensors", "Components", "Power", "Projects", "Boards"] as const;
 type CategoryFilter = (typeof CATEGORY_FILTERS)[number];
 
 const POPULAR_QUICK_PICKS = [
